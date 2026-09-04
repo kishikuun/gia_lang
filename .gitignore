@@ -2,6 +2,5 @@
 __pycache__/
 *.pyc
 .gemini/
-.agents/
 .vscode/
 .DS_Store
