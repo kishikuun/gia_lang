@@ -335,6 +335,7 @@ function processActions(actions) {
                 const target = prodId === 'bun_song_than' ? '#masterpiece' : card;
                 lenis.scrollTo(target, { offset: -100, duration: 1.5 });
             }
+        }
         else if (action.type === 'play_sound') {
             const soundType = action.payload.sound_type;
             const audioEl = document.getElementById(`audio-${soundType}`);
