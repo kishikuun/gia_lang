@@ -1,0 +1,702 @@
+2026-09-01 01:04:53,642 - INFO - Hệ thống API Server Già Làng Số đang được khởi tạo trên cổng 8001...
+2026-09-01 01:06:22,307 - INFO - Hệ thống API Server Già Làng Số đang được khởi tạo trên cổng 8001...
+2026-09-01 01:08:11,078 - INFO - Hệ thống API Server Già Làng Số đang được khởi tạo trên cổng 8001...
+2026-09-01 01:08:14,025 - ERROR - [Critical] Không thể quét danh mục model từ Google: 'Model' object has no attribute 'supported_generation_methods'
+2026-09-01 01:08:14,025 - ERROR - [Critical] Không thể quét danh mục model từ Google: 'Model' object has no attribute 'supported_generation_methods'
+2026-09-01 01:08:14,031 - INFO - [Pipeline] Thử nghiệm triển khai tải dữ liệu trên: gemini-3.7-flash
+2026-09-01 01:08:14,031 - INFO - [Pipeline] Thử nghiệm triển khai tải dữ liệu trên: gemini-3.7-flash
+2026-09-01 01:08:14,087 - ERROR - [Socket Error] Treo cổng kết nối với gemini-3.7-flash: The read operation timed out
+2026-09-01 01:08:14,087 - ERROR - [Socket Error] Treo cổng kết nối với gemini-3.7-flash: The read operation timed out
+2026-09-01 01:08:15,728 - ERROR - [Socket Error] Treo cổng kết nối với gemini-3.7-flash: timed out
+2026-09-01 01:08:15,728 - ERROR - [Socket Error] Treo cổng kết nối với gemini-3.7-flash: timed out
+2026-09-01 01:08:18,728 - WARNING - [Fallback] gemini-3.7-flash không phản hồi. Hạ cấp xuống mô hình thấp hơn...
+2026-09-01 01:08:18,728 - WARNING - [Fallback] gemini-3.7-flash không phản hồi. Hạ cấp xuống mô hình thấp hơn...
+2026-09-01 01:08:18,729 - INFO - [Pipeline] Thử nghiệm triển khai tải dữ liệu trên: gemini-3.6-flash
+2026-09-01 01:08:18,729 - INFO - [Pipeline] Thử nghiệm triển khai tải dữ liệu trên: gemini-3.6-flash
+2026-09-01 01:08:18,866 - ERROR - [Socket Error] Treo cổng kết nối với gemini-3.6-flash: timed out
+2026-09-01 01:08:18,866 - ERROR - [Socket Error] Treo cổng kết nối với gemini-3.6-flash: timed out
+2026-09-01 01:08:20,497 - ERROR - [Socket Error] Treo cổng kết nối với gemini-3.6-flash: timed out
+2026-09-01 01:08:20,497 - ERROR - [Socket Error] Treo cổng kết nối với gemini-3.6-flash: timed out
+2026-09-01 01:08:23,497 - WARNING - [Fallback] gemini-3.6-flash không phản hồi. Hạ cấp xuống mô hình thấp hơn...
+2026-09-01 01:08:23,497 - WARNING - [Fallback] gemini-3.6-flash không phản hồi. Hạ cấp xuống mô hình thấp hơn...
+2026-09-01 01:08:23,498 - INFO - [Pipeline] Thử nghiệm triển khai tải dữ liệu trên: gemini-3.5-flash
+2026-09-01 01:08:23,498 - INFO - [Pipeline] Thử nghiệm triển khai tải dữ liệu trên: gemini-3.5-flash
+2026-09-01 01:08:23,636 - ERROR - [Socket Error] Treo cổng kết nối với gemini-3.5-flash: timed out
+2026-09-01 01:08:23,636 - ERROR - [Socket Error] Treo cổng kết nối với gemini-3.5-flash: timed out
+2026-09-01 01:08:25,289 - ERROR - [Socket Error] Treo cổng kết nối với gemini-3.5-flash: timed out
+2026-09-01 01:08:25,289 - ERROR - [Socket Error] Treo cổng kết nối với gemini-3.5-flash: timed out
+2026-09-01 01:08:28,290 - WARNING - [Fallback] gemini-3.5-flash không phản hồi. Hạ cấp xuống mô hình thấp hơn...
+2026-09-01 01:08:28,290 - WARNING - [Fallback] gemini-3.5-flash không phản hồi. Hạ cấp xuống mô hình thấp hơn...
+2026-09-01 01:08:28,290 - INFO - [Pipeline] Thử nghiệm triển khai tải dữ liệu trên: gemini-3.5-flash-lite
+2026-09-01 01:08:28,290 - INFO - [Pipeline] Thử nghiệm triển khai tải dữ liệu trên: gemini-3.5-flash-lite
+2026-09-01 01:08:28,437 - ERROR - [Socket Error] Treo cổng kết nối với gemini-3.5-flash-lite: timed out
+2026-09-01 01:08:28,437 - ERROR - [Socket Error] Treo cổng kết nối với gemini-3.5-flash-lite: timed out
+2026-09-01 01:08:30,073 - ERROR - [Socket Error] Treo cổng kết nối với gemini-3.5-flash-lite: timed out
+2026-09-01 01:08:30,073 - ERROR - [Socket Error] Treo cổng kết nối với gemini-3.5-flash-lite: timed out
+2026-09-01 01:08:33,074 - WARNING - [Fallback] gemini-3.5-flash-lite không phản hồi. Hạ cấp xuống mô hình thấp hơn...
+2026-09-01 01:08:33,074 - WARNING - [Fallback] gemini-3.5-flash-lite không phản hồi. Hạ cấp xuống mô hình thấp hơn...
+2026-09-01 01:08:33,077 - CRITICAL - [System Error] Sập tải toàn bộ hệ thống! Toàn bộ danh mục model từ cao đến thấp đều chết.
+2026-09-01 01:08:33,077 - CRITICAL - [System Error] Sập tải toàn bộ hệ thống! Toàn bộ danh mục model từ cao đến thấp đều chết.
+2026-09-01 01:10:48,677 - INFO - Hệ thống API Server Già Làng Số đang được khởi tạo trên cổng 8001...
+2026-09-01 01:10:57,860 - INFO - [Discovery] Đã tìm thấy 39 mô hình khả dụng thực tế: ['gemini-2.5-pro', 'gemini-3.7-flash', 'gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-3.1-flash-lite', 'gemini-2.5-flash', 'gemini-2.5-flash-preview-tts', 'gemini-2.5-pro-preview-tts', 'gemma-4-26b-a4b-it', 'gemma-4-31b-it', 'gemini-flash-latest', 'gemini-flash-lite-latest', 'gemini-pro-latest', 'gemini-2.5-flash-lite', 'gemini-2.5-flash-image', 'gemini-3-flash-preview', 'gemini-3.1-pro-preview', 'gemini-3.1-pro-preview-customtools', 'gemini-3.1-flash-lite-preview', 'gemini-3-pro-image-preview', 'gemini-3-pro-image', 'nano-banana-pro-preview', 'gemini-3.1-flash-image-preview', 'gemini-3.1-flash-image', 'gemini-3.1-flash-lite-image', 'gemini-omni-flash-preview', 'gemini-omni-1.1-flash', 'gemini-3.5-transcribe', 'lyria-3-clip-preview', 'lyria-3-pro-preview', 'gemini-3.1-flash-tts-preview', 'gemini-robotics-er-1.6-preview', 'gemini-robotics-er-2-preview', 'gemini-2.5-computer-use-preview-10-2025', 'antigravity-preview-05-2026', 'deep-research-max-preview-04-2026', 'deep-research-preview-04-2026', 'deep-research-pro-preview-12-2025']
+2026-09-01 01:10:57,860 - INFO - [Discovery] Đã tìm thấy 39 mô hình khả dụng thực tế: ['gemini-2.5-pro', 'gemini-3.7-flash', 'gemini-3.6-flash', 'gemini-3.5-flash', 'gemini-3.5-flash-lite', 'gemini-3.1-flash-lite', 'gemini-2.5-flash', 'gemini-2.5-flash-preview-tts', 'gemini-2.5-pro-preview-tts', 'gemma-4-26b-a4b-it', 'gemma-4-31b-it', 'gemini-flash-latest', 'gemini-flash-lite-latest', 'gemini-pro-latest', 'gemini-2.5-flash-lite', 'gemini-2.5-flash-image', 'gemini-3-flash-preview', 'gemini-3.1-pro-preview', 'gemini-3.1-pro-preview-customtools', 'gemini-3.1-flash-lite-preview', 'gemini-3-pro-image-preview', 'gemini-3-pro-image', 'nano-banana-pro-preview', 'gemini-3.1-flash-image-preview', 'gemini-3.1-flash-image', 'gemini-3.1-flash-lite-image', 'gemini-omni-flash-preview', 'gemini-omni-1.1-flash', 'gemini-3.5-transcribe', 'lyria-3-clip-preview', 'lyria-3-pro-preview', 'gemini-3.1-flash-tts-preview', 'gemini-robotics-er-1.6-preview', 'gemini-robotics-er-2-preview', 'gemini-2.5-computer-use-preview-10-2025', 'antigravity-preview-05-2026', 'deep-research-max-preview-04-2026', 'deep-research-preview-04-2026', 'deep-research-pro-preview-12-2025']
+2026-09-01 01:10:57,861 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-pro
+2026-09-01 01:10:57,861 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-pro
+2026-09-01 01:10:57,924 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-pro nghẽn gói tin: The read operation timed out
+2026-09-01 01:10:57,924 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-pro nghẽn gói tin: The read operation timed out
+2026-09-01 01:11:00,925 - WARNING - [Fallback] gemini-2.5-pro thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:00,925 - WARNING - [Fallback] gemini-2.5-pro thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:02,926 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.7-flash
+2026-09-01 01:11:02,926 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.7-flash
+2026-09-01 01:11:03,016 - ERROR - [Socket Error] Cổng kết nối gemini-3.7-flash nghẽn gói tin: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:11:03,016 - ERROR - [Socket Error] Cổng kết nối gemini-3.7-flash nghẽn gói tin: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:11:06,017 - WARNING - [Fallback] gemini-3.7-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:06,017 - WARNING - [Fallback] gemini-3.7-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:08,018 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.6-flash
+2026-09-01 01:11:08,018 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.6-flash
+2026-09-01 01:11:08,264 - ERROR - [Socket Error] Cổng kết nối gemini-3.6-flash nghẽn gói tin: timed out
+2026-09-01 01:11:08,264 - ERROR - [Socket Error] Cổng kết nối gemini-3.6-flash nghẽn gói tin: timed out
+2026-09-01 01:11:11,264 - WARNING - [Fallback] gemini-3.6-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:11,264 - WARNING - [Fallback] gemini-3.6-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:13,265 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.5-flash
+2026-09-01 01:11:13,265 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.5-flash
+2026-09-01 01:11:13,512 - ERROR - [Socket Error] Cổng kết nối gemini-3.5-flash nghẽn gói tin: timed out
+2026-09-01 01:11:13,512 - ERROR - [Socket Error] Cổng kết nối gemini-3.5-flash nghẽn gói tin: timed out
+2026-09-01 01:11:16,512 - WARNING - [Fallback] gemini-3.5-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:16,512 - WARNING - [Fallback] gemini-3.5-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:18,513 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.5-flash-lite
+2026-09-01 01:11:18,513 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.5-flash-lite
+2026-09-01 01:11:18,769 - ERROR - [Socket Error] Cổng kết nối gemini-3.5-flash-lite nghẽn gói tin: timed out
+2026-09-01 01:11:18,769 - ERROR - [Socket Error] Cổng kết nối gemini-3.5-flash-lite nghẽn gói tin: timed out
+2026-09-01 01:11:21,769 - WARNING - [Fallback] gemini-3.5-flash-lite thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:21,769 - WARNING - [Fallback] gemini-3.5-flash-lite thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:23,770 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.1-flash-lite
+2026-09-01 01:11:23,770 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.1-flash-lite
+2026-09-01 01:11:24,032 - ERROR - [Socket Error] Cổng kết nối gemini-3.1-flash-lite nghẽn gói tin: timed out
+2026-09-01 01:11:24,032 - ERROR - [Socket Error] Cổng kết nối gemini-3.1-flash-lite nghẽn gói tin: timed out
+2026-09-01 01:11:27,033 - WARNING - [Fallback] gemini-3.1-flash-lite thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:27,033 - WARNING - [Fallback] gemini-3.1-flash-lite thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:29,034 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-flash
+2026-09-01 01:11:29,034 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-flash
+2026-09-01 01:11:29,306 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-flash nghẽn gói tin: timed out
+2026-09-01 01:11:29,306 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-flash nghẽn gói tin: timed out
+2026-09-01 01:11:32,307 - WARNING - [Fallback] gemini-2.5-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:32,307 - WARNING - [Fallback] gemini-2.5-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:34,307 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-flash-preview-tts
+2026-09-01 01:11:34,307 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-flash-preview-tts
+2026-09-01 01:11:34,558 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-flash-preview-tts nghẽn gói tin: timed out
+2026-09-01 01:11:34,558 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-flash-preview-tts nghẽn gói tin: timed out
+2026-09-01 01:11:37,559 - WARNING - [Fallback] gemini-2.5-flash-preview-tts thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:37,559 - WARNING - [Fallback] gemini-2.5-flash-preview-tts thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:39,560 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-pro-preview-tts
+2026-09-01 01:11:39,560 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-pro-preview-tts
+2026-09-01 01:11:39,627 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-pro-preview-tts nghẽn gói tin: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:11:39,627 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-pro-preview-tts nghẽn gói tin: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:11:42,627 - WARNING - [Fallback] gemini-2.5-pro-preview-tts thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:42,627 - WARNING - [Fallback] gemini-2.5-pro-preview-tts thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:44,629 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemma-4-26b-a4b-it
+2026-09-01 01:11:44,629 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemma-4-26b-a4b-it
+2026-09-01 01:11:44,890 - ERROR - [Socket Error] Cổng kết nối gemma-4-26b-a4b-it nghẽn gói tin: timed out
+2026-09-01 01:11:44,890 - ERROR - [Socket Error] Cổng kết nối gemma-4-26b-a4b-it nghẽn gói tin: timed out
+2026-09-01 01:11:47,890 - WARNING - [Fallback] gemma-4-26b-a4b-it thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:47,890 - WARNING - [Fallback] gemma-4-26b-a4b-it thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:49,891 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemma-4-31b-it
+2026-09-01 01:11:49,891 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemma-4-31b-it
+2026-09-01 01:11:50,148 - ERROR - [Socket Error] Cổng kết nối gemma-4-31b-it nghẽn gói tin: timed out
+2026-09-01 01:11:50,148 - ERROR - [Socket Error] Cổng kết nối gemma-4-31b-it nghẽn gói tin: timed out
+2026-09-01 01:11:53,149 - WARNING - [Fallback] gemma-4-31b-it thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:53,149 - WARNING - [Fallback] gemma-4-31b-it thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:55,149 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-flash-latest
+2026-09-01 01:11:55,149 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-flash-latest
+2026-09-01 01:11:55,408 - ERROR - [Socket Error] Cổng kết nối gemini-flash-latest nghẽn gói tin: timed out
+2026-09-01 01:11:55,408 - ERROR - [Socket Error] Cổng kết nối gemini-flash-latest nghẽn gói tin: timed out
+2026-09-01 01:11:58,408 - WARNING - [Fallback] gemini-flash-latest thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:11:58,408 - WARNING - [Fallback] gemini-flash-latest thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:00,411 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-flash-lite-latest
+2026-09-01 01:12:00,411 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-flash-lite-latest
+2026-09-01 01:12:00,663 - ERROR - [Socket Error] Cổng kết nối gemini-flash-lite-latest nghẽn gói tin: timed out
+2026-09-01 01:12:00,663 - ERROR - [Socket Error] Cổng kết nối gemini-flash-lite-latest nghẽn gói tin: timed out
+2026-09-01 01:12:03,664 - WARNING - [Fallback] gemini-flash-lite-latest thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:03,664 - WARNING - [Fallback] gemini-flash-lite-latest thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:05,665 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-pro-latest
+2026-09-01 01:12:05,665 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-pro-latest
+2026-09-01 01:12:05,766 - ERROR - [Socket Error] Cổng kết nối gemini-pro-latest nghẽn gói tin: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:12:05,766 - ERROR - [Socket Error] Cổng kết nối gemini-pro-latest nghẽn gói tin: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:12:08,767 - WARNING - [Fallback] gemini-pro-latest thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:08,767 - WARNING - [Fallback] gemini-pro-latest thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:10,767 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-flash-lite
+2026-09-01 01:12:10,767 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-flash-lite
+2026-09-01 01:12:11,026 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-flash-lite nghẽn gói tin: timed out
+2026-09-01 01:12:11,026 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-flash-lite nghẽn gói tin: timed out
+2026-09-01 01:12:14,026 - WARNING - [Fallback] gemini-2.5-flash-lite thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:14,026 - WARNING - [Fallback] gemini-2.5-flash-lite thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:16,027 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-flash-image
+2026-09-01 01:12:16,027 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-flash-image
+2026-09-01 01:12:16,288 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-flash-image nghẽn gói tin: timed out
+2026-09-01 01:12:16,288 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-flash-image nghẽn gói tin: timed out
+2026-09-01 01:12:19,516 - WARNING - [Fallback] gemini-2.5-flash-image thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:19,516 - WARNING - [Fallback] gemini-2.5-flash-image thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:21,517 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3-flash-preview
+2026-09-01 01:12:21,517 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3-flash-preview
+2026-09-01 01:12:21,592 - ERROR - [Socket Error] Cổng kết nối gemini-3-flash-preview nghẽn gói tin: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:12:21,592 - ERROR - [Socket Error] Cổng kết nối gemini-3-flash-preview nghẽn gói tin: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:12:24,593 - WARNING - [Fallback] gemini-3-flash-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:24,593 - WARNING - [Fallback] gemini-3-flash-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:26,594 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.1-pro-preview
+2026-09-01 01:12:26,594 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.1-pro-preview
+2026-09-01 01:12:26,852 - ERROR - [Socket Error] Cổng kết nối gemini-3.1-pro-preview nghẽn gói tin: timed out
+2026-09-01 01:12:26,852 - ERROR - [Socket Error] Cổng kết nối gemini-3.1-pro-preview nghẽn gói tin: timed out
+2026-09-01 01:12:29,852 - WARNING - [Fallback] gemini-3.1-pro-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:29,852 - WARNING - [Fallback] gemini-3.1-pro-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:31,854 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.1-pro-preview-customtools
+2026-09-01 01:12:31,854 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.1-pro-preview-customtools
+2026-09-01 01:12:32,042 - ERROR - [Socket Error] Cổng kết nối gemini-3.1-pro-preview-customtools nghẽn gói tin: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:12:32,042 - ERROR - [Socket Error] Cổng kết nối gemini-3.1-pro-preview-customtools nghẽn gói tin: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:12:35,042 - WARNING - [Fallback] gemini-3.1-pro-preview-customtools thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:35,042 - WARNING - [Fallback] gemini-3.1-pro-preview-customtools thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:37,043 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.1-flash-lite-preview
+2026-09-01 01:12:37,043 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.1-flash-lite-preview
+2026-09-01 01:12:37,295 - ERROR - [Socket Error] Cổng kết nối gemini-3.1-flash-lite-preview nghẽn gói tin: timed out
+2026-09-01 01:12:37,295 - ERROR - [Socket Error] Cổng kết nối gemini-3.1-flash-lite-preview nghẽn gói tin: timed out
+2026-09-01 01:12:40,296 - WARNING - [Fallback] gemini-3.1-flash-lite-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:40,296 - WARNING - [Fallback] gemini-3.1-flash-lite-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:42,299 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3-pro-image-preview
+2026-09-01 01:12:42,299 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3-pro-image-preview
+2026-09-01 01:12:42,552 - ERROR - [Socket Error] Cổng kết nối gemini-3-pro-image-preview nghẽn gói tin: timed out
+2026-09-01 01:12:42,552 - ERROR - [Socket Error] Cổng kết nối gemini-3-pro-image-preview nghẽn gói tin: timed out
+2026-09-01 01:12:45,553 - WARNING - [Fallback] gemini-3-pro-image-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:45,553 - WARNING - [Fallback] gemini-3-pro-image-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:47,554 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3-pro-image
+2026-09-01 01:12:47,554 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3-pro-image
+2026-09-01 01:12:47,812 - ERROR - [Socket Error] Cổng kết nối gemini-3-pro-image nghẽn gói tin: timed out
+2026-09-01 01:12:47,812 - ERROR - [Socket Error] Cổng kết nối gemini-3-pro-image nghẽn gói tin: timed out
+2026-09-01 01:12:50,812 - WARNING - [Fallback] gemini-3-pro-image thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:50,812 - WARNING - [Fallback] gemini-3-pro-image thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:52,813 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: nano-banana-pro-preview
+2026-09-01 01:12:52,813 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: nano-banana-pro-preview
+2026-09-01 01:12:53,032 - ERROR - [Socket Error] Cổng kết nối nano-banana-pro-preview nghẽn gói tin: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:12:53,032 - ERROR - [Socket Error] Cổng kết nối nano-banana-pro-preview nghẽn gói tin: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:12:56,032 - WARNING - [Fallback] nano-banana-pro-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:56,032 - WARNING - [Fallback] nano-banana-pro-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:12:58,033 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.1-flash-image-preview
+2026-09-01 01:12:58,033 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.1-flash-image-preview
+2026-09-01 01:12:58,286 - ERROR - [Socket Error] Cổng kết nối gemini-3.1-flash-image-preview nghẽn gói tin: timed out
+2026-09-01 01:12:58,286 - ERROR - [Socket Error] Cổng kết nối gemini-3.1-flash-image-preview nghẽn gói tin: timed out
+2026-09-01 01:13:01,287 - WARNING - [Fallback] gemini-3.1-flash-image-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:01,287 - WARNING - [Fallback] gemini-3.1-flash-image-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:03,288 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.1-flash-image
+2026-09-01 01:13:03,288 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.1-flash-image
+2026-09-01 01:13:03,355 - ERROR - [Socket Error] Cổng kết nối gemini-3.1-flash-image nghẽn gói tin: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:13:03,355 - ERROR - [Socket Error] Cổng kết nối gemini-3.1-flash-image nghẽn gói tin: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:13:06,356 - WARNING - [Fallback] gemini-3.1-flash-image thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:06,356 - WARNING - [Fallback] gemini-3.1-flash-image thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:08,357 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.1-flash-lite-image
+2026-09-01 01:13:08,357 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.1-flash-lite-image
+2026-09-01 01:13:08,605 - ERROR - [Socket Error] Cổng kết nối gemini-3.1-flash-lite-image nghẽn gói tin: timed out
+2026-09-01 01:13:08,605 - ERROR - [Socket Error] Cổng kết nối gemini-3.1-flash-lite-image nghẽn gói tin: timed out
+2026-09-01 01:13:11,606 - WARNING - [Fallback] gemini-3.1-flash-lite-image thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:11,606 - WARNING - [Fallback] gemini-3.1-flash-lite-image thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:13,606 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-omni-flash-preview
+2026-09-01 01:13:13,606 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-omni-flash-preview
+2026-09-01 01:13:13,861 - ERROR - [Socket Error] Cổng kết nối gemini-omni-flash-preview nghẽn gói tin: timed out
+2026-09-01 01:13:13,861 - ERROR - [Socket Error] Cổng kết nối gemini-omni-flash-preview nghẽn gói tin: timed out
+2026-09-01 01:13:16,861 - WARNING - [Fallback] gemini-omni-flash-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:16,861 - WARNING - [Fallback] gemini-omni-flash-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:18,863 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-omni-1.1-flash
+2026-09-01 01:13:18,863 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-omni-1.1-flash
+2026-09-01 01:13:19,124 - ERROR - [Socket Error] Cổng kết nối gemini-omni-1.1-flash nghẽn gói tin: timed out
+2026-09-01 01:13:19,124 - ERROR - [Socket Error] Cổng kết nối gemini-omni-1.1-flash nghẽn gói tin: timed out
+2026-09-01 01:13:22,125 - WARNING - [Fallback] gemini-omni-1.1-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:22,125 - WARNING - [Fallback] gemini-omni-1.1-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:24,125 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.5-transcribe
+2026-09-01 01:13:24,125 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.5-transcribe
+2026-09-01 01:13:24,201 - ERROR - [Socket Error] Cổng kết nối gemini-3.5-transcribe nghẽn gói tin: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:13:24,201 - ERROR - [Socket Error] Cổng kết nối gemini-3.5-transcribe nghẽn gói tin: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:13:27,201 - WARNING - [Fallback] gemini-3.5-transcribe thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:27,201 - WARNING - [Fallback] gemini-3.5-transcribe thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:29,202 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: lyria-3-clip-preview
+2026-09-01 01:13:29,202 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: lyria-3-clip-preview
+2026-09-01 01:13:29,461 - ERROR - [Socket Error] Cổng kết nối lyria-3-clip-preview nghẽn gói tin: timed out
+2026-09-01 01:13:29,461 - ERROR - [Socket Error] Cổng kết nối lyria-3-clip-preview nghẽn gói tin: timed out
+2026-09-01 01:13:32,461 - WARNING - [Fallback] lyria-3-clip-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:32,461 - WARNING - [Fallback] lyria-3-clip-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:34,464 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: lyria-3-pro-preview
+2026-09-01 01:13:34,464 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: lyria-3-pro-preview
+2026-09-01 01:13:34,719 - ERROR - [Socket Error] Cổng kết nối lyria-3-pro-preview nghẽn gói tin: timed out
+2026-09-01 01:13:34,719 - ERROR - [Socket Error] Cổng kết nối lyria-3-pro-preview nghẽn gói tin: timed out
+2026-09-01 01:13:37,719 - WARNING - [Fallback] lyria-3-pro-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:37,719 - WARNING - [Fallback] lyria-3-pro-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:39,719 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.1-flash-tts-preview
+2026-09-01 01:13:39,719 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.1-flash-tts-preview
+2026-09-01 01:13:39,971 - ERROR - [Socket Error] Cổng kết nối gemini-3.1-flash-tts-preview nghẽn gói tin: timed out
+2026-09-01 01:13:39,971 - ERROR - [Socket Error] Cổng kết nối gemini-3.1-flash-tts-preview nghẽn gói tin: timed out
+2026-09-01 01:13:42,973 - WARNING - [Fallback] gemini-3.1-flash-tts-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:42,973 - WARNING - [Fallback] gemini-3.1-flash-tts-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:44,973 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-robotics-er-1.6-preview
+2026-09-01 01:13:44,973 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-robotics-er-1.6-preview
+2026-09-01 01:13:45,225 - ERROR - [Socket Error] Cổng kết nối gemini-robotics-er-1.6-preview nghẽn gói tin: timed out
+2026-09-01 01:13:45,225 - ERROR - [Socket Error] Cổng kết nối gemini-robotics-er-1.6-preview nghẽn gói tin: timed out
+2026-09-01 01:13:48,225 - WARNING - [Fallback] gemini-robotics-er-1.6-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:48,225 - WARNING - [Fallback] gemini-robotics-er-1.6-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:50,226 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-robotics-er-2-preview
+2026-09-01 01:13:50,226 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-robotics-er-2-preview
+2026-09-01 01:13:50,485 - ERROR - [Socket Error] Cổng kết nối gemini-robotics-er-2-preview nghẽn gói tin: timed out
+2026-09-01 01:13:50,485 - ERROR - [Socket Error] Cổng kết nối gemini-robotics-er-2-preview nghẽn gói tin: timed out
+2026-09-01 01:13:53,485 - WARNING - [Fallback] gemini-robotics-er-2-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:53,485 - WARNING - [Fallback] gemini-robotics-er-2-preview thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:55,486 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-computer-use-preview-10-2025
+2026-09-01 01:13:55,486 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-computer-use-preview-10-2025
+2026-09-01 01:13:55,747 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-computer-use-preview-10-2025 nghẽn gói tin: timed out
+2026-09-01 01:13:55,747 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-computer-use-preview-10-2025 nghẽn gói tin: timed out
+2026-09-01 01:13:58,748 - WARNING - [Fallback] gemini-2.5-computer-use-preview-10-2025 thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:13:58,748 - WARNING - [Fallback] gemini-2.5-computer-use-preview-10-2025 thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:14:00,748 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: antigravity-preview-05-2026
+2026-09-01 01:14:00,748 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: antigravity-preview-05-2026
+2026-09-01 01:14:01,006 - ERROR - [Socket Error] Cổng kết nối antigravity-preview-05-2026 nghẽn gói tin: timed out
+2026-09-01 01:14:01,006 - ERROR - [Socket Error] Cổng kết nối antigravity-preview-05-2026 nghẽn gói tin: timed out
+2026-09-01 01:14:04,006 - WARNING - [Fallback] antigravity-preview-05-2026 thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:14:04,006 - WARNING - [Fallback] antigravity-preview-05-2026 thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:14:06,007 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: deep-research-max-preview-04-2026
+2026-09-01 01:14:06,007 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: deep-research-max-preview-04-2026
+2026-09-01 01:14:06,274 - ERROR - [Socket Error] Cổng kết nối deep-research-max-preview-04-2026 nghẽn gói tin: timed out
+2026-09-01 01:14:06,274 - ERROR - [Socket Error] Cổng kết nối deep-research-max-preview-04-2026 nghẽn gói tin: timed out
+2026-09-01 01:14:09,275 - WARNING - [Fallback] deep-research-max-preview-04-2026 thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:14:09,275 - WARNING - [Fallback] deep-research-max-preview-04-2026 thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:14:11,281 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: deep-research-preview-04-2026
+2026-09-01 01:14:11,281 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: deep-research-preview-04-2026
+2026-09-01 01:14:11,534 - ERROR - [Socket Error] Cổng kết nối deep-research-preview-04-2026 nghẽn gói tin: timed out
+2026-09-01 01:14:11,534 - ERROR - [Socket Error] Cổng kết nối deep-research-preview-04-2026 nghẽn gói tin: timed out
+2026-09-01 01:14:14,535 - WARNING - [Fallback] deep-research-preview-04-2026 thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:14:14,535 - WARNING - [Fallback] deep-research-preview-04-2026 thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:14:16,539 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: deep-research-pro-preview-12-2025
+2026-09-01 01:14:16,539 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: deep-research-pro-preview-12-2025
+2026-09-01 01:14:16,613 - ERROR - [Socket Error] Cổng kết nối deep-research-pro-preview-12-2025 nghẽn gói tin: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:14:16,613 - ERROR - [Socket Error] Cổng kết nối deep-research-pro-preview-12-2025 nghẽn gói tin: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:14:19,614 - WARNING - [Fallback] deep-research-pro-preview-12-2025 thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:14:19,614 - WARNING - [Fallback] deep-research-pro-preview-12-2025 thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:14:21,615 - CRITICAL - [System Error] Sập tải toàn bộ hệ thống! Toàn bộ danh mục model từ cao đến thấp đều chết.
+2026-09-01 01:14:21,615 - CRITICAL - [System Error] Sập tải toàn bộ hệ thống! Toàn bộ danh mục model từ cao đến thấp đều chết.
+2026-09-01 01:16:40,397 - INFO - Đang thiết lập Proxy nội bộ chống chặn mạng...
+2026-09-01 01:17:16,498 - INFO - Đang thiết lập Proxy nội bộ chống chặn mạng...
+2026-09-01 01:17:17,637 - INFO - Hệ thống API Server Già Làng Số đang được khởi tạo trên cổng 8001...
+2026-09-01 01:17:18,856 - INFO - Đang thiết lập Proxy nội bộ chống chặn mạng...
+2026-09-01 01:17:20,004 - INFO - Đang thiết lập Proxy nội bộ chống chặn mạng...
+2026-09-01 01:17:20,004 - INFO - Đang thiết lập Proxy nội bộ chống chặn mạng...
+2026-09-01 01:17:34,255 - ERROR - [Critical] Không thể quét danh mục model từ Google: timed out
+2026-09-01 01:17:34,255 - ERROR - [Critical] Không thể quét danh mục model từ Google: timed out
+2026-09-01 01:17:34,255 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-pro
+2026-09-01 01:17:34,255 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-pro
+2026-09-01 01:17:34,316 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-pro nghẽn gói tin: timed out
+2026-09-01 01:17:34,316 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-pro nghẽn gói tin: timed out
+2026-09-01 01:17:37,317 - WARNING - [Fallback] gemini-2.5-pro thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:17:37,317 - WARNING - [Fallback] gemini-2.5-pro thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:17:39,318 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.7-flash
+2026-09-01 01:17:39,318 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.7-flash
+2026-09-01 01:17:39,347 - ERROR - [Socket Error] Cổng kết nối gemini-3.7-flash nghẽn gói tin: timed out
+2026-09-01 01:17:39,347 - ERROR - [Socket Error] Cổng kết nối gemini-3.7-flash nghẽn gói tin: timed out
+2026-09-01 01:17:42,348 - WARNING - [Fallback] gemini-3.7-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:17:42,348 - WARNING - [Fallback] gemini-3.7-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:17:44,350 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.6-flash
+2026-09-01 01:17:44,350 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.6-flash
+2026-09-01 01:17:44,389 - ERROR - [Socket Error] Cổng kết nối gemini-3.6-flash nghẽn gói tin: timed out
+2026-09-01 01:17:44,389 - ERROR - [Socket Error] Cổng kết nối gemini-3.6-flash nghẽn gói tin: timed out
+2026-09-01 01:17:47,390 - WARNING - [Fallback] gemini-3.6-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:17:47,390 - WARNING - [Fallback] gemini-3.6-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:17:49,392 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.5-flash
+2026-09-01 01:17:49,392 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.5-flash
+2026-09-01 01:17:49,427 - ERROR - [Socket Error] Cổng kết nối gemini-3.5-flash nghẽn gói tin: timed out
+2026-09-01 01:17:49,427 - ERROR - [Socket Error] Cổng kết nối gemini-3.5-flash nghẽn gói tin: timed out
+2026-09-01 01:17:52,427 - WARNING - [Fallback] gemini-3.5-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:17:52,427 - WARNING - [Fallback] gemini-3.5-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:17:54,428 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.5-flash-lite
+2026-09-01 01:17:54,428 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.5-flash-lite
+2026-09-01 01:17:54,456 - ERROR - [Socket Error] Cổng kết nối gemini-3.5-flash-lite nghẽn gói tin: timed out
+2026-09-01 01:17:54,456 - ERROR - [Socket Error] Cổng kết nối gemini-3.5-flash-lite nghẽn gói tin: timed out
+2026-09-01 01:17:57,456 - WARNING - [Fallback] gemini-3.5-flash-lite thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:17:57,456 - WARNING - [Fallback] gemini-3.5-flash-lite thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:17:59,457 - CRITICAL - [System Error] Sập tải toàn bộ hệ thống! Toàn bộ danh mục model từ cao đến thấp đều chết.
+2026-09-01 01:17:59,457 - CRITICAL - [System Error] Sập tải toàn bộ hệ thống! Toàn bộ danh mục model từ cao đến thấp đều chết.
+2026-09-01 01:19:42,447 - INFO - Đang thiết lập Proxy nội bộ chống chặn mạng...
+2026-09-01 01:19:43,748 - INFO - Hệ thống API Server Già Làng Số đang được khởi tạo trên cổng 8001...
+2026-09-01 01:19:44,920 - INFO - Đang thiết lập Proxy nội bộ chống chặn mạng...
+2026-09-01 01:19:46,049 - INFO - Đang thiết lập Proxy nội bộ chống chặn mạng...
+2026-09-01 01:19:46,049 - INFO - Đang thiết lập Proxy nội bộ chống chặn mạng...
+2026-09-01 01:19:54,562 - ERROR - [Critical] Không thể quét danh mục model từ Google: timed out
+2026-09-01 01:19:54,562 - ERROR - [Critical] Không thể quét danh mục model từ Google: timed out
+2026-09-01 01:19:54,563 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-pro
+2026-09-01 01:19:54,563 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-pro
+2026-09-01 01:19:54,623 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-pro nghẽn gói tin: timed out
+2026-09-01 01:19:54,623 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-pro nghẽn gói tin: timed out
+2026-09-01 01:19:57,624 - WARNING - [Fallback] gemini-2.5-pro thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:19:57,624 - WARNING - [Fallback] gemini-2.5-pro thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:19:59,625 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.7-flash
+2026-09-01 01:19:59,625 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.7-flash
+2026-09-01 01:19:59,653 - ERROR - [Socket Error] Cổng kết nối gemini-3.7-flash nghẽn gói tin: timed out
+2026-09-01 01:19:59,653 - ERROR - [Socket Error] Cổng kết nối gemini-3.7-flash nghẽn gói tin: timed out
+2026-09-01 01:20:02,668 - WARNING - [Fallback] gemini-3.7-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:20:02,668 - WARNING - [Fallback] gemini-3.7-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:20:04,668 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.6-flash
+2026-09-01 01:20:04,668 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.6-flash
+2026-09-01 01:20:04,707 - ERROR - [Socket Error] Cổng kết nối gemini-3.6-flash nghẽn gói tin: timed out
+2026-09-01 01:20:04,707 - ERROR - [Socket Error] Cổng kết nối gemini-3.6-flash nghẽn gói tin: timed out
+2026-09-01 01:20:07,708 - WARNING - [Fallback] gemini-3.6-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:20:07,708 - WARNING - [Fallback] gemini-3.6-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:20:09,708 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.5-flash
+2026-09-01 01:20:09,708 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.5-flash
+2026-09-01 01:20:09,736 - ERROR - [Socket Error] Cổng kết nối gemini-3.5-flash nghẽn gói tin: timed out
+2026-09-01 01:20:09,736 - ERROR - [Socket Error] Cổng kết nối gemini-3.5-flash nghẽn gói tin: timed out
+2026-09-01 01:20:12,737 - WARNING - [Fallback] gemini-3.5-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:20:12,737 - WARNING - [Fallback] gemini-3.5-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:20:14,737 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.5-flash-lite
+2026-09-01 01:20:14,737 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.5-flash-lite
+2026-09-01 01:20:14,777 - ERROR - [Socket Error] Cổng kết nối gemini-3.5-flash-lite nghẽn gói tin: timed out
+2026-09-01 01:20:14,777 - ERROR - [Socket Error] Cổng kết nối gemini-3.5-flash-lite nghẽn gói tin: timed out
+2026-09-01 01:20:17,777 - WARNING - [Fallback] gemini-3.5-flash-lite thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:20:17,777 - WARNING - [Fallback] gemini-3.5-flash-lite thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:20:19,778 - CRITICAL - [System Error] Sập tải toàn bộ hệ thống! Toàn bộ danh mục model từ cao đến thấp đều chết.
+2026-09-01 01:20:19,778 - CRITICAL - [System Error] Sập tải toàn bộ hệ thống! Toàn bộ danh mục model từ cao đến thấp đều chết.
+2026-09-01 01:22:42,018 - INFO - Đang thiết lập Proxy nội bộ chống chặn mạng...
+2026-09-01 01:22:42,698 - INFO - Hệ thống API Server Già Làng Số đang được khởi tạo trên cổng 8001...
+2026-09-01 01:22:43,696 - INFO - Đang thiết lập Proxy nội bộ chống chặn mạng...
+2026-09-01 01:22:44,518 - INFO - Đang thiết lập Proxy nội bộ chống chặn mạng...
+2026-09-01 01:22:44,518 - INFO - Đang thiết lập Proxy nội bộ chống chặn mạng...
+2026-09-01 01:22:51,443 - ERROR - [Critical] Không thể quét danh mục model từ Google: timed out
+2026-09-01 01:22:51,443 - ERROR - [Critical] Không thể quét danh mục model từ Google: timed out
+2026-09-01 01:22:51,443 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-pro
+2026-09-01 01:22:51,443 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-2.5-pro
+2026-09-01 01:22:51,506 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-pro nghẽn gói tin: timed out
+2026-09-01 01:22:51,506 - ERROR - [Socket Error] Cổng kết nối gemini-2.5-pro nghẽn gói tin: timed out
+2026-09-01 01:22:54,507 - WARNING - [Fallback] gemini-2.5-pro thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:22:54,507 - WARNING - [Fallback] gemini-2.5-pro thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:22:56,507 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.7-flash
+2026-09-01 01:22:56,507 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.7-flash
+2026-09-01 01:22:56,534 - ERROR - [Socket Error] Cổng kết nối gemini-3.7-flash nghẽn gói tin: timed out
+2026-09-01 01:22:56,534 - ERROR - [Socket Error] Cổng kết nối gemini-3.7-flash nghẽn gói tin: timed out
+2026-09-01 01:22:59,535 - WARNING - [Fallback] gemini-3.7-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:22:59,535 - WARNING - [Fallback] gemini-3.7-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:23:01,535 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.6-flash
+2026-09-01 01:23:01,535 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.6-flash
+2026-09-01 01:23:01,569 - ERROR - [Socket Error] Cổng kết nối gemini-3.6-flash nghẽn gói tin: timed out
+2026-09-01 01:23:01,569 - ERROR - [Socket Error] Cổng kết nối gemini-3.6-flash nghẽn gói tin: timed out
+2026-09-01 01:23:04,570 - WARNING - [Fallback] gemini-3.6-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:23:04,570 - WARNING - [Fallback] gemini-3.6-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:23:06,571 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.5-flash
+2026-09-01 01:23:06,571 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.5-flash
+2026-09-01 01:23:06,605 - ERROR - [Socket Error] Cổng kết nối gemini-3.5-flash nghẽn gói tin: timed out
+2026-09-01 01:23:06,605 - ERROR - [Socket Error] Cổng kết nối gemini-3.5-flash nghẽn gói tin: timed out
+2026-09-01 01:23:09,606 - WARNING - [Fallback] gemini-3.5-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:23:09,606 - WARNING - [Fallback] gemini-3.5-flash thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:23:11,607 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.5-flash-lite
+2026-09-01 01:23:11,607 - INFO - [Pipeline] Khởi động phiên tải dữ liệu trên: gemini-3.5-flash-lite
+2026-09-01 01:23:11,638 - ERROR - [Socket Error] Cổng kết nối gemini-3.5-flash-lite nghẽn gói tin: timed out
+2026-09-01 01:23:11,638 - ERROR - [Socket Error] Cổng kết nối gemini-3.5-flash-lite nghẽn gói tin: timed out
+2026-09-01 01:23:14,639 - WARNING - [Fallback] gemini-3.5-flash-lite thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:23:14,639 - WARNING - [Fallback] gemini-3.5-flash-lite thất bại. Tạm nghỉ 2s giải phóng socket...
+2026-09-01 01:23:16,639 - CRITICAL - [System Error] Sập tải toàn bộ hệ thống! Toàn bộ danh mục model từ cao đến thấp đều chết.
+2026-09-01 01:23:16,639 - CRITICAL - [System Error] Sập tải toàn bộ hệ thống! Toàn bộ danh mục model từ cao đến thấp đều chết.
+2026-09-01 01:25:50,310 - INFO - Hệ thống API Server Già Làng Số đang được khởi tạo trên cổng 8001...
+2026-09-01 01:26:03,820 - INFO - [Discovery] Đã tìm thấy 39 mô hình khả dụng.
+2026-09-01 01:26:03,820 - INFO - [Discovery] Đã tìm thấy 39 mô hình khả dụng.
+2026-09-01 01:26:03,821 - INFO - [Route] Thử nghiệm cổng kết nối: Google Direct
+2026-09-01 01:26:03,821 - INFO - [Route] Thử nghiệm cổng kết nối: Google Direct
+2026-09-01 01:26:04,424 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-2.5-pro
+2026-09-01 01:26:04,424 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-2.5-pro
+2026-09-01 01:26:04,714 - ERROR - [Socket Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 01:26:04,714 - ERROR - [Socket Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 01:26:07,714 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:07,714 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:09,715 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3.7-flash
+2026-09-01 01:26:09,715 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3.7-flash
+2026-09-01 01:26:09,973 - ERROR - [Socket Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 01:26:09,973 - ERROR - [Socket Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 01:26:12,973 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:12,973 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:14,974 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3.6-flash
+2026-09-01 01:26:14,974 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3.6-flash
+2026-09-01 01:26:15,231 - ERROR - [Socket Error] Lỗi kết nối gemini-3.6-flash: timed out
+2026-09-01 01:26:15,231 - ERROR - [Socket Error] Lỗi kết nối gemini-3.6-flash: timed out
+2026-09-01 01:26:18,233 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:18,233 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:20,234 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3.5-flash
+2026-09-01 01:26:20,234 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3.5-flash
+2026-09-01 01:26:20,308 - ERROR - [Socket Error] Lỗi kết nối gemini-3.5-flash: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:26:20,308 - ERROR - [Socket Error] Lỗi kết nối gemini-3.5-flash: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:26:23,309 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:23,309 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:25,310 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3.5-flash-lite
+2026-09-01 01:26:25,310 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3.5-flash-lite
+2026-09-01 01:26:25,561 - ERROR - [Socket Error] Lỗi kết nối gemini-3.5-flash-lite: timed out
+2026-09-01 01:26:25,561 - ERROR - [Socket Error] Lỗi kết nối gemini-3.5-flash-lite: timed out
+2026-09-01 01:26:28,562 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:28,562 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:30,562 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3.1-flash-lite
+2026-09-01 01:26:30,562 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3.1-flash-lite
+2026-09-01 01:26:30,818 - ERROR - [Socket Error] Lỗi kết nối gemini-3.1-flash-lite: timed out
+2026-09-01 01:26:30,818 - ERROR - [Socket Error] Lỗi kết nối gemini-3.1-flash-lite: timed out
+2026-09-01 01:26:33,818 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:33,818 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:35,820 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-2.5-flash
+2026-09-01 01:26:35,820 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-2.5-flash
+2026-09-01 01:26:35,894 - ERROR - [Socket Error] Lỗi kết nối gemini-2.5-flash: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:26:35,894 - ERROR - [Socket Error] Lỗi kết nối gemini-2.5-flash: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:26:38,895 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:38,895 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:40,897 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-2.5-flash-preview-tts
+2026-09-01 01:26:40,897 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-2.5-flash-preview-tts
+2026-09-01 01:26:41,150 - ERROR - [Socket Error] Lỗi kết nối gemini-2.5-flash-preview-tts: timed out
+2026-09-01 01:26:41,150 - ERROR - [Socket Error] Lỗi kết nối gemini-2.5-flash-preview-tts: timed out
+2026-09-01 01:26:44,151 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:44,151 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:46,152 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-2.5-pro-preview-tts
+2026-09-01 01:26:46,152 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-2.5-pro-preview-tts
+2026-09-01 01:26:46,251 - ERROR - [Socket Error] Lỗi kết nối gemini-2.5-pro-preview-tts: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:26:46,251 - ERROR - [Socket Error] Lỗi kết nối gemini-2.5-pro-preview-tts: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:26:49,256 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:49,256 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:51,256 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemma-4-26b-a4b-it
+2026-09-01 01:26:51,256 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemma-4-26b-a4b-it
+2026-09-01 01:26:51,519 - ERROR - [Socket Error] Lỗi kết nối gemma-4-26b-a4b-it: timed out
+2026-09-01 01:26:51,519 - ERROR - [Socket Error] Lỗi kết nối gemma-4-26b-a4b-it: timed out
+2026-09-01 01:26:54,520 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:54,520 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:56,521 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemma-4-31b-it
+2026-09-01 01:26:56,521 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemma-4-31b-it
+2026-09-01 01:26:56,764 - ERROR - [Socket Error] Lỗi kết nối gemma-4-31b-it: timed out
+2026-09-01 01:26:56,764 - ERROR - [Socket Error] Lỗi kết nối gemma-4-31b-it: timed out
+2026-09-01 01:26:59,765 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:26:59,765 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:01,767 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-flash-latest
+2026-09-01 01:27:01,767 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-flash-latest
+2026-09-01 01:27:02,024 - ERROR - [Socket Error] Lỗi kết nối gemini-flash-latest: timed out
+2026-09-01 01:27:02,024 - ERROR - [Socket Error] Lỗi kết nối gemini-flash-latest: timed out
+2026-09-01 01:27:05,024 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:05,024 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:07,025 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-flash-lite-latest
+2026-09-01 01:27:07,025 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-flash-lite-latest
+2026-09-01 01:27:07,289 - ERROR - [Socket Error] Lỗi kết nối gemini-flash-lite-latest: timed out
+2026-09-01 01:27:07,289 - ERROR - [Socket Error] Lỗi kết nối gemini-flash-lite-latest: timed out
+2026-09-01 01:27:10,290 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:10,290 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:12,291 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-pro-latest
+2026-09-01 01:27:12,291 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-pro-latest
+2026-09-01 01:27:12,552 - ERROR - [Socket Error] Lỗi kết nối gemini-pro-latest: timed out
+2026-09-01 01:27:12,552 - ERROR - [Socket Error] Lỗi kết nối gemini-pro-latest: timed out
+2026-09-01 01:27:15,552 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:15,552 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:17,553 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-2.5-flash-lite
+2026-09-01 01:27:17,553 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-2.5-flash-lite
+2026-09-01 01:27:17,623 - ERROR - [Socket Error] Lỗi kết nối gemini-2.5-flash-lite: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:27:17,623 - ERROR - [Socket Error] Lỗi kết nối gemini-2.5-flash-lite: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:27:20,624 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:20,624 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:22,625 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-2.5-flash-image
+2026-09-01 01:27:22,625 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-2.5-flash-image
+2026-09-01 01:27:22,888 - ERROR - [Socket Error] Lỗi kết nối gemini-2.5-flash-image: timed out
+2026-09-01 01:27:22,888 - ERROR - [Socket Error] Lỗi kết nối gemini-2.5-flash-image: timed out
+2026-09-01 01:27:25,889 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:25,889 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:27,890 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3-flash-preview
+2026-09-01 01:27:27,890 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3-flash-preview
+2026-09-01 01:27:28,138 - ERROR - [Socket Error] Lỗi kết nối gemini-3-flash-preview: timed out
+2026-09-01 01:27:28,138 - ERROR - [Socket Error] Lỗi kết nối gemini-3-flash-preview: timed out
+2026-09-01 01:27:31,139 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:31,139 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:33,140 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3.1-pro-preview
+2026-09-01 01:27:33,140 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3.1-pro-preview
+2026-09-01 01:27:33,244 - ERROR - [Socket Error] Lỗi kết nối gemini-3.1-pro-preview: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:27:33,244 - ERROR - [Socket Error] Lỗi kết nối gemini-3.1-pro-preview: _ssl.c:1063: The handshake operation timed out
+2026-09-01 01:27:36,247 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:36,247 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:38,248 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3.1-pro-preview-customtools
+2026-09-01 01:27:38,248 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3.1-pro-preview-customtools
+2026-09-01 01:27:38,513 - ERROR - [Socket Error] Lỗi kết nối gemini-3.1-pro-preview-customtools: timed out
+2026-09-01 01:27:38,513 - ERROR - [Socket Error] Lỗi kết nối gemini-3.1-pro-preview-customtools: timed out
+2026-09-01 01:27:41,514 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:41,514 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:43,515 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3.1-flash-lite-preview
+2026-09-01 01:27:43,515 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3.1-flash-lite-preview
+2026-09-01 01:27:43,764 - ERROR - [Socket Error] Lỗi kết nối gemini-3.1-flash-lite-preview: timed out
+2026-09-01 01:27:43,764 - ERROR - [Socket Error] Lỗi kết nối gemini-3.1-flash-lite-preview: timed out
+2026-09-01 01:27:46,765 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:46,765 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:48,766 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3-pro-image-preview
+2026-09-01 01:27:48,766 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3-pro-image-preview
+2026-09-01 01:27:49,015 - ERROR - [Socket Error] Lỗi kết nối gemini-3-pro-image-preview: timed out
+2026-09-01 01:27:49,015 - ERROR - [Socket Error] Lỗi kết nối gemini-3-pro-image-preview: timed out
+2026-09-01 01:27:52,016 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:52,016 - WARNING - [Fallback] Đổi dòng mô hình để tìm khe hở mạng...
+2026-09-01 01:27:54,049 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3-pro-image
+2026-09-01 01:27:54,049 - INFO - [Pipeline] Đang đẩy luồng hội thoại lên model: gemini-3-pro-image
+2026-09-01 01:27:54,340 - ERROR - [Socket Error] Lỗi kết nối gemini-3-pro-image: timed out
+2026-09-01 01:27:54,340 - ERROR - [Socket Error] Lỗi kết nối gemini-3-pro-image: timed out
+Khởi chạy API Server Local trên cổng 8001...
+[Ollama] Đang gọi model gialang_model...
+[Ollama] Đang gọi model gialang_model...
+2026-09-01 01:52:15,244 - INFO - Khởi chạy API Server Hybrid trên cổng 8001...
+2026-09-01 01:52:34,841 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Google Direct
+2026-09-01 01:52:34,841 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Google Direct
+2026-09-01 01:52:35,463 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 01:52:35,463 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 01:52:35,664 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 01:52:35,664 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 01:52:35,664 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 01:52:35,664 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 01:52:35,804 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 01:52:35,804 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 01:52:35,804 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 01:52:35,804 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 01:52:35,944 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 01:52:35,944 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 01:52:35,944 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Secure CDN Gateway / Custom URL
+2026-09-01 01:52:35,944 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Secure CDN Gateway / Custom URL
+2026-09-01 01:52:36,525 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 01:52:36,525 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 01:52:36,664 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 01:52:36,664 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 01:52:36,665 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 01:52:36,665 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 01:52:36,805 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 01:52:36,805 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 01:52:36,805 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 01:52:36,805 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 01:52:36,944 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 01:52:36,944 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 01:52:36,945 - CRITICAL - [System Error] Bế tắc toàn diện hệ thống đám mây! Kích hoạt chế độ Cứu Thương OFFLINE (Ollama)...
+2026-09-01 01:52:36,945 - CRITICAL - [System Error] Bế tắc toàn diện hệ thống đám mây! Kích hoạt chế độ Cứu Thương OFFLINE (Ollama)...
+2026-09-01 01:52:36,945 - INFO - [Ollama] Mạng quốc tế thất bại. Đang gọi model gialang_model offline...
+2026-09-01 01:52:36,945 - INFO - [Ollama] Mạng quốc tế thất bại. Đang gọi model gialang_model offline...
+Khởi chạy API Server Local trên cổng 8001...
+[Ollama] Đang gọi model gialang_model...
+[Ollama] Đang gọi model gialang_model...
+2026-09-01 02:02:02,924 - INFO - Khởi chạy API Server Hybrid trên cổng 8001...
+2026-09-01 02:05:49,978 - INFO - Khởi chạy API Server Hybrid trên cổng 8001...
+2026-09-01 02:09:44,789 - INFO - Khởi chạy API Server Hybrid trên cổng 8001...
+2026-09-01 02:11:43,054 - INFO - Khởi chạy API Server Hybrid trên cổng 8001...
+2026-09-01 02:11:46,744 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Google Direct
+2026-09-01 02:11:46,744 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Google Direct
+2026-09-01 02:11:47,328 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 02:11:47,328 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 02:11:47,540 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 02:11:47,540 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 02:11:47,541 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 02:11:47,541 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 02:11:47,683 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 02:11:47,683 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 02:11:47,684 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 02:11:47,684 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 02:11:47,823 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 02:11:47,823 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 02:11:47,823 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Secure CDN Gateway / Custom URL
+2026-09-01 02:11:47,823 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Secure CDN Gateway / Custom URL
+2026-09-01 02:11:48,420 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 02:11:48,420 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 02:11:48,547 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 02:11:48,547 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 02:11:48,547 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 02:11:48,547 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 02:11:48,704 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 02:11:48,704 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 02:11:48,704 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 02:11:48,704 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 02:11:48,860 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 02:11:48,860 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 02:11:48,862 - CRITICAL - [System Error] Bế tắc toàn diện hệ thống đám mây! Kích hoạt chế độ Cứu Thương OFFLINE (Ollama)...
+2026-09-01 02:11:48,862 - CRITICAL - [System Error] Bế tắc toàn diện hệ thống đám mây! Kích hoạt chế độ Cứu Thương OFFLINE (Ollama)...
+2026-09-01 02:11:48,862 - INFO - [Ollama] Mạng quốc tế thất bại. Đang gọi model gialang_model offline...
+2026-09-01 02:11:48,862 - INFO - [Ollama] Mạng quốc tế thất bại. Đang gọi model gialang_model offline...
+2026-09-01 09:45:31,567 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Google Direct
+2026-09-01 09:45:31,567 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Google Direct
+2026-09-01 09:45:32,217 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 09:45:32,217 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 09:45:32,438 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 09:45:32,438 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 09:45:32,439 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 09:45:32,439 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 09:45:32,580 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 09:45:32,580 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 09:45:32,581 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 09:45:32,581 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 09:45:32,736 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 09:45:32,736 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 09:45:32,737 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Secure CDN Gateway / Custom URL
+2026-09-01 09:45:32,737 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Secure CDN Gateway / Custom URL
+2026-09-01 09:45:33,338 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 09:45:33,338 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 09:45:33,473 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 09:45:33,473 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 09:45:33,473 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 09:45:33,473 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 09:45:33,613 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 09:45:33,613 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 09:45:33,614 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 09:45:33,614 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 09:45:33,768 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 09:45:33,768 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 09:45:33,769 - CRITICAL - [System Error] Bế tắc toàn diện hệ thống đám mây! Kích hoạt chế độ Cứu Thương OFFLINE (Ollama)...
+2026-09-01 09:45:33,769 - CRITICAL - [System Error] Bế tắc toàn diện hệ thống đám mây! Kích hoạt chế độ Cứu Thương OFFLINE (Ollama)...
+2026-09-01 09:45:33,772 - INFO - [Ollama] Mạng quốc tế thất bại. Đang gọi model gialang_model offline...
+2026-09-01 09:45:33,772 - INFO - [Ollama] Mạng quốc tế thất bại. Đang gọi model gialang_model offline...
+2026-09-01 10:09:16,122 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Google Direct
+2026-09-01 10:09:16,122 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Google Direct
+2026-09-01 10:09:16,704 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 10:09:16,704 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 10:09:16,920 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 10:09:16,920 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 10:09:16,920 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 10:09:16,920 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 10:09:17,105 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 10:09:17,105 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 10:09:17,105 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 10:09:17,105 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 10:09:17,246 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 10:09:17,246 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 10:09:17,246 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Secure CDN Gateway / Custom URL
+2026-09-01 10:09:17,246 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Secure CDN Gateway / Custom URL
+2026-09-01 10:09:17,838 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 10:09:17,838 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 10:09:17,998 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 10:09:17,998 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 10:09:18,004 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 10:09:18,004 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 10:09:18,156 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 10:09:18,156 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 10:09:18,157 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 10:09:18,157 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 10:09:18,297 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 10:09:18,297 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 10:09:18,297 - CRITICAL - [System Error] Bế tắc toàn diện hệ thống đám mây! Kích hoạt chế độ Cứu Thương OFFLINE (Ollama)...
+2026-09-01 10:09:18,297 - CRITICAL - [System Error] Bế tắc toàn diện hệ thống đám mây! Kích hoạt chế độ Cứu Thương OFFLINE (Ollama)...
+2026-09-01 10:09:18,297 - INFO - [Ollama] Mạng quốc tế thất bại. Đang gọi model gialang_model offline...
+2026-09-01 10:09:18,297 - INFO - [Ollama] Mạng quốc tế thất bại. Đang gọi model gialang_model offline...
+2026-09-01 10:10:10,260 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Google Direct
+2026-09-01 10:10:10,260 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Google Direct
+2026-09-01 10:10:10,793 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 10:10:10,793 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 10:10:10,953 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 10:10:10,953 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 10:10:10,954 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 10:10:10,954 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 10:10:11,124 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 10:10:11,124 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 10:10:11,126 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 10:10:11,126 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 10:10:11,265 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 10:10:11,265 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 10:10:11,265 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Secure CDN Gateway / Custom URL
+2026-09-01 10:10:11,265 - INFO - [Route] Thử nghiệm cổng kết nối Cloud: Secure CDN Gateway / Custom URL
+2026-09-01 10:10:11,806 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 10:10:11,806 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-2.5-pro
+2026-09-01 10:10:11,943 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 10:10:11,943 - WARNING - [Cloud Error] Lỗi kết nối gemini-2.5-pro: timed out
+2026-09-01 10:10:11,944 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 10:10:11,944 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.7-flash
+2026-09-01 10:10:12,083 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 10:10:12,083 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.7-flash: timed out
+2026-09-01 10:10:12,083 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 10:10:12,083 - INFO - [Cloud Pipeline] Đang thử kết nối model: gemini-3.5-flash
+2026-09-01 10:10:12,223 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 10:10:12,223 - WARNING - [Cloud Error] Lỗi kết nối gemini-3.5-flash: timed out
+2026-09-01 10:10:12,223 - CRITICAL - [System Error] Bế tắc toàn diện hệ thống đám mây! Kích hoạt chế độ Cứu Thương OFFLINE (Ollama)...
+2026-09-01 10:10:12,223 - CRITICAL - [System Error] Bế tắc toàn diện hệ thống đám mây! Kích hoạt chế độ Cứu Thương OFFLINE (Ollama)...
+2026-09-01 10:10:12,223 - INFO - [Ollama] Mạng quốc tế thất bại. Đang gọi model gialang_model offline...
+2026-09-01 10:10:12,223 - INFO - [Ollama] Mạng quốc tế thất bại. Đang gọi model gialang_model offline...

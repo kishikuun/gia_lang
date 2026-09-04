@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section id="heritage-page" class="fullscreen-section" style="height: auto; min-height: 100vh; padding-top: 120px; background-color: var(--bg-dark);">
+    <div class="horizontal-header text-fade-up">
+        <h2 class="serif-title">Chuyện Làng <br><span class="gold-text">Chưa Kể</span></h2>
+        <p>Nghe gió ngàn hát khúc ca cội nguồn</p>
+    </div>
+    
+    <div style="max-width: 800px; margin: 50px auto; padding-bottom: 150px; font-size: 1.2rem; color: var(--text-muted); line-height: 2;">
+        
+        <div class="text-fade-up" style="margin-bottom: 50px;">
+            <img src="https://images.unsplash.com/photo-1542317148-8b4bdccb33ea?q=80&w=1200&auto=format&fit=crop" style="width: 100%; border-radius: 12px; margin-bottom: 20px;" alt="Núi rừng Tây Nguyên">
+            <h3 class="serif-title gold-text" style="font-size: 2rem; margin-bottom: 10px;">Linh Hồn Đại Ngàn</h3>
+            <p>Từ thuở hồng hoang, khi tiếng cồng chiêng vang vọng khắp núi đồi, người đồng bào đã biết trân quý từng giọt nước, từng mầm xanh mà Yàng ban tặng. Làng ta không chỉ là nơi che mưa chắn gió, mà là nơi lưu giữ những giá trị văn hóa vô giá của cha ông.</p>
+        </div>
+
+        <div class="text-fade-up" style="margin-bottom: 50px;">
+            <img src="https://images.unsplash.com/photo-1589301773809-77c867a5f6e8?q=80&w=1200&auto=format&fit=crop" style="width: 100%; border-radius: 12px; margin-bottom: 20px;" alt="Bún Song Thằn">
+            <h3 class="serif-title gold-text" style="font-size: 2rem; margin-bottom: 10px;">Huyền Thoại Bún Song Thằn</h3>
+            <p>Xưa kia, Bún Song Thằn là vật phẩm quý giá chỉ được dùng để tiến vua. Những người thợ lành nghề nhất phải thức trắng đêm, chọn lọc từng hạt đậu xanh nguyên chất, xay giã thủ công để tạo ra những sợi bún trong vắt, dai mềm và chứa đựng tinh hoa đất trời.</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- Inline script để báo cho Già Làng nói chuyện -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const narratorText = document.getElementById('narrator-text');
+    if (narratorText) {
+        setTimeout(() => {
+            gsap.to(narratorText, { opacity: 0, duration: 0.3, onComplete: () => {
+                narratorText.textContent = "Cháu hãy ngồi xuống đây, Già kể cho nghe chuyện của núi rừng...";
+                gsap.to(narratorText, { opacity: 1, duration: 0.5 });
+            }});
+        }, 1000);
+    }
+});
+</script>
+{% endblock %}
