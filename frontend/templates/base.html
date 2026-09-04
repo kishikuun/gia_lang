@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Già Làng Số</title>
+    <title>Già Làng Sứ</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,12 +24,65 @@
 </head>
 
 <body>
+    <!-- WELCOME SCREEN (For Audio Autoplay Permission) -->
+    <div id="welcome-screen">
+        <div class="welcome-content">
+            <h1 class="serif-title gold-text">Bước Vào Buôn Làng</h1>
+            <p>Xin hãy mở lòng để lắng nghe hơi thở của đại ngàn.</p>
+            <button id="enter-village-btn" class="btn-primary">Bắt Đầu Hành Trình</button>
+        </div>
+    </div>
+
+    <!-- AMBIENT AUDIO -->
+    <audio id="ambient-audio" loop preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/16/audio_f5e6a96e95.mp3?filename=forest-wind-and-birds-68813.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="magic-chime-audio" preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_51ba97a61d.mp3?filename=magic-wand-6214.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="audio-weaving" preload="auto">
+        <!-- Placeholder weaving sound (actually a general mechanical/wood sound from pixabay) -->
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_24a1b02de0.mp3?filename=weaving-loom-6379.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="audio-pouring" preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_3d100086c0.mp3?filename=pouring-water-43753.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="audio-chimes" preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/03/10/audio_51ba97a61d.mp3?filename=magic-wand-6214.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- SPIRIT ORB (Omnipresent Guide) -->
+    <div id="spirit-orb-container">
+        <div class="orb-pulse"></div>
+        <button id="spirit-orb" title="Trò chuyện cùng Già Làng">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="orb-icon">
+                <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Z"/>
+                <path d="M12 6a6 6 0 1 0 6 6 6 6 0 0 0-6-6Z"/>
+                <circle cx="12" cy="12" r="2"/>
+            </svg>
+        </button>
+    </div>
+
+    <!-- SPIRIT REALM OVERLAY (For Chatting) -->
+    <div id="spirit-realm-overlay" class="hidden">
+        <button id="close-spirit-realm">&times;</button>
+        <div class="spirit-content">
+            <div id="spirit-text-area">
+                <p id="spirit-message">Già Làng đang lắng nghe bạn...</p>
+            </div>
+            <div class="spirit-input-area">
+                <input type="text" id="spirit-input" placeholder="Hỏi Già Làng về bất cứ thứ gì..." autocomplete="off">
+                <button id="spirit-send-btn">Gửi</button>
+            </div>
+        </div>
+    </div>
+
     <!-- HEADER -->
     <header class="navbar">
-        <div class="logo">GIÀ LÀNG.</div>
+        <div class="logo">GIA LÀNG.</div>
         <nav class="links">
             <a href="/" class="nav-link">Trang Chủ</a>
-            <a href="/products" class="nav-link">Thương Quán</a>
+            <a href="/products" class="nav-link">Thăm Quán</a>
             <a href="/heritage" class="nav-link">Chuyện Làng</a>
             <button id="cart-toggle-btn" class="cart-btn">
                 <span>Giỏ Hàng</span>
@@ -40,32 +93,17 @@
 
     <!-- MAIN SCROLL CONTAINER -->
     <main id="smooth-wrapper">
-        <!-- NARRATOR OVERLAY (Floating AI Text) -->
-        <div id="narrator-overlay">
-            <div class="narrator-container">
-                <h2 id="narrator-text"></h2>
-            </div>
-        </div>
-
         <div id="smooth-content">
             {% block content %}{% endblock %}
 
             <footer class="footer">
                 <div class="footer-content">
-                    <h2 class="footer-title">Lưu Giữ Hồn Núi Rừng</h2>
-                    <p>&copy; 2026 Dự án Bảo tồn Di sản Gia Lai. Mọi sản phẩm đều được làm thủ công bởi nghệ nhân địa
-                        phương.</p>
+                    <h2 class="footer-title">Lưu Giữ Hồn Đại Ngàn</h2>
+                    <p>&copy; 2026 Dự Án Bảo tồn Di sản Gia Lai. Mọi sản phẩm đều được làm thủ công bởi nghệ nhân địa phương.</p>
                 </div>
             </footer>
         </div>
     </main>
-
-    <!-- NARRATOR OVERLAY (AI Text Area) -->
-    <div id="narrator-overlay" class="pointer-events-none">
-        <div class="narrator-container">
-            <p id="narrator-text"></p>
-        </div>
-    </div>
 
     <!-- CART SIDEBAR UI -->
     <div id="cart-sidebar" class="cart-hidden">
@@ -84,39 +122,6 @@
         </div>
     </div>
     <div id="cart-overlay" class="cart-hidden"></div>
-
-    <!-- INTERACTIVE STORY MODAL (Replaces normal product modal) -->
-    <div id="story-modal" class="hidden">
-        <div class="story-modal-bg"></div>
-        <div class="story-content-wrapper">
-            <button id="close-story-modal">&times;</button>
-            <div class="story-split">
-                <!-- Left: Visuals -->
-                <div class="story-visual">
-                    <img id="story-product-img" src="" alt="Product">
-                </div>
-                <!-- Right: Interactive Narrative -->
-                <div class="story-interactive">
-                    <h2 id="story-title" class="serif-title">Tên Sản Phẩm</h2>
-                    <p id="story-narrative" class="narrative-text">Già Làng đang nhớ lại câu chuyện...</p>
-
-                    <div id="story-chat-area">
-                        <div id="story-history"></div>
-                        <div class="story-input-box">
-                            <input type="text" id="story-input"
-                                placeholder="Hỏi Già về sản vật này, hoặc nói 'Già ơi, cho cháu mua 1 cái'...">
-                            <button id="story-send-btn">
-                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                                    stroke-width="2">
-                                    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <!-- Scripts -->
     <script src="/assets/js/app.js"></script>

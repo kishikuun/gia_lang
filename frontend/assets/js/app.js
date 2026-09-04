@@ -6,6 +6,8 @@ requestAnimationFrame(raf);
 // Kết nối Lenis với ScrollTrigger của GSAP
 gsap.registerPlugin(ScrollTrigger);
 
+let currentContext = "Trang chủ";
+
 // NAVBAR SCROLL EFFECT
 const navbar = document.querySelector('.navbar');
 window.addEventListener('scroll', () => {
@@ -13,13 +15,36 @@ window.addEventListener('scroll', () => {
     else navbar.classList.remove('scrolled');
 });
 
+// ============================================
+// WELCOME SCREEN & AUDIO LOGIC
+// ============================================
+const welcomeScreen = document.getElementById('welcome-screen');
+const enterBtn = document.getElementById('enter-village-btn');
+const ambientAudio = document.getElementById('ambient-audio');
+const magicAudio = document.getElementById('magic-chime-audio');
+
+if (enterBtn && welcomeScreen) {
+    enterBtn.addEventListener('click', () => {
+        welcomeScreen.style.opacity = '0';
+        setTimeout(() => welcomeScreen.style.display = 'none', 1000);
+        
+        if (ambientAudio) {
+            ambientAudio.volume = 0.4;
+            ambientAudio.play().catch(e => console.log("Audio play blocked", e));
+        }
+        
+        // Gọi AI chào ngay khi vừa load xong
+        triggerInitialGreeting();
+    });
+}
+
 // GSAP ANIMATIONS & SCROLLYTELLING
 document.addEventListener('DOMContentLoaded', () => {
     // Hero Parallax
     gsap.to('.hero-bg', { y: '20%', ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
     gsap.to('.hero-content', { y: '30%', opacity: 0, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
 
-    // Masterpiece (Bún Song Thằn) Parallax
+    // Masterpiece (Bún Song Thần) Parallax
     gsap.to('.masterpiece-bg', { y: '15%', ease: 'none', scrollTrigger: { trigger: '#masterpiece', start: 'top bottom', end: 'bottom top', scrub: true } });
     
     // Fade Up Elements
@@ -37,55 +62,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 trigger: "#village",
                 pin: true,
                 scrub: 1,
-                end: () => "+=" + horizontalContainer.scrollWidth
+                end: () => "+=" + (horizontalContainer.scrollWidth * 0.6)
             }
         });
     }
 
-    // NARRATOR LOGIC (Dynamic Typography)
-    const narratorText = document.getElementById('narrator-text');
-    function updateNarrator(text) {
-        if (narratorText.textContent === text) return;
-        gsap.to(narratorText, { opacity: 0, duration: 0.3, onComplete: () => {
-            narratorText.textContent = text;
-            if (text !== "") {
-                gsap.to(narratorText, { opacity: 1, duration: 0.5 });
-            }
-        }});
-    }
+    // CONTEXT OBSERVER (For Spirit Orb)
+    ScrollTrigger.create({ trigger: '#hero', start: 'top 50%', onEnter: () => currentContext = "Trang Chủ", onEnterBack: () => currentContext = "Trang Chủ" });
+    ScrollTrigger.create({ trigger: '#masterpiece', start: 'top 50%', onEnter: () => currentContext = "Bún Song Thần", onEnterBack: () => currentContext = "Bún Song Thần" });
+    ScrollTrigger.create({ trigger: '#village', start: 'top 50%', onEnter: () => currentContext = "Sản vật làng: Thổ Cẩm, Rượu Cần, Gùi", onEnterBack: () => currentContext = "Sản vật làng: Thổ Cẩm, Rượu Cần, Gùi" });
+    ScrollTrigger.create({ trigger: '#campfire', start: 'top 50%', onEnter: () => currentContext = "Lửa trại", onEnterBack: () => currentContext = "Lửa trại" });
 
-    // Trigger narrator lines based on scroll sections
-    ScrollTrigger.create({
-        trigger: '#hero',
-        start: 'top 50%',
-        onEnter: () => updateNarrator("Chào cháu, mừng cháu về với buôn làng."),
-        onEnterBack: () => updateNarrator("Chào cháu, mừng cháu về với buôn làng.")
-    });
-
-    ScrollTrigger.create({
-        trigger: '#masterpiece',
-        start: 'top 50%',
-        onEnter: () => updateNarrator("Cháu nhìn xem... Bún Song Thằn, tuyệt tác tiến Vua!"),
-        onEnterBack: () => updateNarrator("Cháu nhìn xem... Bún Song Thằn, tuyệt tác tiến Vua!")
-    });
-
-    ScrollTrigger.create({
-        trigger: '#village',
-        start: 'top 50%',
-        onEnter: () => updateNarrator("Làng ta còn nhiều của ngon vật lạ lắm..."),
-        onEnterBack: () => updateNarrator("Làng ta còn nhiều của ngon vật lạ lắm...")
-    });
-
-    ScrollTrigger.create({
-        trigger: '#campfire',
-        start: 'top 50%',
-        onEnter: () => updateNarrator(""), // Hide when in campfire chat
-        onEnterBack: () => updateNarrator("")
-    });
-
-    // Gọi AI chào ngay khi vừa load xong
-    triggerInitialGreeting();
-    
     // 3D TILT EFFECT CHO SẢN PHẨM
     const productCards = document.querySelectorAll('.product-card');
     productCards.forEach(card => {
@@ -117,18 +104,107 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// ============================================
-// AI CAMPFIRE CHAT LOGIC (Replacing Modal)
-// ============================================
-const campfireInput = document.getElementById('campfire-input');
-const campfireSendBtn = document.getElementById('campfire-send-btn');
-const campfireHistory = document.getElementById('campfire-history');
 
-let chatHistory = [];
-let isAiThinking = false;
-let cart = [];
+// ============================================
+// SPIRIT ORB & REALM LOGIC (The Omnipresent Guide)
+// ============================================
+const spiritOrb = document.getElementById('spirit-orb');
+const spiritRealm = document.getElementById('spirit-realm-overlay');
+const closeSpiritRealm = document.getElementById('close-spirit-realm');
+const spiritMessage = document.getElementById('spirit-message');
+const spiritInput = document.getElementById('spirit-input');
+const spiritSendBtn = document.getElementById('spirit-send-btn');
 
-// Khởi tạo cuộc trò chuyện ban đầu
+let spiritChatHistory = [];
+let isSpiritThinking = false;
+
+function toggleSpiritRealm() {
+    if (!spiritRealm) return;
+    const isHidden = spiritRealm.classList.contains('hidden');
+    if (isHidden) {
+        if (magicAudio) {
+            magicAudio.currentTime = 0;
+            magicAudio.play().catch(e => console.log(e));
+        }
+        spiritRealm.classList.remove('hidden');
+        
+        // Auto-greet based on context if chat is somewhat empty
+        if (spiritChatHistory.length < 2) {
+            triggerContextualGreeting();
+        }
+    } else {
+        spiritRealm.classList.add('hidden');
+    }
+}
+
+if (spiritOrb) spiritOrb.addEventListener('click', toggleSpiritRealm);
+if (closeSpiritRealm) closeSpiritRealm.addEventListener('click', toggleSpiritRealm);
+
+function typeSpiritResponse(content, onComplete) {
+    let i = 0;
+    spiritMessage.innerHTML = '';
+    function type() {
+        if (i < content.length) {
+            spiritMessage.innerHTML += content.charAt(i);
+            i++;
+            setTimeout(type, 20);
+        } else {
+            if(onComplete) onComplete();
+        }
+    }
+    type();
+}
+
+async function callSpiritAI(systemPromptOverride = null) {
+    isSpiritThinking = true;
+    spiritMessage.innerHTML = 'Già Làng đang cảm nhận hơi thở của đại ngàn...';
+
+    try {
+        // We append current context to help AI know where the user is
+        const recentMessage = spiritChatHistory[spiritChatHistory.length - 1];
+        let payloadMessage = recentMessage ? recentMessage.content : "";
+        if (systemPromptOverride) {
+            payloadMessage = systemPromptOverride;
+        }
+
+        const res = await fetch('/api/interact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                user_message: `[Ngữ cảnh: Người dùng đang xem phần "${currentContext}"] ${payloadMessage}`,
+                chat_history: spiritChatHistory.slice(0, -1),
+                context_product: null
+            })
+        });
+        
+        const data = await res.json();
+        
+        if (res.ok) {
+            const aiResponse = data.response;
+            const actions = data.actions || [];
+            
+            spiritChatHistory.push({ role: 'model', content: aiResponse });
+            
+            typeSpiritResponse(aiResponse, () => {
+                if (actions && actions.length > 0) processActions(actions);
+            });
+        } else {
+            spiritMessage.innerHTML = 'Hồn thiêng chưa kịp hồi đáp. Hãy thử lại.';
+        }
+    } catch (err) {
+        spiritMessage.innerHTML = 'Lỗi kết nối tới bản làng thiêng.';
+    } finally {
+        isSpiritThinking = false;
+    }
+}
+
+async function triggerContextualGreeting() {
+    const prompt = `Hãy nói 1 câu ngắn gọn, mang tính tâm linh và chào mừng cháu đến với phần "${currentContext}". Đừng hỏi nhiều.`;
+    spiritChatHistory.push({ role: 'user', content: prompt });
+    await callSpiritAI(prompt);
+}
+
+// Khởi tạo cuộc trò chuyện ban đầu (dùng cho Campfire hoặc ẩn)
 async function triggerInitialGreeting() {
     try {
         const res = await fetch('/api/interact', {
@@ -138,30 +214,46 @@ async function triggerInitialGreeting() {
         });
         const data = await res.json();
         if (res.ok) {
-            chatHistory.push({ role: 'model', content: data.response });
-            appendCampfireMsg('ai', data.response);
+            spiritChatHistory.push({ role: 'model', content: data.response });
+            // Cũng chèn vào campfire nếu có
+            if (typeof appendCampfireMsg === 'function') {
+                appendCampfireMsg('ai', data.response);
+            }
         }
     } catch (err) {
         console.error("Lỗi gọi greeting", err);
     }
 }
 
-campfireSendBtn.addEventListener('click', handleCampfireMessage);
+if (spiritSendBtn && spiritInput) {
+    spiritSendBtn.addEventListener('click', handleSpiritMessage);
+    spiritInput.addEventListener('keypress', (e) => { 
+        if (e.key === 'Enter') handleSpiritMessage(); 
+    });
+}
+
+async function handleSpiritMessage() {
+    const text = spiritInput.value.trim();
+    if (!text || isSpiritThinking) return;
+    
+    spiritInput.value = '';
+    spiritChatHistory.push({ role: "user", content: text });
+    await callSpiritAI();
+}
+
+
+// ============================================
+// OLD CAMPFIRE CHAT LOGIC (Fallback)
+// ============================================
+const campfireInput = document.getElementById('campfire-input');
+const campfireSendBtn = document.getElementById('campfire-send-btn');
+const campfireHistory = document.getElementById('campfire-history');
+
+if(campfireSendBtn) campfireSendBtn.addEventListener('click', handleCampfireMessage);
 if(campfireInput) {
     campfireInput.addEventListener('keypress', (e) => { 
         if (e.key === 'Enter') handleCampfireMessage(); 
     });
-}
-
-async function handleCampfireMessage() {
-    const text = campfireInput.value.trim();
-    if (!text || isAiThinking) return;
-    
-    appendCampfireMsg('user', text);
-    campfireInput.value = '';
-    
-    chatHistory.push({ role: "user", content: text });
-    await callCampfireAI();
 }
 
 function appendCampfireMsg(role, content) {
@@ -174,24 +266,16 @@ function appendCampfireMsg(role, content) {
     return div;
 }
 
-function typeAIResponse(content, targetDiv, onComplete) {
-    let i = 0;
-    targetDiv.innerHTML = '';
-    function type() {
-        if (i < content.length) {
-            targetDiv.innerHTML += content.charAt(i);
-            i++;
-            if(campfireHistory) campfireHistory.scrollTop = campfireHistory.scrollHeight;
-            setTimeout(type, 15);
-        } else {
-            if(onComplete) onComplete();
-        }
-    }
-    type();
-}
-
-async function callCampfireAI() {
-    isAiThinking = true;
+async function handleCampfireMessage() {
+    const text = campfireInput.value.trim();
+    if (!text || isSpiritThinking) return;
+    
+    appendCampfireMsg('user', text);
+    campfireInput.value = '';
+    
+    // Đồng bộ vào mảng chat của Spirit
+    spiritChatHistory.push({ role: "user", content: text });
+    
     const tempDiv = appendCampfireMsg('ai', 'Già đang nhấp ngụm trà...');
     if(tempDiv) tempDiv.style.opacity = '0.5';
 
@@ -200,9 +284,8 @@ async function callCampfireAI() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                user_message: chatHistory[chatHistory.length - 1].content,
-                chat_history: chatHistory.slice(0, -1),
-                context_product: null
+                user_message: text,
+                chat_history: spiritChatHistory.slice(0, -1)
             })
         });
         
@@ -210,24 +293,19 @@ async function callCampfireAI() {
         
         if (res.ok) {
             const aiResponse = data.response;
-            const actions = data.actions || [];
+            spiritChatHistory.push({ role: 'model', content: aiResponse });
             
-            chatHistory.push({ role: 'model', content: aiResponse });
-            if(tempDiv) tempDiv.style.opacity = '1';
-            
-            typeAIResponse(aiResponse, tempDiv, () => {
-                // Xử lý action nếu có (add_to_cart, highlight_product)
-                if (actions && actions.length > 0) processActions(actions);
-            });
-        } else {
-            if(tempDiv) tempDiv.innerHTML = 'Già Làng đang bận đi nương...';
+            if(tempDiv) {
+                tempDiv.style.opacity = '1';
+                tempDiv.innerHTML = aiResponse; // Simple inject for campfire
+                campfireHistory.scrollTop = campfireHistory.scrollHeight;
+            }
         }
     } catch (err) {
-        if(tempDiv) tempDiv.innerHTML = 'Lỗi kết nối tới bản làng.';
-    } finally {
-        isAiThinking = false;
+        if(tempDiv) tempDiv.innerHTML = 'Lỗi kết nối.';
     }
 }
+
 
 // Xử lý các Function Calls trả về từ AI
 function processActions(actions) {
@@ -236,43 +314,56 @@ function processActions(actions) {
             const prodId = action.payload.product_id;
             const quantity = action.payload.quantity || 1;
             
-            // Lấy tạm giá mock, thực tế nên lấy từ backend hoặc data attributes
+            // Lấy tạm giá mock
             const mockPrice = prodId === 'bun_song_than' ? 150000 : 100000;
-            const mockName = prodId === 'bun_song_than' ? 'Bún Song Thằn' : prodId;
+            const mockName = prodId === 'bun_song_than' ? 'Bún Song Thần' : prodId;
             
             addToCart({ id: prodId, name: mockName, price: mockPrice }, quantity);
             
-            // Bắn thông báo ngay trong khung chat
-            if(campfireHistory) {
-                const notif = document.createElement('div');
-                notif.style.color = 'var(--gold)';
-                notif.style.fontSize = '0.9rem';
-                notif.style.textAlign = 'center';
-                notif.style.marginTop = '10px';
-                notif.textContent = `🛒 Già đã bỏ ${quantity} phần ${mockName} vào gùi cho cháu rồi đó!`;
-                campfireHistory.appendChild(notif);
-                campfireHistory.scrollTop = campfireHistory.scrollHeight;
-            }
+            // Hiện thông báo trong Spirit Realm
+            const notif = document.createElement('p');
+            notif.style.color = '#fff';
+            notif.style.fontSize = '1rem';
+            notif.textContent = `🛒 Đã thêm ${quantity} phần ${mockName}`;
+            spiritMessage.appendChild(notif);
         }
         else if (action.type === 'highlight_product') {
             const prodId = action.payload.product_id;
             const card = document.querySelector(`.product-card[data-id="${prodId}"]`);
             if (card || prodId === 'bun_song_than') {
+                toggleSpiritRealm(); // close orb overlay
                 const target = prodId === 'bun_song_than' ? '#masterpiece' : card;
                 lenis.scrollTo(target, { offset: -100, duration: 1.5 });
+            }
+        else if (action.type === 'play_sound') {
+            const soundType = action.payload.sound_type;
+            const audioEl = document.getElementById(`audio-${soundType}`);
+            if (audioEl) {
+                audioEl.currentTime = 0;
+                audioEl.volume = 0.8;
+                audioEl.play().catch(e => console.log(e));
             }
         }
     });
 }
 
-// Global func để nút Bún Song Thằn gọi được
+window.triggerDetails = function(productId, productName) {
+    // If not open, open it
+    if (spiritRealm.classList.contains('hidden')) {
+        toggleSpiritRealm();
+    }
+    
+    const prompt = `[SỰ KIỆN TƯƠNG TÁC]: Khách vừa bấm xem chi tiết món ${productName}. Thay vì hiển thị bảng nhàm chán, Già hãy dùng giọng điệu Gen Z kể một câu chuyện thật cuốn về văn hóa đằng sau món này. Nhớ doạ vui một chút là không mua thì phí phạm lắm, gạ chốt đơn liền!`;
+    spiritChatHistory.push({ role: 'user', content: prompt });
+    callSpiritAI(prompt);
+};
+
 window.triggerAction = function(type, productId) {
     if (type === 'add_to_cart') {
         const mockPrice = productId === 'bun_song_than' ? 150000 : 100000;
-        const mockName = productId === 'bun_song_than' ? 'Bún Song Thằn' : productId;
+        const mockName = productId === 'bun_song_than' ? 'Bún Song Thần' : productId;
         addToCart({ id: productId, name: mockName, price: mockPrice }, 1);
         
-        // Hiện sidebar giỏ hàng ngay lập tức
         if (!cartSidebar.classList.contains('open')) {
             toggleCart();
         }
@@ -282,6 +373,7 @@ window.triggerAction = function(type, productId) {
 // ============================================
 // CART SYSTEM (Sidebar UI)
 // ============================================
+let cart = [];
 const cartToggleBtn = document.getElementById('cart-toggle-btn');
 const cartSidebar = document.getElementById('cart-sidebar');
 const cartOverlay = document.getElementById('cart-overlay');
@@ -359,3 +451,4 @@ function updateCartUI() {
         });
     });
 }
+

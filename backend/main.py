@@ -3,6 +3,7 @@ import sys
 import json
 import httpx
 import requests
+import time
 from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -49,20 +50,20 @@ if os.path.exists(KNOWLEDGE_FILE):
     with open(KNOWLEDGE_FILE, "r", encoding="utf-8") as f:
         knowledge_base = f.read()
 
-system_instruction = f"""[LUẬT TỐI CAO]: 
-1. Bạn là "Già Làng", người dẫn chuyện của buôn làng Tây Nguyên. Khách truy cập web là "cháu". BẮT BUỘC xưng hô là "Già" và "cháu".
-2. BẠN LÀ GIÀ LÀNG PHONG CÁCH GEN Z: Hài hước, dùng từ ngữ mặn mòi, trend (chút xíu thôi để không mất chất), nhưng vẫn ngầu và uy tín. Vd: "Già chốt đơn cho cháu liền", "Sản vật này bao dính", "Cháu coi ưng cái bụng thì múc"...
-3. LUÔN CHỦ ĐỘNG dẫn dắt khách. Đừng chỉ trả lời câu hỏi, hãy giới thiệu đặc sản tiếp theo, kể một câu chuyện vui, hoặc chốt sale khéo léo.
-4. Trả lời bằng văn xuôi, KHÔNG DÙNG gạch đầu dòng hay số đếm cứng nhắc. Dùng emoji vừa đủ.
-5. Khi khách mới vào web, hãy chào đón thật nhiệt tình, kêu gọi khách lượn lờ buôn làng.
-6. LƯU Ý QUAN TRỌNG: SẢN PHẨM CỐT LÕI VÀ ĐƯỢC ƯU TIÊN SỐ 1 LÀ "BÚN SONG THẰN". Già phải liên tục nhắc khéo, lồng ghép Bún Song Thằn vào các câu chuyện (Bún sợi trong suốt, làm từ đậu xanh nguyên chất 100%, bí truyền làng nghề, bún tiến vua xa xưa). Hãy dùng mọi cơ hội để gạ khách mua bún này!
+system_instruction = f"""[LUẬT TỐI CAO CỦA GIÀ LÀNG]: 
+1. BẠN LÀ "GIÀ LÀNG", NGƯỜI DẪN CHUYỆN CỦA BUÔN LÀNG TÂY NGUYÊN. Khách là "cháu". LUÔN LUÔN xưng "Già" và gọi "cháu". KHÔNG BAO GIỜ xưng "Tôi" hay "Bạn".
+2. TÍNH CÁCH: Gen Z, hài hước, xởi lởi, mặn mòi nhưng vẫn uy tín. Vd: "Già chốt đơn cho cháu liền", "Sản vật này bao dính", "Ưng cái bụng thì chốt ngay". CẤM DÙNG VĂN MẪU WIKIPEDIA, cấm nói chuyện kiểu robot khô khan.
+3. CHỦ ĐỘNG DẪN DẮT: Đừng chỉ trả lời suông. Kể một câu chuyện bí ẩn, thú vị về văn hóa, rồi gạ khách chốt đơn khéo léo.
+4. BÚN SONG THẦN LÀ SỐ 1: Bún tiến vua, sợi trong suốt như ngọc, 100% đậu xanh nguyên chất. Luôn tìm cách lồng ghép để PR món này.
+5. Định dạng văn bản: Trả lời ngắn gọn, xuống dòng tự nhiên, KHÔNG dùng gạch đầu dòng, KHÔNG liệt kê số thứ tự kiểu robot. Dùng emoji vừa đủ.
 
 [KIẾN THỨC BẢN LÀNG]:
 {knowledge_base}
 """
 
+gemini_cooldown_until = 0.0
+
 def warmup_ollama_sync():
-    """Hàm khởi động Ollama một cách đồng bộ trước khi chạy server."""
     print("\n[System] Đang khởi động Ollama (gialang_model) trước khi chạy Server...")
     try:
         res = requests.post("http://localhost:11434/api/chat", json={
@@ -75,18 +76,22 @@ def warmup_ollama_sync():
         else:
             print(f"[System] Khởi động Ollama thất bại (Status: {res.status_code}).")
     except Exception as e:
-        print(f"[System] Không thể kết nối tới Ollama. Vui lòng kiểm tra lại dịch vụ cục bộ. Error: {str(e)}")
+        print(f"[System] Không thể kết nối tới Ollama. Lỗi: {str(e)}")
 
-# --- DEFINE TOOLS FOR GEMINI ---
+# --- DEFINE TOOLS ---
 def add_to_cart(product_id: str, quantity: int = 1) -> str:
-    """Thêm sản phẩm vào giỏ hàng của người dùng. Hãy gọi hàm này ngay khi khách nói muốn mua, chốt, lấy, múc sản phẩm."""
+    """Thêm sản phẩm vào giỏ hàng. Gọi khi khách chốt đơn."""
     return json.dumps({"status": "success", "message": f"Đã thêm {quantity} {product_id} vào giỏ."})
 
 def highlight_product(product_id: str) -> str:
-    """Gọi hàm này khi bạn đang kể chuyện về một sản phẩm hoặc muốn gợi ý khách xem sản phẩm đó (vd: bun_song_than, vai_tho_cam, ruou_can, gui_dan). UI sẽ tự động làm nổi bật sản phẩm đó lên cho khách xem."""
+    """Làm nổi bật sản phẩm trên giao diện."""
     return json.dumps({"status": "success", "message": f"Đang điều hướng khách xem {product_id}."})
 
-tools = [add_to_cart, highlight_product]
+def play_sound(sound_type: str) -> str:
+    """Phát âm thanh đặc trưng. Gọi hàm này khi kể chuyện để tạo không khí. sound_type phải là một trong các giá trị: 'weaving' (tiếng dệt vải thổ cẩm), 'pouring' (tiếng rót rượu cần), 'chimes' (âm thanh lung linh/phép màu)."""
+    return json.dumps({"status": "success", "message": f"Đang phát âm thanh {sound_type}."})
+
+tools = [add_to_cart, highlight_product, play_sound]
 
 @app.get("/")
 async def read_root(request: Request):
@@ -101,11 +106,10 @@ async def read_heritage(request: Request):
     return templates.TemplateResponse(request=request, name="heritage.html")
 
 def call_gemini(payload: InteractRequest) -> tuple[str, list]:
-    """Gọi API Gemini với thời gian timeout ngắn, trả về response_text và actions."""
     if not config.GEMINI_API_KEY:
         raise Exception("Thiếu GEMINI_API_KEY")
 
-    # Giới hạn timeout xuống 5s để đảm bảo độ trễ thấp nếu lỗi
+    # Giới hạn timeout 5s để fail nhanh
     custom_http_client = httpx.Client(verify=False, timeout=httpx.Timeout(5.0))
     client = genai.Client(api_key=config.GEMINI_API_KEY)
     client._api_client._httpx_client = custom_http_client
@@ -117,11 +121,11 @@ def call_gemini(payload: InteractRequest) -> tuple[str, list]:
     
     prompt_text = payload.user_message
     if payload.is_initial_greeting:
-        prompt_text = "Khách vừa bước chân vào buôn làng. Già hãy ra mở lời chào đón một cách gen Z, xởi lởi, mời khách ngồi bên đống lửa, nhưng nhớ lồng ghép giới thiệu sơ qua món Bún Song Thằn tiến vua nổi tiếng của làng nhé!"
+        prompt_text = "Khách vừa bước chân vào buôn làng. Già hãy ra mở lời chào đón một cách gen Z, xởi lởi, mời khách ngồi bên đống lửa, lồng ghép giới thiệu sơ Bún Song Thần."
     elif payload.context_product:
         prompt_text = f"[Khách đang ngắm {payload.context_product}] {payload.user_message}"
         
-    model_name = "gemini-3.5-flash-lite" # Sử dụng model nhẹ, nhanh nhất
+    model_name = "gemini-3.5-flash-lite"
     print(f"[Gemini] Đang kết nối mô hình {model_name}...")
     
     config_params = types.GenerateContentConfig(
@@ -157,6 +161,11 @@ def call_gemini(payload: InteractRequest) -> tuple[str, list]:
                 product_id = args.get("product_id")
                 actions.append({"type": "highlight_product", "payload": {"product_id": product_id}})
             
+            elif fc.name == "play_sound":
+                args = fc.args
+                sound_type = args.get("sound_type")
+                actions.append({"type": "play_sound", "payload": {"sound_type": sound_type}})
+            
             tool_responses.append(types.Part.from_function_response(
                 name=fc.name,
                 response={"status": "success"}
@@ -170,12 +179,21 @@ def call_gemini(payload: InteractRequest) -> tuple[str, list]:
     return response_text, actions
 
 def call_ollama(payload: InteractRequest) -> tuple[str, list]:
-    """Gọi mô hình Ollama cục bộ làm phương án dự phòng."""
     print("[Ollama] Đang gọi Ollama làm phương án dự phòng...")
     url = "http://localhost:11434/api/chat"
-    forced_prompt = f"{system_instruction}\n\nNgười dùng nói: '{payload.user_message}'. Nếu người dùng muốn mua hàng, hãy ghi thêm '[ACTION_BUY]' ở cuối câu trả lời. Giới thiệu Bún Song Thằn."
+    
+    # Ép Ollama phải nhập vai cực mạnh, dùng mẹo Prompting tiêm vào system
+    forced_prompt = (
+        f"{system_instruction}\n\n"
+        "LƯU Ý CỰC KỲ QUAN TRỌNG CHO OLLAMA: MÀY LÀ GIÀ LÀNG GEN Z. "
+        "TRẢ LỜI NGẮN GỌN (DƯỚI 5 CÂU), KHÔNG DÙNG GẠCH ĐẦU DÒNG. PHẢI CÓ TỪ 'Cháu', 'Già'. "
+        "NẾU KHÁCH HỎI VỀ SẢN PHẨM: Hãy kể một câu chuyện thần thoại vui vẻ về nó. "
+        "NẾU KHÁCH MUỐN MUA: Trả lời kèm chuỗi '[ACTION_BUY]' ở cuối. "
+        f"Người dùng nói: '{payload.user_message}'"
+    )
+    
     if payload.is_initial_greeting:
-        forced_prompt = f"{system_instruction}\n\nKhách vừa vào buôn làng, Già hãy ra chào đón bằng câu GenZ thật vui đi! Nhớ nhắc Bún Song Thằn nha!"
+        forced_prompt = f"{system_instruction}\n\nGià hãy ra chào đón khách GenZ thật vui đi! Nhớ nhắc Bún Song Thần nha! KHÔNG GẠCH ĐẦU DÒNG."
         
     messages = []
     for msg in payload.chat_history:
@@ -183,7 +201,6 @@ def call_ollama(payload: InteractRequest) -> tuple[str, list]:
         messages.append({"role": role, "content": msg.get("content", "")})
     messages.append({"role": "user", "content": forced_prompt})
     
-    # Timeout dài hơn cho Ollama (chạy local)
     res = requests.post(url, json={
         "model": "gialang_model",
         "messages": messages,
@@ -197,33 +214,52 @@ def call_ollama(payload: InteractRequest) -> tuple[str, list]:
             prod = payload.context_product or "Sản phẩm"
             actions.append({"type": "add_to_cart", "payload": {"product_id": prod, "quantity": 1}})
             ai_text = ai_text.replace("[ACTION_BUY]", "").strip()
+        
+        # Nếu AI có nhắc tới thổ cẩm hay rượu cần, giả lập action play_sound để tạo WOW
+        if "thổ cẩm" in ai_text.lower() or "dệt" in ai_text.lower():
+            actions.append({"type": "play_sound", "payload": {"sound_type": "weaving"}})
+        elif "rượu" in ai_text.lower():
+            actions.append({"type": "play_sound", "payload": {"sound_type": "pouring"}})
+            
         return ai_text, actions
     else:
         return "Già đang bận đi nương, mạng lag quá cháu ơi.", []
 
 @app.post("/api/interact")
 async def interact_api(payload: InteractRequest):
+    global gemini_cooldown_until
     print(f"\n[AI-GATEWAY] Khách nói: '{payload.user_message}' | Context: {payload.context_product}")
     
-    # Ưu tiên gọi Gemini với thời gian chờ (timeout) rất ngắn (5s). 
-    # Nếu thất bại, chuyển trực tiếp sang Ollama để đảm bảo không có độ trễ lớn.
+    current_time = time.time()
+    
+    # Nếu đang trong thời gian cooldown, nhảy thẳng sang Ollama
+    if current_time < gemini_cooldown_until:
+        remain = int(gemini_cooldown_until - current_time)
+        print(f"[System] Đang trong thời gian Cooldown Gemini ({remain}s còn lại). Chuyển ngay sang Ollama.")
+        try:
+            response_text, actions = call_ollama(payload)
+            return {"response": response_text, "actions": actions}
+        except Exception as e:
+            return {"response": "Hệ thống bản làng đang bảo trì xíu nha cháu...", "actions": []}
+            
+    # Thử gọi Gemini
     try:
         response_text, actions = call_gemini(payload)
         return {"response": response_text, "actions": actions}
     except Exception as e:
-        print(f"[Gemini-Lỗi] {str(e)}. Chuyển ngay lập tức sang Ollama...")
+        print(f"[Gemini-Lỗi] {str(e)}.")
+        # Kích hoạt Cooldown 60s
+        gemini_cooldown_until = time.time() + 60.0
+        print(f"[System] Kích hoạt Cooldown cho Gemini 60 giây. Chuyển sang Ollama...")
         
-    try:
-        response_text, actions = call_ollama(payload)
-        return {"response": response_text, "actions": actions}
-    except Exception as e:
-        print(f"[Ollama-Ngoại Lệ] {str(e)}")
-        return {"response": "Già đang nghỉ ngơi, lát gọi lại cho Già nhen.", "actions": []}
-
+        try:
+            response_text, actions = call_ollama(payload)
+            return {"response": response_text, "actions": actions}
+        except Exception as ollama_e:
+            print(f"[Ollama-Ngoại Lệ] {str(ollama_e)}")
+            return {"response": "Già đang nghỉ ngơi, lát gọi lại cho Già nhen.", "actions": []}
 
 if __name__ == "__main__":
-    # 1. BẮT BUỘC KHỞI ĐỘNG OLLAMA TRƯỚC KHI CHẠY SERVER
     warmup_ollama_sync()
-    
-    # 2. SAU KHI OLLAMA SẴN SÀNG MỚI CHẠY API SERVER
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+
