@@ -25,6 +25,9 @@ const magicAudio = document.getElementById('magic-chime-audio');
 
 if (enterBtn && welcomeScreen) {
     enterBtn.addEventListener('click', () => {
+        window.scrollTo(0,0);
+        if (typeof lenis !== 'undefined') lenis.scrollTo(0, {immediate: true});
+        
         welcomeScreen.style.opacity = '0';
         setTimeout(() => welcomeScreen.style.display = 'none', 1000);
         
@@ -67,11 +70,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // CONTEXT OBSERVER (For Spirit Orb)
-    ScrollTrigger.create({ trigger: '#hero', start: 'top 50%', onEnter: () => currentContext = "Trang Chủ", onEnterBack: () => currentContext = "Trang Chủ" });
-    ScrollTrigger.create({ trigger: '#masterpiece', start: 'top 50%', onEnter: () => currentContext = "Bún Song Thần", onEnterBack: () => currentContext = "Bún Song Thần" });
-    ScrollTrigger.create({ trigger: '#village', start: 'top 50%', onEnter: () => currentContext = "Sản vật làng: Thổ Cẩm, Rượu Cần, Gùi", onEnterBack: () => currentContext = "Sản vật làng: Thổ Cẩm, Rượu Cần, Gùi" });
-    ScrollTrigger.create({ trigger: '#campfire', start: 'top 50%', onEnter: () => currentContext = "Lửa trại", onEnterBack: () => currentContext = "Lửa trại" });
+    // CONTEXT OBSERVER (For Spirit Orb & Tooltip)
+    ScrollTrigger.create({ trigger: '#hero', start: 'top 50%', onEnter: () => { currentContext = "Trang Chủ"; triggerContextualGreeting(); }, onEnterBack: () => { currentContext = "Trang Chủ"; } });
+    ScrollTrigger.create({ trigger: '#masterpiece', start: 'top 50%', onEnter: () => { currentContext = "Bún Song Thần"; triggerContextualGreeting(); }, onEnterBack: () => { currentContext = "Bún Song Thần"; } });
+    ScrollTrigger.create({ trigger: '#village', start: 'top 50%', onEnter: () => { currentContext = "Sản vật làng: Thổ Cẩm, Rượu Cần, Gùi"; triggerContextualGreeting(); }, onEnterBack: () => { currentContext = "Sản vật làng"; } });
+    ScrollTrigger.create({ trigger: '#campfire', start: 'top 50%', onEnter: () => { currentContext = "Lửa trại"; triggerContextualGreeting(); }, onEnterBack: () => { currentContext = "Lửa trại"; } });
 
     // 3D TILT EFFECT CHO SẢN PHẨM
     const productCards = document.querySelectorAll('.product-card');
@@ -114,6 +117,7 @@ const closeSpiritRealm = document.getElementById('close-spirit-realm');
 const spiritMessage = document.getElementById('spirit-message');
 const spiritInput = document.getElementById('spirit-input');
 const spiritSendBtn = document.getElementById('spirit-send-btn');
+const spiritTooltip = document.getElementById('spirit-tooltip'); // Mini tooltip
 
 let spiritChatHistory = [];
 let isSpiritThinking = false;
@@ -127,6 +131,7 @@ function toggleSpiritRealm() {
             magicAudio.play().catch(e => console.log(e));
         }
         spiritRealm.classList.remove('hidden');
+        if (spiritTooltip) spiritTooltip.classList.remove('show'); // Hide tooltip when opening realm
         
         // Auto-greet based on context if chat is somewhat empty
         if (spiritChatHistory.length < 2) {
@@ -185,6 +190,13 @@ async function callSpiritAI(systemPromptOverride = null) {
             
             spiritChatHistory.push({ role: 'model', content: aiResponse });
             
+            // Nếu Spirit Realm đang đóng, hiện Tooltip nhỏ bên ngoài
+            if (spiritRealm && spiritRealm.classList.contains('hidden') && spiritTooltip) {
+                spiritTooltip.textContent = aiResponse;
+                spiritTooltip.classList.add('show');
+                setTimeout(() => spiritTooltip.classList.remove('show'), 8000);
+            }
+            
             typeSpiritResponse(aiResponse, () => {
                 if (actions && actions.length > 0) processActions(actions);
             });
@@ -199,7 +211,7 @@ async function callSpiritAI(systemPromptOverride = null) {
 }
 
 async function triggerContextualGreeting() {
-    const prompt = `Hãy nói 1 câu ngắn gọn, mang tính tâm linh và chào mừng cháu đến với phần "${currentContext}". Đừng hỏi nhiều.`;
+    const prompt = `Già hãy thả thính khách bằng 1 câu thật ngắn, mặn mòi, lôi cuốn liên quan đến "${currentContext}". Chú ý: Cực kỳ ngắn, dưới 15 chữ để hiện vừa bong bóng chat mini!`;
     spiritChatHistory.push({ role: 'user', content: prompt });
     await callSpiritAI(prompt);
 }
@@ -453,3 +465,76 @@ function updateCartUI() {
     });
 }
 
+    });
+
+    // Terraink-like Dark Matter style
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
+        subdomains: 'abcd',
+        maxZoom: 20
+    }).addTo(map);
+
+    // Custom gold marker icon
+    const goldIcon = L.icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-gold.png',
+        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41],
+        popupAnchor: [1, -34],
+        shadowSize: [41, 41],
+        className: 'map-marker-icon'
+    });
+
+    const locations = [
+        { id: 'bun_song_than', name: 'Làng Bún An Thái', lat: 13.9, lng: 108.8, desc: 'Nơi khai sinh món Bún Song Thần tiến vua.' },
+        { id: 'vai_tho_cam', name: 'Làng Dệt Thổ Cẩm', lat: 13.98, lng: 108.0, desc: 'Nơi tiếng khung cửi lách cách ngày đêm.' },
+        { id: 'ruou_can', name: 'Làng Rượu Cần', lat: 14.3, lng: 108.0, desc: 'Nơi men lá nồng say hương rừng đại ngàn.' }
+    ];
+
+    locations.forEach(loc => {
+        const marker = L.marker([loc.lat, loc.lng], {icon: goldIcon}).addTo(map);
+        
+        // Bind a simple tooltip
+        marker.bindPopup(`<b>${loc.name}</b><br><button onclick="triggerMapStory('${loc.id}', '${loc.name}')" style="margin-top:10px; background:var(--gold); border:none; padding:5px 10px; color:#000; border-radius:4px; cursor:pointer; font-weight:bold;">Nghe Chuyện</button>`);
+        
+        marker.on('click', () => {
+            map.flyTo([loc.lat, loc.lng], 12, {
+                animate: true,
+                duration: 2
+            });
+        });
+    });
+
+    ScrollTrigger.create({ trigger: '#map-realm', start: 'top 50%', onEnter: () => { currentContext = "Bản Đồ Di Sản"; triggerContextualGreeting(); }, onEnterBack: () => { currentContext = "Bản Đồ Di Sản"; } });
+}
+
+window.triggerMapStory = function(id, name) {
+    if (spiritRealm.classList.contains('hidden')) {
+        toggleSpiritRealm();
+    }
+    const prompt = `[SỰ KIỆN TƯƠNG TÁC BẢN ĐỒ]: Khách vừa chọn vùng đất ${name} trên bản đồ. Già hãy kể 1 câu chuyện thần thoại thật lôi cuốn về vùng đất này và nhắc họ hãy trải nghiệm thử sản vật nơi đây. Mặn mòi lên nhé!`;
+    spiritChatHistory.push({ role: 'user', content: prompt });
+    callSpiritAI(prompt);
+};
+
+window.triggerProactiveAI = function(id, name) {
+    if (window.currentHoverId === id) return;
+    window.currentHoverId = id;
+    
+    if (window.hoverTimer) clearTimeout(window.hoverTimer);
+    
+    window.hoverTimer = setTimeout(() => {
+        const prompt = `[SỰ KIỆN TƯƠNG TÁC]: Khách đang ngắm món ${name} khá lâu (trên 3s). Già hãy chủ động nói 1 câu mặn mòi, dí dỏm để gạ khách mua món này đi! Nhớ là thật ngắn gọn dưới 20 chữ.`;
+        if(typeof spiritChatHistory !== 'undefined') {
+            spiritChatHistory.push({ role: 'user', content: prompt });
+            callSpiritAI(prompt);
+        }
+    }, 3000);
+};
+
+window.cancelProactiveAI = function(id) {
+    if (window.currentHoverId === id) {
+        window.currentHoverId = null;
+        if (window.hoverTimer) clearTimeout(window.hoverTimer);
+    }
+};

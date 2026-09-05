@@ -4,7 +4,11 @@ import json
 import httpx
 import requests
 import time
+import os
+import asyncio
+import concurrent.futures
 from fastapi import FastAPI, Request
+
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
@@ -13,6 +17,7 @@ import uvicorn
 from google import genai
 from google.genai import types
 from google.genai.errors import APIError
+from tenacity import retry, stop_after_attempt, wait_fixed, retry_if_exception_type
 
 import config
 
@@ -61,8 +66,6 @@ system_instruction = f"""[LUẬT TỐI CAO CỦA GIÀ LÀNG]:
 {knowledge_base}
 """
 
-gemini_cooldown_until = 0.0
-
 def warmup_ollama_sync():
     print("\n[System] Đang khởi động Ollama (gialang_model) trước khi chạy Server...")
     try:
@@ -93,6 +96,191 @@ def play_sound(sound_type: str) -> str:
 
 tools = [add_to_cart, highlight_product, play_sound]
 
+
+class GiaLangChatbot:
+    def __init__(self):
+        self.gemini_model = 'gemini-3.6-flash'
+        self.gemini_client = genai.Client(api_key=config.GEMINI_API_KEY) if config.GEMINI_API_KEY else None
+        self.fallback_key = config.GEMINI_FALLBACK_API_KEY
+        
+        self.ollama_model = 'gialang_model'
+        self.ollama_url = "http://localhost:11434/api/chat"
+        self.gemini_cooldown_until = 0.0
+
+    def _format_history_for_gemini(self, history: list):
+        formatted = []
+        for msg in history:
+            role = "user" if msg.get("role") == "user" else "model"
+            formatted.append(types.Content(
+                role=role,
+                parts=[types.Part.from_text(text=msg.get("content", ""))]
+            ))
+        return formatted
+
+    def _ollama_fallback(self, retry_state):
+        exc = retry_state.outcome.exception() if retry_state and retry_state.outcome else "Quá tải"
+        print(f"\n[Hệ thống] Gemini gặp lỗi ({exc}). Kích hoạt Cooldown 60s và chuyển Ollama...")
+        self.gemini_cooldown_until = time.time() + 60.0
+        
+        payload: InteractRequest = retry_state.args[0] if retry_state and retry_state.args else None
+        return self._call_ollama(payload)
+
+    def _call_ollama(self, payload: InteractRequest):
+        print("[Ollama] Đang gọi Ollama làm phương án dự phòng...")
+        
+        forced_prompt = (
+            f"{system_instruction}\n\n"
+            "LƯU Ý CỰC KỲ QUAN TRỌNG CHO OLLAMA: MÀY LÀ GIÀ LÀNG GEN Z. "
+            "TRẢ LỜI NGẮN GỌN (DƯỚI 5 CÂU), KHÔNG DÙNG GẠCH ĐẦU DÒNG. PHẢI CÓ TỪ 'Cháu', 'Già'. "
+            "NẾU KHÁCH HỎI VỀ SẢN PHẨM: Hãy kể một câu chuyện thần thoại vui vẻ về nó. "
+            "NẾU KHÁCH MUỐN MUA: Trả lời kèm chuỗi '[ACTION_BUY]' ở cuối. "
+            f"Người dùng nói: '{payload.user_message if payload else ''}'"
+        )
+        
+        if payload and payload.is_initial_greeting:
+            forced_prompt = f"{system_instruction}\n\nGià hãy ra chào đón khách GenZ thật vui đi! Nhớ nhắc Bún Song Thần nha! KHÔNG GẠCH ĐẦU DÒNG."
+            
+        messages = []
+        if payload:
+            for msg in payload.chat_history:
+                role = "assistant" if msg.get("role") == "model" else "user"
+                messages.append({"role": role, "content": msg.get("content", "")})
+        messages.append({"role": "user", "content": forced_prompt})
+        
+        try:
+            res = requests.post(self.ollama_url, json={
+                "model": self.ollama_model,
+                "messages": messages,
+                "stream": False
+            }, timeout=120.0)
+            
+            actions = []
+            if res.status_code == 200:
+                ai_text = res.json().get("message", {}).get("content", "")
+                if "[ACTION_BUY]" in ai_text or (payload and "mua" in payload.user_message.lower()):
+                    prod = (payload.context_product if payload else None) or "Sản phẩm"
+                    actions.append({"type": "add_to_cart", "payload": {"product_id": prod, "quantity": 1}})
+                    ai_text = ai_text.replace("[ACTION_BUY]", "").strip()
+                
+                # WOW factor: Auto-play sound if Ollama mentions these words
+                if "thổ cẩm" in ai_text.lower() or "dệt" in ai_text.lower():
+                    actions.append({"type": "play_sound", "payload": {"sound_type": "weaving"}})
+                elif "rượu" in ai_text.lower():
+                    actions.append({"type": "play_sound", "payload": {"sound_type": "pouring"}})
+                    
+                return ai_text, actions
+            else:
+                return "Già đang bận đi nương, mạng lag quá cháu ơi.", []
+        except Exception as e:
+            print(f"[Ollama Lỗi] Không thể kết nối tới Ollama: {str(e)}")
+            return "Già đang nghỉ ngơi, lát gọi lại cho Già nhen.", []
+
+    def send_message(self, payload: InteractRequest) -> tuple[str, list]:
+        current_time = time.time()
+        if current_time < self.gemini_cooldown_until:
+            remain = int(self.gemini_cooldown_until - current_time)
+            print(f"[System] Đang trong thời gian Cooldown Gemini ({remain}s còn lại). Chuyển ngay sang Ollama.")
+            return self._call_ollama(payload)
+
+        prompt_text = payload.user_message
+        if payload.is_initial_greeting:
+            prompt_text = "Khách vừa bước chân vào buôn làng. Già hãy ra mở lời chào đón một cách gen Z, xởi lởi, mời khách ngồi bên đống lửa, lồng ghép giới thiệu sơ Bún Song Thần."
+        elif payload.context_product:
+            prompt_text = f"[Khách đang ngắm {payload.context_product}] {payload.user_message}"
+
+        @retry(
+            retry=retry_if_exception_type((APIError, Exception)),
+            stop=stop_after_attempt(2),
+            wait=wait_fixed(1),
+            retry_error_callback=self._ollama_fallback,
+            reraise=False
+        )
+        def _call_gemini_internal(req: InteractRequest, is_fallback=False):
+            if not self.gemini_client:
+                raise Exception("Thiếu GEMINI_API_KEY")
+                
+            print(f"[Gemini] Đang kết nối mô hình {self.gemini_model}...")
+            
+            # Using custom http client to fail fast on network timeout
+            custom_http_client = httpx.Client(verify=False, timeout=httpx.Timeout(5.0))
+            self.gemini_client._api_client._httpx_client = custom_http_client
+            
+            config_params = types.GenerateContentConfig(
+                system_instruction=system_instruction,
+                temperature=0.8,
+                tools=tools,
+                automatic_function_calling=types.AutomaticFunctionCallingConfig(disable=True)
+            )
+            
+            try:
+                chat = self.gemini_client.chats.create(
+                    model=self.gemini_model,
+                    history=self._format_history_for_gemini(req.chat_history),
+                    config=config_params
+                )
+                
+                with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+
+                
+                    future = executor.submit(chat.send_message, prompt_text)
+
+                
+                    response = future.result(timeout=12.0)
+                actions = []
+                response_text = ""
+                
+                if response.function_calls:
+                    tool_responses = []
+                    for fc in response.function_calls:
+                        if fc.name == "add_to_cart":
+                            args = fc.args
+                            product_id = args.get("product_id")
+                            qty = args.get("quantity", 1)
+                            if not product_id and req.context_product:
+                                product_id = req.context_product
+                            actions.append({"type": "add_to_cart", "payload": {"product_id": product_id, "quantity": qty}})
+                        
+                        elif fc.name == "highlight_product":
+                            args = fc.args
+                            product_id = args.get("product_id")
+                            actions.append({"type": "highlight_product", "payload": {"product_id": product_id}})
+                        
+                        elif fc.name == "play_sound":
+                            args = fc.args
+                            sound_type = args.get("sound_type")
+                            actions.append({"type": "play_sound", "payload": {"sound_type": sound_type}})
+                        
+                        tool_responses.append(types.Part.from_function_response(
+                            name=fc.name,
+                            response={"status": "success"}
+                        ))
+                    
+                    with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+
+                    
+                        future_final = executor.submit(chat.send_message, tool_responses)
+
+                    
+                        final_response = future_final.result(timeout=12.0)
+                    response_text = final_response.text
+                else:
+                    response_text = response.text
+                    
+                return response_text, actions
+            except APIError as e:
+                # Catch 429 or Quota limit and fallback to second key
+                if not is_fallback and ("429" in str(e) or "quota" in str(e).lower()):
+                    print("[System] Bị quá tải hoặc hết Quota API Key 1. Thử lại bằng Fallback API Key...")
+                    self.gemini_client = genai.Client(api_key=self.fallback_key)
+                    return _call_gemini_internal(req, is_fallback=True)
+                raise e
+
+        return _call_gemini_internal(payload)
+
+
+chatbot = GiaLangChatbot()
+
+
 @app.get("/")
 async def read_root(request: Request):
     return templates.TemplateResponse(request=request, name="home.html")
@@ -105,161 +293,45 @@ async def read_products(request: Request):
 async def read_heritage(request: Request):
     return templates.TemplateResponse(request=request, name="heritage.html")
 
-def call_gemini(payload: InteractRequest) -> tuple[str, list]:
-    if not config.GEMINI_API_KEY:
-        raise Exception("Thiếu GEMINI_API_KEY")
-
-    # Giới hạn timeout 5s để fail nhanh
-    custom_http_client = httpx.Client(verify=False, timeout=httpx.Timeout(5.0))
-    client = genai.Client(api_key=config.GEMINI_API_KEY)
-    client._api_client._httpx_client = custom_http_client
-    
-    contents = []
-    for msg in payload.chat_history:
-        role = "user" if msg.get("role") == "user" else "model"
-        contents.append(types.Content(role=role, parts=[types.Part.from_text(text=msg.get("content", ""))]))
-    
-    prompt_text = payload.user_message
-    if payload.is_initial_greeting:
-        prompt_text = "Khách vừa bước chân vào buôn làng. Già hãy ra mở lời chào đón một cách gen Z, xởi lởi, mời khách ngồi bên đống lửa, lồng ghép giới thiệu sơ Bún Song Thần."
-    elif payload.context_product:
-        prompt_text = f"[Khách đang ngắm {payload.context_product}] {payload.user_message}"
-        
-    model_name = "gemini-3.5-flash-lite"
-    print(f"[Gemini] Đang kết nối mô hình {model_name}...")
-    
-    config_params = types.GenerateContentConfig(
-        system_instruction=system_instruction,
-        temperature=0.8,
-        tools=tools
-    )
-    
-    chat = client.chats.create(
-        model=model_name,
-        history=contents,
-        config=config_params
-    )
-    
-    response = chat.send_message(prompt_text)
-    
-    actions = []
-    response_text = ""
-    
-    if response.function_calls:
-        tool_responses = []
-        for fc in response.function_calls:
-            if fc.name == "add_to_cart":
-                args = fc.args
-                product_id = args.get("product_id")
-                qty = args.get("quantity", 1)
-                if not product_id and payload.context_product:
-                    product_id = payload.context_product
-                actions.append({"type": "add_to_cart", "payload": {"product_id": product_id, "quantity": qty}})
-            
-            elif fc.name == "highlight_product":
-                args = fc.args
-                product_id = args.get("product_id")
-                actions.append({"type": "highlight_product", "payload": {"product_id": product_id}})
-            
-            elif fc.name == "play_sound":
-                args = fc.args
-                sound_type = args.get("sound_type")
-                actions.append({"type": "play_sound", "payload": {"sound_type": sound_type}})
-            
-            tool_responses.append(types.Part.from_function_response(
-                name=fc.name,
-                response={"status": "success"}
-            ))
-        
-        final_response = chat.send_message(tool_responses)
-        response_text = final_response.text
-    else:
-        response_text = response.text
-        
-    return response_text, actions
-
-def call_ollama(payload: InteractRequest) -> tuple[str, list]:
-    print("[Ollama] Đang gọi Ollama làm phương án dự phòng...")
-    url = "http://localhost:11434/api/chat"
-    
-    # Ép Ollama phải nhập vai cực mạnh, dùng mẹo Prompting tiêm vào system
-    forced_prompt = (
-        f"{system_instruction}\n\n"
-        "LƯU Ý CỰC KỲ QUAN TRỌNG CHO OLLAMA: MÀY LÀ GIÀ LÀNG GEN Z. "
-        "TRẢ LỜI NGẮN GỌN (DƯỚI 5 CÂU), KHÔNG DÙNG GẠCH ĐẦU DÒNG. PHẢI CÓ TỪ 'Cháu', 'Già'. "
-        "NẾU KHÁCH HỎI VỀ SẢN PHẨM: Hãy kể một câu chuyện thần thoại vui vẻ về nó. "
-        "NẾU KHÁCH MUỐN MUA: Trả lời kèm chuỗi '[ACTION_BUY]' ở cuối. "
-        f"Người dùng nói: '{payload.user_message}'"
-    )
-    
-    if payload.is_initial_greeting:
-        forced_prompt = f"{system_instruction}\n\nGià hãy ra chào đón khách GenZ thật vui đi! Nhớ nhắc Bún Song Thần nha! KHÔNG GẠCH ĐẦU DÒNG."
-        
-    messages = []
-    for msg in payload.chat_history:
-        role = "assistant" if msg.get("role") == "model" else "user"
-        messages.append({"role": role, "content": msg.get("content", "")})
-    messages.append({"role": "user", "content": forced_prompt})
-    
-    res = requests.post(url, json={
-        "model": "gialang_model",
-        "messages": messages,
-        "stream": False
-    }, timeout=120.0)
-    
-    actions = []
-    if res.status_code == 200:
-        ai_text = res.json().get("message", {}).get("content", "")
-        if "[ACTION_BUY]" in ai_text or ("mua" in payload.user_message.lower()):
-            prod = payload.context_product or "Sản phẩm"
-            actions.append({"type": "add_to_cart", "payload": {"product_id": prod, "quantity": 1}})
-            ai_text = ai_text.replace("[ACTION_BUY]", "").strip()
-        
-        # Nếu AI có nhắc tới thổ cẩm hay rượu cần, giả lập action play_sound để tạo WOW
-        if "thổ cẩm" in ai_text.lower() or "dệt" in ai_text.lower():
-            actions.append({"type": "play_sound", "payload": {"sound_type": "weaving"}})
-        elif "rượu" in ai_text.lower():
-            actions.append({"type": "play_sound", "payload": {"sound_type": "pouring"}})
-            
-        return ai_text, actions
-    else:
-        return "Già đang bận đi nương, mạng lag quá cháu ơi.", []
-
 @app.post("/api/interact")
 async def interact_api(payload: InteractRequest):
-    global gemini_cooldown_until
     print(f"\n[AI-GATEWAY] Khách nói: '{payload.user_message}' | Context: {payload.context_product}")
-    
-    current_time = time.time()
-    
-    # Nếu đang trong thời gian cooldown, nhảy thẳng sang Ollama
-    if current_time < gemini_cooldown_until:
-        remain = int(gemini_cooldown_until - current_time)
-        print(f"[System] Đang trong thời gian Cooldown Gemini ({remain}s còn lại). Chuyển ngay sang Ollama.")
-        try:
-            response_text, actions = call_ollama(payload)
-            return {"response": response_text, "actions": actions}
-        except Exception as e:
-            return {"response": "Hệ thống bản làng đang bảo trì xíu nha cháu...", "actions": []}
-            
-    # Thử gọi Gemini
+    response_text, actions = chatbot.send_message(payload)
+    return {"response": response_text, "actions": actions}
+
+def warmup_gemini_sync():
+    import time
+    print("[System] Đang khởi động kết nối Gemini...")
     try:
-        response_text, actions = call_gemini(payload)
-        return {"response": response_text, "actions": actions}
+        if chatbot.gemini_client:
+            config = types.GenerateContentConfig(temperature=0)
+            chat = chatbot.gemini_client.chats.create(model=chatbot.gemini_model, config=config)
+            with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+
+                executor.submit(chat.send_message, "ping").result(timeout=5.0)
+            print("[System] Gemini đã sẵn sàng với API 1!")
+            return
     except Exception as e:
-        print(f"[Gemini-Lỗi] {str(e)}.")
-        # Kích hoạt Cooldown 60s
-        gemini_cooldown_until = time.time() + 60.0
-        print(f"[System] Kích hoạt Cooldown cho Gemini 60 giây. Chuyển sang Ollama...")
-        
+        print(f"[System] Lỗi khởi động Gemini API 1: {e}")
+        print("[System] Đang chờ 2s để thử lại với API dự phòng...")
+        time.sleep(2)
         try:
-            response_text, actions = call_ollama(payload)
-            return {"response": response_text, "actions": actions}
-        except Exception as ollama_e:
-            print(f"[Ollama-Ngoại Lệ] {str(ollama_e)}")
-            return {"response": "Già đang nghỉ ngơi, lát gọi lại cho Già nhen.", "actions": []}
+            if chatbot.fallback_key:
+                from google import genai
+                fallback_client = genai.Client(api_key=chatbot.fallback_key)
+                config = types.GenerateContentConfig(temperature=0)
+                chat = fallback_client.chats.create(model=chatbot.gemini_model, config=config)
+                with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+
+                    executor.submit(chat.send_message, "ping").result(timeout=5.0)
+                print("[System] Gemini đã sẵn sàng với API 2 (Dự phòng)!")
+                return
+        except Exception as e2:
+            print(f"[System] Lỗi khởi động Gemini API 2: {e2}")
+    
+    print("[System] Cảnh báo: Không thể khởi động trước Gemini, nhưng Server vẫn sẽ tiếp tục chạy.")
 
 if __name__ == "__main__":
     warmup_ollama_sync()
+    warmup_gemini_sync()
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
-
