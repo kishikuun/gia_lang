@@ -5,3 +5,8 @@ google-genai
 python-dotenv
 tavily-python
 tenacity
+requests
+httpx
+pytest
+playwright
+pytest-playwright

@@ -25,14 +25,14 @@
     </div>
 </section>
 
-<!-- THE MASTERPIECE: BÚN SONG THẦN -->
+<!-- THE MASTERPIECE: BÚN SONG THẰN -->
 <section id="masterpiece" class="fullscreen-section masterpiece-section">
-    <div class="masterpiece-bg" style="background-image: url('https://images.unsplash.com/photo-1589301773809-77c867a5f6e8?q=80&w=2000&auto=format&fit=crop');"></div>
+    <div class="masterpiece-bg" style="background-image: url('/assets/images/masterpiece_bg.jpg');"></div>
     <div class="masterpiece-overlay"></div>
     
     <div class="masterpiece-content text-fade-up">
         <span class="masterpiece-badge">Đặc sản Tiến Vua</span>
-        <h2 class="serif-title gold-text mega-title">Bún Song Thần</h2>
+        <h2 class="serif-title gold-text mega-title">Bún Song Thằn</h2>
         <p class="masterpiece-desc">Làm từ 100% đậu xanh nguyên chất. Sợi bún trong suốt như ngọc, dai ngon bí truyền.</p>
         <button class="btn-primary" onclick="triggerAction('add_to_cart', 'bun_song_than')">Già Làng ơi, cho cháu 1 phần!</button>
     </div>
@@ -50,7 +50,7 @@
             <!-- Vải Thổ Cẩm -->
             <div class="h-item product-card" data-id="vai_tho_cam" data-price="350000" data-name="Vải Thổ Cẩm">
                 <div class="h-item-img" style="cursor: pointer;" onclick="triggerDetails('vai_tho_cam', 'Vải Thổ Cẩm')">
-                    <img src="https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?q=80&w=800&auto=format&fit=crop" alt="Thổ Cẩm">
+                    <img src="/assets/images/vai_tho_cam.jpg" alt="Thổ Cẩm" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1606744824163-985d376605aa?q=80&w=800&auto=format&fit=crop'">
                     <div class="image-overlay"><span class="discover-text">Chi tiết</span></div>
                 </div>
                 <div class="h-item-info">
@@ -62,7 +62,7 @@
             <!-- Rượu Cần -->
             <div class="h-item product-card" data-id="ruou_can" data-price="280000" data-name="Rượu Cần Men Lá">
                 <div class="h-item-img" style="cursor: pointer;" onclick="triggerDetails('ruou_can', 'Rượu Cần Men Lá')">
-                    <img src="https://images.unsplash.com/photo-1594963363385-d6029d5b03fb?q=80&w=800&auto=format&fit=crop" alt="Rượu Cần">
+                    <img src="/assets/images/ruou_can.jpg" alt="Rượu Cần" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=800&auto=format&fit=crop'">
                     <div class="image-overlay"><span class="discover-text">Chi tiết</span></div>
                 </div>
                 <div class="h-item-info">
@@ -74,7 +74,7 @@
             <!-- Gùi Đan -->
             <div class="h-item product-card" data-id="gui_dan" data-price="120000" data-name="Gùi Đan Mây Tre">
                 <div class="h-item-img" style="cursor: pointer;" onclick="triggerDetails('gui_dan', 'Gùi Đan Mây Tre')">
-                    <img src="https://images.unsplash.com/photo-1598462058356-d66ff0d04fb4?q=80&w=800&auto=format&fit=crop" alt="Gùi Đan">
+                    <img src="/assets/images/gui_dan.jpg" alt="Gùi Đan" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1590736969955-71cc94801759?q=80&w=800&auto=format&fit=crop'">
                     <div class="image-overlay"><span class="discover-text">Chi tiết</span></div>
                 </div>
                 <div class="h-item-info">
@@ -88,11 +88,108 @@
 
 <!-- TERRAINK-STYLE CARTOGRAPHIC MAP -->
 <section id="map-realm" class="fullscreen-section map-section">
-    <div class="map-overlay-title text-fade-up">
-        <h2 class="serif-title gold-text">Bản Đồ Di Sản</h2>
-        <p>Chọn một vùng đất để nghe Già Làng kể tích xưa</p>
+    <!-- MAP TOP BAR (HEADER & CONTROLS) -->
+    <div class="map-top-bar">
+        <div class="map-overlay-title text-fade-up">
+            <div class="map-badge-container">
+                <span class="map-badge">Đề Án 34 Tỉnh Thành Sau Sáp Nhập</span>
+            </div>
+            <h2 class="serif-title gold-text">Bản Đồ Di Sản & Hành Chính Việt Nam</h2>
+            <p>Khám phá diện mạo 34 tỉnh, thành phố mới & nghe Già Làng kể chuyện văn hóa muôn nơi</p>
+        </div>
+
+        <!-- MAP CONTROLS FLOATING TOOLBAR -->
+        <div class="map-controls-toolbar">
+            <div class="map-search-box">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <select id="map-province-select" class="map-select">
+                    <option value="">-- Chọn hoặc tìm tỉnh thành (34 tỉnh) --</option>
+                </select>
+            </div>
+            <div class="map-filter-group">
+                <button class="map-filter-btn active" data-filter="all">Tất cả (34)</button>
+                <button class="map-filter-btn" data-filter="merged">Sáp nhập mới (23)</button>
+                <button class="map-filter-btn" data-filter="kept">Giữ nguyên (11)</button>
+                <button class="map-filter-btn highlight-btn" data-filter="heritage">⭐ Tâm điểm Gia Lai</button>
+            </div>
+            <button id="map-reset-btn" class="map-action-btn" title="Về toàn cảnh Việt Nam">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path></svg>
+                Toàn cảnh
+            </button>
+            <button id="map-style-toggle" class="map-action-btn" title="Chuyển chế độ xem bản đồ">
+                🛰️ Vệ tinh
+            </button>
+        </div>
     </div>
+
+    <!-- MAP CONTAINER -->
     <div id="village-map"></div>
+
+    <!-- MAP LEGEND -->
+    <div class="map-legend-card">
+        <div class="legend-header">
+            <span class="legend-title">Chú Thích Bản Đồ</span>
+        </div>
+        <div class="legend-items">
+            <div class="legend-item">
+                <span class="legend-color-box color-merged"></span>
+                <span>Tỉnh / TP sáp nhập mới (23)</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color-box color-kept"></span>
+                <span>Đơn vị giữ nguyên (11)</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-color-box color-gialai"></span>
+                <span>Gia Lai (Gia Lai + Bình Định)</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-icon-star">🇻🇳</span>
+                <span>Quần đảo Hoàng Sa & Trường Sa</span>
+            </div>
+            <div class="legend-item">
+                <span class="legend-icon-star">🏮</span>
+                <span>Điểm di sản văn hóa buôn làng</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- FLOATING PROVINCE DETAIL CARD -->
+    <div id="province-detail-card" class="province-card hidden">
+        <button id="close-province-card" class="card-close-btn">&times;</button>
+        <div class="card-badge" id="card-stt">STT: 09</div>
+        <h3 class="card-title gold-text" id="card-name">Tỉnh Gia Lai</h3>
+        <div class="card-tag" id="card-status-tag">Sáp nhập mới</div>
+        <div class="card-divider"></div>
+        <div class="card-info-row">
+            <span class="info-label">Các đơn vị hợp nhất:</span>
+            <span class="info-val" id="card-mergers">Gia Lai + Bình Định</span>
+        </div>
+        <div class="card-info-row">
+            <span class="info-label">Trung tâm hành chính:</span>
+            <span class="info-val gold-accent" id="card-center">Bình Định</span>
+        </div>
+        <div class="card-info-row" id="card-scale-row">
+            <span class="info-label">Quy mô hành chính:</span>
+            <span class="info-val" id="card-scale">135 đơn vị (25 phường, 110 xã)</span>
+        </div>
+        <div class="card-stats-grid">
+            <div class="stat-box">
+                <span class="stat-label">Diện tích</span>
+                <span class="stat-value" id="card-area">21.576 km²</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">Dân số</span>
+                <span class="stat-value" id="card-population">3.583.691</span>
+            </div>
+        </div>
+        <div class="card-heritage-note" id="card-heritage-box">
+            <strong>Di sản nổi bật:</strong> Nơi hội tụ tinh hoa Bún Song Thằn An Thái (tiến vua) cùng văn hóa cồng chiêng, rượu cần đại ngàn!
+        </div>
+        <button id="card-story-btn" class="card-btn-action">
+            <span>✨ Nghe Già Làng kể tích xưa</span>
+        </button>
+    </div>
 </section>
 
 <!-- CAMPFIRE CHAT (IMMERSIVE INTERACTION) -->
@@ -113,7 +210,7 @@
             </div>
             
             <div class="prompt-chips">
-                <button class="prompt-chip" onclick="document.getElementById('campfire-input').value='Già ơi, Bún Song Thần làm từ gì?'; document.getElementById('campfire-send-btn').click();">Già ơi, Bún Song Thần làm từ gì?</button>
+                <button class="prompt-chip" onclick="document.getElementById('campfire-input').value='Già ơi, Bún Song Thằn làm từ gì?'; document.getElementById('campfire-send-btn').click();">Già ơi, Bún Song Thằn làm từ gì?</button>
                 <button class="prompt-chip" onclick="document.getElementById('campfire-input').value='Kể cháu nghe chuyện làng đi!'; document.getElementById('campfire-send-btn').click();">Kể cháu nghe chuyện làng đi!</button>
                 <button class="prompt-chip" onclick="document.getElementById('campfire-input').value='Cháu muốn mua quà về xuôi.'; document.getElementById('campfire-send-btn').click();">Cháu muốn mua quà về xuôi.</button>
             </div>

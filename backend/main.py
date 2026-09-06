@@ -24,6 +24,22 @@ import config
 if sys.platform == "win32":
     sys.stdout.reconfigure(encoding='utf-8')
     sys.stderr.reconfigure(encoding='utf-8')
+    
+    # Fix [WinError 10054] An existing connection was forcibly closed by the remote host
+    try:
+        from asyncio.proactor_events import _ProactorBasePipeTransport
+        _orig_call_connection_lost = _ProactorBasePipeTransport._call_connection_lost
+        def _silent_call_connection_lost(self, exc=None):
+            try:
+                _orig_call_connection_lost(self, exc)
+            except (ConnectionResetError, OSError) as e:
+                if getattr(e, 'winerror', None) == 10054 or e.args[0] == 10054:
+                    pass
+                else:
+                    raise
+        _ProactorBasePipeTransport._call_connection_lost = _silent_call_connection_lost
+    except Exception:
+        pass
 
 app = FastAPI()
 
@@ -34,6 +50,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.middleware("http")
+async def add_cache_control_header(request: Request, call_next):
+    response = await call_next(request)
+    if any(request.url.path.endswith(ext) for ext in [".js", ".css", ".geojson", ".html"]):
+        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, max-age=0"
+        response.headers["Pragma"] = "no-cache"
+        response.headers["Expires"] = "0"
+    return response
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FRONTEND_DIR = os.path.join(BASE_DIR, "../frontend")
@@ -59,7 +84,7 @@ system_instruction = f"""[LUẬT TỐI CAO CỦA GIÀ LÀNG]:
 1. BẠN LÀ "GIÀ LÀNG", NGƯỜI DẪN CHUYỆN CỦA BUÔN LÀNG TÂY NGUYÊN. Khách là "cháu". LUÔN LUÔN xưng "Già" và gọi "cháu". KHÔNG BAO GIỜ xưng "Tôi" hay "Bạn".
 2. TÍNH CÁCH: Gen Z, hài hước, xởi lởi, mặn mòi nhưng vẫn uy tín. Vd: "Già chốt đơn cho cháu liền", "Sản vật này bao dính", "Ưng cái bụng thì chốt ngay". CẤM DÙNG VĂN MẪU WIKIPEDIA, cấm nói chuyện kiểu robot khô khan.
 3. CHỦ ĐỘNG DẪN DẮT: Đừng chỉ trả lời suông. Kể một câu chuyện bí ẩn, thú vị về văn hóa, rồi gạ khách chốt đơn khéo léo.
-4. BÚN SONG THẦN LÀ SỐ 1: Bún tiến vua, sợi trong suốt như ngọc, 100% đậu xanh nguyên chất. Luôn tìm cách lồng ghép để PR món này.
+4. BÚN SONG THẰN LÀ SỐ 1: Bún tiến vua, sợi trong suốt như ngọc, 100% đậu xanh nguyên chất. Luôn tìm cách lồng ghép để PR món này.
 5. Định dạng văn bản: Trả lời ngắn gọn, xuống dòng tự nhiên, KHÔNG dùng gạch đầu dòng, KHÔNG liệt kê số thứ tự kiểu robot. Dùng emoji vừa đủ.
 
 [KIẾN THỨC BẢN LÀNG]:
@@ -138,7 +163,7 @@ class GiaLangChatbot:
         )
         
         if payload and payload.is_initial_greeting:
-            forced_prompt = f"{system_instruction}\n\nGià hãy ra chào đón khách GenZ thật vui đi! Nhớ nhắc Bún Song Thần nha! KHÔNG GẠCH ĐẦU DÒNG."
+            forced_prompt = f"{system_instruction}\n\nGià hãy ra chào đón khách GenZ thật vui đi! Nhớ nhắc Bún Song Thằn nha! KHÔNG GẠCH ĐẦU DÒNG."
             
         messages = []
         if payload:
@@ -184,7 +209,7 @@ class GiaLangChatbot:
 
         prompt_text = payload.user_message
         if payload.is_initial_greeting:
-            prompt_text = "Khách vừa bước chân vào buôn làng. Già hãy ra mở lời chào đón một cách gen Z, xởi lởi, mời khách ngồi bên đống lửa, lồng ghép giới thiệu sơ Bún Song Thần."
+            prompt_text = "Khách vừa bước chân vào buôn làng. Già hãy ra mở lời chào đón một cách gen Z, xởi lởi, mời khách ngồi bên đống lửa, lồng ghép giới thiệu sơ Bún Song Thằn."
         elif payload.context_product:
             prompt_text = f"[Khách đang ngắm {payload.context_product}] {payload.user_message}"
 
