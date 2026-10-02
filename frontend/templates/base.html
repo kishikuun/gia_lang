@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Già Làng Số</title>
+    <!-- Favicon -->
+    <link rel="icon" href="data:,">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/assets/css/style.css?v={{ range(100000, 999999) | random }}">
+
+    <!-- Libraries -->
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <!-- Lenis for Smooth Scrolling -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    
+    <!-- Leaflet for Map -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+</head>
+
+<body>
+    <!-- WELCOME SCREEN (For Audio Autoplay Permission) -->
+    <div id="welcome-screen">
+        <div class="welcome-content">
+            <h1 class="serif-title gold-text">Bước Vào Buôn Làng</h1>
+            <p>Xin hãy mở lòng để lắng nghe hơi thở của đại ngàn.</p>
+            <button id="enter-village-btn" class="btn-primary">Bắt Đầu Hành Trình</button>
+        </div>
+    </div>
+
+    <!-- AMBIENT AUDIO -->
+    <audio id="ambient-audio" loop preload="auto"></audio>
+    <audio id="magic-chime-audio" preload="auto"></audio>
+    <audio id="audio-weaving" preload="auto"></audio>
+    <audio id="audio-pouring" preload="auto"></audio>
+    <audio id="audio-chimes" preload="auto"></audio>
+
+    <!-- BUON LANG AMBIENT SOUNDS -->
+    <audio id="ambient-cong-chieng" loop preload="auto">
+        <source src="/assets/audio/cong_chieng.ogg" type="audio/ogg">
+    </audio>
+    <audio id="ambient-tieng-suoi" loop preload="auto">
+        <source src="/assets/audio/tieng_suoi.ogg" type="audio/ogg">
+    </audio>
+    <audio id="ambient-tieng-chim" loop preload="auto">
+        <source src="/assets/audio/tieng_chim.ogg" type="audio/ogg">
+    </audio>
+    <audio id="ambient-tieng-lua" loop preload="auto">
+        <source src="/assets/audio/tieng_lua.wav" type="audio/wav">
+    </audio>
+
+    <!-- SPIRIT ORB (Omnipresent Guide) -->
+    <div id="spirit-orb-container">
+        <div id="spirit-tooltip" class="spirit-tooltip">Chào khách!</div>
+        <div class="orb-pulse"></div>
+        <button id="spirit-orb" title="Trò chuyện cùng Già Làng">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                stroke-linejoin="round" class="orb-icon">
+                <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Z" />
+                <path d="M12 6a6 6 0 1 0 6 6 6 6 0 0 0-6-6Z" />
+                <circle cx="12" cy="12" r="2" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- SPIRIT REALM SIDEBAR (Copilot-Style Chatbox) -->
+    <div id="spirit-realm-overlay" class="hidden">
+        <div id="spirit-chat-backdrop" class="spirit-chat-backdrop"></div>
+        <aside id="spirit-chat-panel" class="spirit-chat-panel">
+            <!-- Header -->
+            <div class="spirit-chat-header">
+                <div class="spirit-chat-header-left">
+                    <div class="spirit-avatar-header">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="spirit-avatar-icon">
+                            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Z" />
+                            <path d="M12 6a6 6 0 1 0 6 6 6 6 0 0 0-6-6Z" />
+                            <circle cx="12" cy="12" r="2" />
+                        </svg>
+                    </div>
+                    <div class="spirit-chat-header-info">
+                        <h3 class="spirit-chat-title">Già Làng Số</h3>
+                        <span class="spirit-chat-status">
+                            <span class="status-dot"></span>
+                            Trực tuyến
+                        </span>
+                    </div>
+                </div>
+                <div class="spirit-chat-header-actions">
+                    <button id="spirit-clear-chat" class="spirit-header-btn" title="Xoá lịch sử">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="18" height="18"><path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6h14z"/></svg>
+                    </button>
+                    <button id="close-spirit-realm" class="spirit-header-btn" title="Đóng">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Chat Messages Area -->
+            <div id="spirit-chat-messages" class="spirit-chat-messages">
+                <!-- Date divider -->
+                <div class="spirit-chat-date-divider">
+                    <span>Hôm Nay</span>
+                </div>
+                <!-- Messages will be injected here by JS -->
+            </div>
+
+            <!-- Typing Indicator (Hidden by default) -->
+            <div id="spirit-typing-indicator" class="spirit-typing-indicator hidden">
+                <div class="spirit-avatar-small">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Z" /><circle cx="12" cy="12" r="2" /></svg>
+                </div>
+                <div class="typing-dots">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="spirit-chat-input-area">
+                <div class="spirit-chat-input-wrapper">
+                    <textarea id="spirit-input" placeholder="Nhắn tin cho Già Làng..." rows="1" autocomplete="off"></textarea>
+                    <div class="spirit-chat-input-actions">
+                        <button id="spirit-send-btn" class="spirit-send-btn" title="Gửi tin nhắn" disabled>
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                        </button>
+                    </div>
+                </div>
+                <p class="spirit-chat-disclaimer">Già Làng AI có thể đưa ra thông tin chưa chính xác.</p>
+            </div>
+        </aside>
+    </div>
+
+    <!-- HEADER -->
+    <header class="navbar">
+        <div class="logo">GIA LÀNG.</div>
+        <nav class="links">
+            <a href="/" class="nav-link">Trang Chủ</a>
+            <a href="/products" class="nav-link">Thăm Quán</a>
+            <a href="/heritage" class="nav-link">Chuyện Làng</a>
+            <button id="sound-mixer-btn" class="sound-mixer-btn" title="Chỉnh âm thanh đại ngàn">
+                <span class="sound-icon-waves">
+                    <span class="bar bar-1"></span>
+                    <span class="bar bar-2"></span>
+                    <span class="bar bar-3"></span>
+                </span>
+                <span>Âm Thanh</span>
+            </button>
+            <button id="cart-toggle-btn" class="cart-btn">
+                <span>Giỏ Hàng</span>
+                <span id="cart-count" class="badge">0</span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- MAIN SCROLL CONTAINER -->
+    <main id="smooth-wrapper">
+        <div id="smooth-content">
+            {% block content %}{% endblock %}
+
+            <footer class="footer">
+                <div class="footer-content">
+                    <h2 class="footer-title">Lưu Giữ Hồn Đại Ngàn</h2>
+                    <p>&copy; 2026 Dự Án Bảo tồn Di sản Gia Lai. Mọi sản phẩm đều được làm thủ công bởi nghệ nhân địa
+                        phương.</p>
+                </div>
+            </footer>
+        </div>
+    </main>
+
+    <!-- CART SIDEBAR UI -->
+    <div id="cart-sidebar" class="cart-hidden">
+        <div class="cart-header">
+            <h3>Giỏ Hàng Của Bạn</h3>
+            <button id="close-cart-btn">&times;</button>
+        </div>
+        <div class="cart-body">
+            <ul id="cart-items">
+                <!-- Cart items will be injected here -->
+            </ul>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">Tổng: <span id="cart-total-price">0</span> VNĐ</div>
+            <button id="checkout-btn" class="btn-primary full-width">Thanh Toán</button>
+        </div>
+    </div>
+    <div id="cart-overlay" class="cart-hidden"></div>
+
+    <!-- AMBIENT SOUND MIXER PANEL (SLIDING RECTANGLE ON THE RIGHT) -->
+    <div id="sound-panel">
+        <div class="sound-panel-header">
+            <div>
+                <h3 class="serif-title gold-text">Âm Thanh Đại Ngàn</h3>
+                <p class="sound-panel-sub">Hòa quyện thanh âm cùng lửa trại</p>
+            </div>
+            <button id="close-sound-panel" class="sound-close-btn" title="Đóng bảng">&times;</button>
+        </div>
+
+        <div class="sound-master-control">
+            <button id="sound-master-toggle" class="sound-master-btn">
+                <span id="sound-master-icon">🔊</span>
+                <span id="sound-master-text">Bật Toàn Bộ Âm Thanh</span>
+            </button>
+        </div>
+
+        <div class="sound-tracks-list">
+            <!-- Cồng Chiêng -->
+            <div class="sound-track-item">
+                <div class="sound-track-header">
+                    <div class="sound-track-title">
+                        <span class="sound-emoji">🔔</span>
+                        <div>
+                            <strong>Cồng Chiêng Tây Nguyên</strong>
+                            <small>Ngân vang linh thiêng</small>
+                        </div>
+                    </div>
+                    <span class="sound-vol-label" id="vol-label-cong-chieng">40%</span>
+                </div>
+                <div class="sound-track-controls">
+                    <input type="range" min="0" max="100" value="40" class="sound-slider" id="slider-cong-chieng">
+                    <button class="sound-mute-btn" id="mute-cong-chieng" title="Bật/Tắt âm này">🔊</button>
+                </div>
+            </div>
+
+            <!-- Tiếng Suối -->
+            <div class="sound-track-item">
+                <div class="sound-track-header">
+                    <div class="sound-track-title">
+                        <span class="sound-emoji">🌊</span>
+                        <div>
+                            <strong>Tiếng Suối Róc Rách</strong>
+                            <small>Dòng suối đầu nguồn</small>
+                        </div>
+                    </div>
+                    <span class="sound-vol-label" id="vol-label-tieng-suoi">50%</span>
+                </div>
+                <div class="sound-track-controls">
+                    <input type="range" min="0" max="100" value="50" class="sound-slider" id="slider-tieng-suoi">
+                    <button class="sound-mute-btn" id="mute-tieng-suoi" title="Bật/Tắt âm này">🔊</button>
+                </div>
+            </div>
+
+            <!-- Tiếng Chim Rừng -->
+            <div class="sound-track-item">
+                <div class="sound-track-header">
+                    <div class="sound-track-title">
+                        <span class="sound-emoji">🦜</span>
+                        <div>
+                            <strong>Tiếng Chim Rừng</strong>
+                            <small>Ríu rít bình minh</small>
+                        </div>
+                    </div>
+                    <span class="sound-vol-label" id="vol-label-tieng-chim">45%</span>
+                </div>
+                <div class="sound-track-controls">
+                    <input type="range" min="0" max="100" value="45" class="sound-slider" id="slider-tieng-chim">
+                    <button class="sound-mute-btn" id="mute-tieng-chim" title="Bật/Tắt âm này">🔊</button>
+                </div>
+            </div>
+
+            <!-- Tiếng Lửa Trại -->
+            <div class="sound-track-item">
+                <div class="sound-track-header">
+                    <div class="sound-track-title">
+                        <span class="sound-emoji">🔥</span>
+                        <div>
+                            <strong>Tiếng Lửa Trại</strong>
+                            <small>Bập bùng than hồng</small>
+                        </div>
+                    </div>
+                    <span class="sound-vol-label" id="vol-label-tieng-lua">60%</span>
+                </div>
+                <div class="sound-track-controls">
+                    <input type="range" min="0" max="100" value="60" class="sound-slider" id="slider-tieng-lua">
+                    <button class="sound-mute-btn" id="mute-tieng-lua" title="Bật/Tắt âm này">🔊</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="sound-panel-overlay"></div>
+
+    <!-- PRODUCT PURCHASE MODAL (GIAO DIỆN MUA HÀNG CHI TIẾT - CLEAN & LUXURY REDESIGN) -->
+    <div id="product-purchase-modal" class="product-modal-backdrop" aria-hidden="true">
+        <div class="product-modal-overlay" id="product-modal-overlay"></div>
+        <div class="product-modal-container" role="dialog" aria-modal="true">
+            <!-- Modern Ambient Glow -->
+            <div class="modal-ambient-glow"></div>
+
+            <button id="close-product-modal" class="modal-close-btn" aria-label="Đóng cửa sổ">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+            
+            <div class="product-modal-body">
+                <!-- CỘT TRÁI: HÌNH ẢNH & TƯƠNG TÁC -->
+                <div class="modal-gallery-col">
+                    <div class="main-image-container">
+                        <div id="modal-image-badge" class="image-artisan-badge">
+                            <span class="badge-sparkle">✦</span>
+                            <span>100% THỦ CÔNG</span>
+                        </div>
+                        <img id="modal-main-img" src="" alt="Sản phẩm" class="main-product-img">
+                        <div class="image-zoom-hint">
+                            <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                            <span>Ảnh thực tế nghệ nhân dệt/đan</span>
+                        </div>
+                    </div>
+                    
+                    <!-- THUMBNAILS STRIP -->
+                    <div class="thumbnail-strip" id="modal-thumb-list">
+                        <!-- Rendered by JS -->
+                    </div>
+
+                    <!-- SOCIAL SHARE & FAVORITE BAR -->
+                    <div class="modal-social-bar">
+                        <div class="share-group">
+                            <span class="share-label">Chia sẻ:</span>
+                            <div class="share-icons">
+                                <button class="share-btn fb" title="Facebook" onclick="shareProduct('Facebook')">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+                                </button>
+                                <button class="share-btn msg" title="Messenger" onclick="shareProduct('Messenger')">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="m12 2c-5.5 0-10 4.1-10 9.2 0 2.9 1.4 5.5 3.7 7.2v3.6l3.5-1.9c.9.3 1.8.4 2.8.4 5.5 0 10-4.1 10-9.3s-4.5-9.2-10-9.2zm1 12.3-2.6-2.8-5 2.8 5.6-5.9 2.6 2.8 5-2.8-5.6 5.9z"/></svg>
+                                </button>
+                                <button class="share-btn pin" title="Pinterest" onclick="shareProduct('Pinterest')">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12c0 5.1 3.2 9.4 7.6 11.1-.1-1-.2-2.5 0-3.6.2-1 1.4-5.8 1.4-5.8s-.4-.7-.4-1.8c0-1.7 1-3 2.2-3 1.1 0 1.6.8 1.6 1.8 0 1.1-.7 2.7-1.1 4.2-.3 1.3.6 2.3 1.9 2.3 2.3 0 4.1-2.4 4.1-5.9 0-3.1-2.2-5.3-5.4-5.3-3.7 0-5.9 2.8-5.9 5.7 0 1.1.4 2.3 1 3 .1.1.1.2.1.4-.1.4-.3 1.4-.4 1.6-.1.2-.2.3-.5.2-1.9-.9-3.1-3.7-3.1-6 0-4.9 3.5-9.4 10.3-9.4 5.4 0 9.7 3.9 9.7 9.1 0 5.4-3.4 9.8-8.2 9.8-1.6 0-3.1-.8-3.6-1.8l-1 3.8c-.4 1.4-1.4 3.1-2.1 4.2 1.3.4 2.7.6 4.1.6 6.6 0 12-5.4 12-12S18.6 0 12 0z"/></svg>
+                                </button>
+                                <button class="share-btn x" title="X" onclick="shareProduct('X')">
+                                    <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                                </button>
+                                <button class="share-btn copy" title="Sao chép liên kết" onclick="copyProductLink()">
+                                    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <button id="modal-like-btn" class="like-btn" onclick="toggleModalLike()">
+                            <svg id="modal-like-icon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                            <span>Yêu thích (<span id="modal-like-count">8,4k</span>)</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CỘT PHẢI: CHI TIẾT SẢN PHẨM & MUA HÀNG -->
+                <div class="modal-info-col">
+                    <!-- HEADER: BADGE & TITLE -->
+                    <div class="product-title-row">
+                        <div class="title-meta-line">
+                            <span id="modal-heritage-badge" class="heritage-badge">✦ Kiệt Tác Đan Lát</span>
+                            <span class="heritage-sub-tag">Thủ Công Bản Địa</span>
+                        </div>
+                        <h2 id="modal-product-title" class="product-full-title">Gùi Đan Mây Tre Rừng Tự Nhiên - Nghệ Thuật Đan Lát Thủ Công Gia Rai</h2>
+                    </div>
+
+                    <!-- RATINGS, STATS & AI ASSISTANT -->
+                    <div class="product-stats-row">
+                        <div class="stats-left">
+                            <div class="rating-stat">
+                                <span id="modal-rating-score" class="rating-score">4.8</span>
+                                <div class="stars-list">
+                                    <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                                </div>
+                            </div>
+                            <span class="stat-divider"></span>
+                            <div class="review-stat">
+                                <strong id="modal-review-count">3,8k</strong> <span>Đánh giá</span>
+                            </div>
+                            <span class="stat-divider"></span>
+                            <div class="sold-stat">
+                                <strong id="modal-sold-count">950</strong> <span>Đã bán</span>
+                            </div>
+                        </div>
+                        <button class="ai-story-trigger-btn" onclick="askGiaLangAboutCurrentProduct()" title="Nhờ Già Làng kể câu chuyện văn hóa về món này">
+                            <span class="ai-btn-pulse"></span>
+                            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+                            <span>Hỏi Già Làng</span>
+                        </button>
+                    </div>
+
+                    <!-- PRICE & VOUCHER SHOWCASE CARD -->
+                    <div class="modal-price-card">
+                        <div class="price-main-row">
+                            <div class="price-figures">
+                                <span id="modal-price-current" class="price-current">120.000₫</span>
+                                <span id="modal-price-original" class="price-original">140.000₫</span>
+                            </div>
+                            <span id="modal-discount-tag" class="discount-pill">-20% GIẢM</span>
+                        </div>
+                        <div class="voucher-integrated-row">
+                            <span class="voucher-label">Ưu đãi:</span>
+                            <div class="voucher-list" id="modal-voucher-list">
+                                <!-- Populated dynamically by JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MODERN TRUST CARDS GRID (CLEAN & MINIMALIST) -->
+                    <div class="modal-trust-cards">
+                        <div class="trust-card">
+                            <div class="trust-icon-box">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg>
+                            </div>
+                            <div class="trust-content">
+                                <div class="trust-title" id="modal-shipping-text">Vận chuyển toàn quốc (2 - 4 ngày)</div>
+                                <div class="trust-desc" id="modal-shipping-sub">Miễn phí vận chuyển cho đơn từ 500.000₫</div>
+                            </div>
+                        </div>
+                        <div class="trust-card">
+                            <div class="trust-icon-box">
+                                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                            </div>
+                            <div class="trust-content">
+                                <div class="trust-title">Già Làng Bảo Chứng</div>
+                                <div class="trust-desc" id="modal-guarantee-text">100% Thủ công bản địa • Đổi trả miễn phí 7 ngày</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- VARIATIONS SELECTION -->
+                    <div class="modal-variations-section">
+                        <div class="section-label-row">
+                            <span class="section-label" id="modal-variation-label">Kích Cỡ Gùi:</span>
+                            <span class="selected-variation-name" id="modal-selected-var-name"></span>
+                        </div>
+                        <div class="variations-grid" id="modal-variations-container">
+                            <!-- Populated dynamically by JS -->
+                        </div>
+                    </div>
+
+                    <!-- QUANTITY & AVAILABILITY -->
+                    <div class="modal-qty-section">
+                        <span class="section-label">Số Lượng:</span>
+                        <div class="qty-and-stock">
+                            <div class="qty-stepper">
+                                <button type="button" class="qty-btn" id="qty-minus" onclick="changeModalQuantity(-1)" aria-label="Giảm số lượng">−</button>
+                                <input type="number" id="modal-qty-input" value="1" min="1" max="99" onchange="validateModalQty(this)" aria-label="Số lượng">
+                                <button type="button" class="qty-btn" id="qty-plus" onclick="changeModalQuantity(1)" aria-label="Tăng số lượng">+</button>
+                            </div>
+                            <div class="stock-indicator">
+                                <span class="stock-pulse-dot"></span>
+                                <span id="modal-stock-text" class="stock-text">còn 19 sản phẩm sẵn có</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ACTION BUTTONS -->
+                    <div class="modal-action-buttons">
+                        <button type="button" class="btn-add-cart-gold" onclick="handleModalAddToCart()">
+                            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                            <span>Thêm Vào Giỏ</span>
+                        </button>
+                        <button type="button" class="btn-buy-now-gold" onclick="handleModalBuyNow()">
+                            <span class="btn-shine-effect"></span>
+                            <span>Mua Ngay</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ELDER STORY CINEMATIC OVERLAY (NGHE GIÀ LÀNG KỂ TÍCH XƯA) -->
+    <div id="elder-story-overlay" class="elder-story-overlay" aria-hidden="true">
+        <div class="elder-story-backdrop-blur"></div>
+        <div class="elder-story-embers">
+            <span class="elder-ember e1"></span>
+            <span class="elder-ember e2"></span>
+            <span class="elder-ember e3"></span>
+            <span class="elder-ember e4"></span>
+            <span class="elder-ember e5"></span>
+            <span class="elder-ember e6"></span>
+        </div>
+
+        <!-- CENTER STORY THEATER MODAL -->
+        <div class="elder-story-theater" role="dialog" aria-modal="true" aria-labelledby="elder-story-title">
+            <!-- CLOSE BUTTON -->
+            <button id="close-elder-story-btn" class="elder-story-close-btn" title="Đóng và trở lại bản đồ (Phím ESC)" aria-label="Đóng">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+            </button>
+
+            <!-- ANCIENT ORNATE TOP BANNER -->
+            <div class="elder-story-header">
+                <div class="elder-avatar-badge">
+                    <div class="elder-avatar-glow"></div>
+                    <span class="elder-avatar-icon">🏮</span>
+                    <span class="elder-fire-pulse"></span>
+                </div>
+                <div class="elder-header-text">
+                    <div class="elder-badge-tag">
+                        <span class="pulse-spark">✨</span>
+                        <span>KHÔNG GIAN TÍCH CỔ • GIÀ LÀNG KHỞI THOẠI</span>
+                    </div>
+                    <h3 id="elder-story-title" class="elder-story-title serif-title">Gia Lai</h3>
+                    <div id="elder-story-subtitle" class="elder-story-subtitle">Đất Võ Trời Văn Hòa Quyện Cùng Cõi Rừng Cồng Chiêng Đại Ngàn</div>
+                </div>
+            </div>
+
+            <!-- AUDIO & AMBIENCE BAR -->
+            <div class="elder-ambience-bar">
+                <div class="ambience-left">
+                    <span class="ambience-campfire-icon">🔥</span>
+                    <span class="ambience-status-text" id="elder-ambience-status">Tiếng củi lách tách bên bếp lửa buôn làng...</span>
+                </div>
+                <div class="ambience-wave" id="elder-voice-wave">
+                    <span class="wave-bar"></span>
+                    <span class="wave-bar"></span>
+                    <span class="wave-bar"></span>
+                    <span class="wave-bar"></span>
+                    <span class="wave-bar"></span>
+                </div>
+                <div class="ambience-controls-right">
+                    <button id="elder-decipher-btn" class="elder-decipher-btn" title="Kích hoạt lại hiệu ứng dịch cổ ngữ">
+                        <span class="decipher-icon">📜</span>
+                        <span class="decipher-label">Dịch Cổ Ngữ</span>
+                    </button>
+                    <button id="elder-tts-toggle-btn" class="elder-tts-btn" title="Bật/Tắt giọng đọc kể chuyện">
+                        <span class="tts-icon" id="elder-tts-icon">🔊</span>
+                        <span class="tts-text" id="elder-tts-label">Nghe già đọc</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- STORY CONTENT (SCROLLABLE RICH STORY) -->
+            <div class="elder-story-content-wrapper" id="elder-story-scrollable">
+                <div class="ancient-decipher-indicator" id="ancient-decipher-status">
+                    <span class="decipher-spinner">✦</span>
+                    <span class="decipher-status-text" id="decipher-status-text">Đang dịch giải cổ ngữ tích xưa...</span>
+                </div>
+
+                <div class="elder-opening-quote">
+                    <span class="quote-symbol">“</span>
+                    <p class="elder-opening-text">
+                        Hỡi người con của buôn làng, hãy ngồi xuống đây bên bếp lửa ấm, hơ đôi tay qua làn khói thơm mùi gỗ rừng. Già sẽ kể cho con nghe tích xưa của dải đất này...
+                    </p>
+                </div>
+                
+                <div id="elder-story-body" class="elder-story-body">
+                    <!-- Dynamic story content will be loaded here -->
+                </div>
+
+                <div class="elder-heritage-highlight" id="elder-story-heritage-box">
+                    <div class="heritage-icon">🏺</div>
+                    <div class="heritage-text">
+                        <strong id="elder-heritage-name">Bảo vật & Sản vật đất trời:</strong>
+                        <span id="elder-heritage-desc">Bún Song Thằn tiến vua An Thái, cồng chiêng Đắk Đoa và vò rượu cần men lá đại ngàn!</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FOOTER ACTIONS -->
+            <div class="elder-story-footer">
+                <button id="elder-ask-more-btn" class="elder-btn-secondary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    <span>Trò chuyện thêm cùng Già</span>
+                </button>
+                <button id="elder-return-map-btn" class="elder-btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    <span>Trở lại bản đồ</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="product-toast" class="product-toast" aria-live="polite"></div>
+
+    <!-- Scripts -->
+    <script src="/assets/js/app.js?v={{ range(100000, 999999) | random }}"></script>
+</body>
+
+</html>
