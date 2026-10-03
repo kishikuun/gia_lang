@@ -763,14 +763,18 @@ function processActions(actions) {
             const prodId = action.payload.product_id;
             const quantity = action.payload.quantity || 1;
             
-            // Lấy tạm giá mock
-            const mockPrice = prodId === 'bun_song_than' ? 150000 : 100000;
-            const mockName = prodId === 'bun_song_than' ? 'Bún Song Thằn' : prodId;
+            // Lấy thông tin thật từ PRODUCTS_DB nếu có
+            const productInfo = PRODUCTS_DB[prodId];
+            const realPrice = productInfo ? productInfo.variations[0].price : (prodId === 'bun_song_than' ? 150000 : 100000);
+            const realName = productInfo ? productInfo.shortName : (prodId === 'bun_song_than' ? 'Bún Song Thằn' : prodId);
             
-            addToCart({ id: prodId, name: mockName, price: mockPrice }, quantity);
-            
-            // Hiện thông báo trong Spirit Realm
-            appendMessage('ai', `🛒 Đã thêm ${quantity} phần ${mockName}`);
+            // Hiện nút để người dùng tự bấm thay vì tự động thêm
+            appendMessage('ai', `
+                <div class="chat-buy-suggestion" style="margin-top: 10px; padding: 12px; background: rgba(212,175,55,0.05); border: 1px solid rgba(212,175,55,0.3); border-radius: 12px; text-align: center;">
+                    <p style="margin: 0 0 10px 0; font-weight: 500; color: var(--gold); font-size: 0.95rem;">Già đã lấy sẵn ${quantity} phần ${realName} cho cháu rồi đây!</p>
+                    <button onclick="addToCart({id: '${prodId}', name: '${realName}', price: ${realPrice}}, ${quantity}); if(typeof showProductToast === 'function') showProductToast('🛒 Đã thêm ${realName} vào giỏ!'); this.innerHTML='✓ Đã thêm vào giỏ'; this.style.background='#48d1b3'; this.style.color='#0d1117'; this.style.border='none'; this.disabled=true;" class="btn-primary" style="padding: 8px 16px; font-size: 0.9rem; width: 100%; box-sizing: border-box; cursor: pointer;">🛒 Nhấn để Thêm Vào Giỏ</button>
+                </div>
+            `);
         }
         else if (action.type === 'highlight_product') {
             const prodId = action.payload.product_id;
