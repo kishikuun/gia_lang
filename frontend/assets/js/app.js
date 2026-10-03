@@ -2547,7 +2547,6 @@ Object.keys(soundTracks).forEach(key => {
 // ONBOARDING TOUR LOGIC (Driver.js)
 // ========================================================
 function startOnboardingTour() {
-    if (localStorage.getItem('gia_lang_tour_completed')) return;
     if (window.location.pathname !== '/' && window.location.pathname !== '' && window.location.pathname !== '/index.html') return;
 
     if (!window.driver) {
@@ -2598,7 +2597,6 @@ function startOnboardingTour() {
         ],
         onDestroyStarted: () => {
             driverObj.destroy();
-            localStorage.setItem('gia_lang_tour_completed', 'true');
         },
     });
 
