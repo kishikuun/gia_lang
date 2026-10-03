@@ -4578,4 +4578,65 @@ body.story-dimmed footer,
 .driver-popover-arrow-side-top::before { border-top-color: rgba(212, 175, 55, 0.4) !important; }
 .driver-popover-arrow-side-bottom::before { border-bottom-color: rgba(212, 175, 55, 0.4) !important; }
 
+/* ========================================================
+   SWIPE INDICATOR (NÚT MỞ CHAT CẠNH PHẢI)
+   ======================================================== */
+.chat-swipe-indicator {
+    position: fixed;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    background: rgba(13, 17, 23, 0.85);
+    border: 1px solid rgba(212, 175, 55, 0.4);
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    padding: 16px 8px 16px 12px;
+    color: #d4af37;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    z-index: 50; /* Dưới chatbox (z-index 100) nhưng trên map */
+    box-shadow: -4px 0 15px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+}
+
+.chat-swipe-indicator:hover {
+    padding-right: 12px;
+    background: rgba(212, 175, 55, 0.15);
+    border-color: rgba(212, 175, 55, 0.8);
+    box-shadow: -4px 0 20px rgba(212, 175, 55, 0.2);
+}
+
+.chat-swipe-indicator span {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #f5eedb;
+}
+
+.swipe-arrow {
+    width: 20px;
+    height: 20px;
+    animation: bounceLeft 2s infinite ease-in-out;
+}
+
+@keyframes bounceLeft {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-6px); }
+}
+
+/* Ẩn indicator khi chatbox đang mở */
+#spirit-realm-overlay:not(.hidden) ~ #chat-swipe-indicator,
+body:has(#spirit-realm-overlay:not(.hidden)) #chat-swipe-indicator {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%) translateX(100%);
+}
+
 

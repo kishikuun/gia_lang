@@ -375,6 +375,8 @@ function toggleSpiritRealm() {
 if (spiritOrb) spiritOrb.addEventListener('click', toggleSpiritRealm);
 if (closeSpiritRealm) closeSpiritRealm.addEventListener('click', toggleSpiritRealm);
 if (spiritChatBackdrop) spiritChatBackdrop.addEventListener('click', toggleSpiritRealm);
+const chatSwipeIndicator = document.getElementById('chat-swipe-indicator');
+if (chatSwipeIndicator) chatSwipeIndicator.addEventListener('click', toggleSpiritRealm);
 
 // --- GLOBAL SWIPE GESTURE FOR CHAT ---
 let touchStartX = 0;
