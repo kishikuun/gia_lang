@@ -2578,6 +2578,9 @@ Object.keys(soundTracks).forEach(key => {
 function startOnboardingTour() {
     if (window.location.pathname !== '/' && window.location.pathname !== '' && window.location.pathname !== '/index.html') return;
 
+    // Chỉ hiện tour vào lần đầu truy cập
+    if (localStorage.getItem('tourCompleted') === 'true') return;
+
     if (!window.driver) {
         console.warn('Driver.js not loaded');
         return;
@@ -2625,6 +2628,7 @@ function startOnboardingTour() {
             }
         ],
         onDestroyStarted: () => {
+            localStorage.setItem('tourCompleted', 'true');
             driverObj.destroy();
         },
     });
