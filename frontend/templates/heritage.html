@@ -1,34 +1,86 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<section class="page-header" style="padding-top: 150px; text-align: center; padding-bottom: 50px;">
-    <h1 class="serif-title gold-text" style="font-size: 3.5rem;">Chuyện Làng</h1>
-    <p style="font-size: 1.2rem; color: #ddd; max-width: 600px; margin: 20px auto;">Ngồi xuống đây, châm điếu thuốc cuộn, để Già Làng kể cho cháu nghe những tích xưa của đại ngàn hùng vĩ.</p>
+<!-- Particle Container for Fire Sparks -->
+<div id="fire-particles" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: -1;"></div>
+
+<section class="page-header" style="padding-top: 150px; text-align: center; padding-bottom: 50px; position: relative;">
+    <h1 class="serif-title" style="font-size: 4.5rem; background: linear-gradient(to right, #F5A623, #FF5722); -webkit-background-clip: text; color: transparent; text-shadow: 0 4px 15px rgba(245, 166, 35, 0.3);">Chuyện Làng</h1>
+    <p style="font-size: 1.2rem; color: #E2E8F0; max-width: 650px; margin: 20px auto; font-family: 'Inter', sans-serif; opacity: 0.9;">Ngồi xuống đây, châm điếu thuốc cuộn, để Già Làng kể cho cháu nghe những tích xưa của đại ngàn hùng vĩ.</p>
 </section>
 
-<section class="heritage-stories" style="padding: 50px 10%; max-width: 900px; margin: 0 auto;">
+<section class="heritage-stories" style="padding: 20px 5%; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 40px;">
     
-    <div class="story-card" style="background: rgba(20,20,20,0.8); border: 1px solid var(--gold); border-radius: 12px; padding: 30px; margin-bottom: 40px; cursor: pointer; transition: all 0.3s;" onclick="triggerStoryMode('sutich_nharong', 'Sự Tích Nhà Rông')">
-        <h2 class="serif-title" style="color: var(--gold); font-size: 2rem; margin-bottom: 15px;">Sự Tích Nhà Rông</h2>
-        <p style="color: #bbb; line-height: 1.6;">Ngày xửa ngày xưa, khi bầu trời còn sát mặt đất, người Gia Rai và Ba Na không có chỗ trú ngưa...</p>
-        <button class="btn-primary" style="margin-top: 20px;">Nghe Già Kể Chuyện</button>
+    <!-- Story Card 1 -->
+    <div class="story-card" style="position: relative; background: rgba(11, 19, 16, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(245, 166, 35, 0.2); border-radius: 20px; overflow: hidden; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 40px rgba(0,0,0,0.5);" onclick="triggerStoryMode('sutich_nharong', 'Sự Tích Nhà Rông')">
+        <div class="story-img" style="height: 250px; width: 100%; overflow: hidden; position: relative;">
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(11, 19, 16, 0.1), rgba(11, 19, 16, 1)); z-index: 1;"></div>
+            <img src="https://images.unsplash.com/photo-1542322302-3c81c3cceb63?q=80&w=800&auto=format&fit=crop" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease;" alt="Nhà Rông">
+        </div>
+        <div style="padding: 0 30px 30px 30px; position: relative; z-index: 2; margin-top: -30px;">
+            <h2 class="serif-title" style="color: #F5A623; font-size: 2.2rem; margin-bottom: 15px; text-shadow: 0 2px 5px rgba(0,0,0,0.5);">Sự Tích Nhà Rông</h2>
+            <p style="color: #E2E8F0; line-height: 1.7; font-family: 'Inter', sans-serif; opacity: 0.8;">Ngày xửa ngày xưa, khi bầu trời còn sát mặt đất, người Gia Rai và Ba Na không có chỗ trú ngụ, họ phải dựng lên những mái nhà cao vút để chạm tới thần linh...</p>
+            <button class="premium-btn" style="margin-top: 25px; width: 100%; padding: 12px; border-radius: 10px; background: linear-gradient(45deg, #FF5722, #F5A623); border: none; color: white; font-weight: bold; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px;">Nghe Già Kể Chuyện</button>
+        </div>
     </div>
 
-    <div class="story-card" style="background: rgba(20,20,20,0.8); border: 1px solid var(--gold); border-radius: 12px; padding: 30px; margin-bottom: 40px; cursor: pointer; transition: all 0.3s;" onclick="triggerStoryMode('sutich_ruoucan', 'Sự Tích Rượu Cần')">
-        <h2 class="serif-title" style="color: var(--gold); font-size: 2rem; margin-bottom: 15px;">Truyền Thuyết Rượu Cần Men Lá</h2>
-        <p style="color: #bbb; line-height: 1.6;">Nàng H'Bia vì thương dân làng thiếu thứ nước uống ngày hội, đã băng rừng tìm lá thuốc quý...</p>
-        <button class="btn-primary" style="margin-top: 20px;">Nghe Già Kể Chuyện</button>
+    <!-- Story Card 2 -->
+    <div class="story-card" style="position: relative; background: rgba(11, 19, 16, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 1px solid rgba(245, 166, 35, 0.2); border-radius: 20px; overflow: hidden; cursor: pointer; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 10px 40px rgba(0,0,0,0.5);" onclick="triggerStoryMode('sutich_ruoucan', 'Sự Tích Rượu Cần')">
+        <div class="story-img" style="height: 250px; width: 100%; overflow: hidden; position: relative;">
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, rgba(11, 19, 16, 0.1), rgba(11, 19, 16, 1)); z-index: 1;"></div>
+            <img src="/assets/images/ruou_can.jpg" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1612927601601-6638404737ce?q=80&w=800&auto=format&fit=crop'" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease;" alt="Rượu Cần">
+        </div>
+        <div style="padding: 0 30px 30px 30px; position: relative; z-index: 2; margin-top: -30px;">
+            <h2 class="serif-title" style="color: #F5A623; font-size: 2.2rem; margin-bottom: 15px; text-shadow: 0 2px 5px rgba(0,0,0,0.5);">Truyền Thuyết Rượu Cần</h2>
+            <p style="color: #E2E8F0; line-height: 1.7; font-family: 'Inter', sans-serif; opacity: 0.8;">Nàng H'Bia vì thương dân làng thiếu thứ nước uống ngày hội, đã băng rừng tìm lá thuốc quý, cất lên men say làm nức lòng cả thần linh và con người...</p>
+            <button class="premium-btn" style="margin-top: 25px; width: 100%; padding: 12px; border-radius: 10px; background: linear-gradient(45deg, #FF5722, #F5A623); border: none; color: white; font-weight: bold; font-family: 'Inter', sans-serif; cursor: pointer; transition: all 0.3s; text-transform: uppercase; letter-spacing: 1px;">Nghe Già Kể Chuyện</button>
+        </div>
     </div>
 
 </section>
 
 <!-- Dim Overlay for Story Mode -->
-<div id="story-dim-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 800; display: none; opacity: 0; transition: opacity 1s;"></div>
+<div id="story-dim-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.95) 100%); z-index: 800; display: none; opacity: 0; transition: opacity 1s;"></div>
 
 <style>
+    /* Dark Forest Background */
+    body {
+        background-color: #0B1310;
+        background-image: radial-gradient(circle at 50% 0%, rgba(30, 45, 36, 0.5) 0%, rgba(11, 19, 16, 1) 70%);
+        background-attachment: fixed;
+    }
+    
     .story-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 10px 30px rgba(230,197,92,0.2);
+        transform: translateY(-15px);
+        box-shadow: 0 20px 50px rgba(245, 166, 35, 0.15);
+        border-color: rgba(245, 166, 35, 0.5);
+    }
+    
+    .story-card:hover .story-img img {
+        transform: scale(1.1);
+    }
+
+    .story-card:hover .premium-btn {
+        box-shadow: 0 0 20px rgba(255, 87, 34, 0.5);
+        transform: scale(1.02);
+    }
+    
+    /* Fire Sparks Particle CSS */
+    .spark {
+        position: absolute;
+        bottom: -10px;
+        width: 3px;
+        height: 3px;
+        background: #F5A623;
+        border-radius: 50%;
+        box-shadow: 0 0 10px #FF5722, 0 0 20px #FF5722;
+        animation: float-up linear infinite;
+        opacity: 0;
+    }
+    
+    @keyframes float-up {
+        0% { transform: translateY(0) translateX(0) scale(1); opacity: 1; }
+        100% { transform: translateY(-100vh) translateX(50px) scale(0); opacity: 0; }
     }
 </style>
 
@@ -86,6 +138,39 @@
             }
         };
     };
+
+    // Tạo hiệu ứng đóm lửa (Fire Sparks)
+    function createSparks() {
+        const container = document.getElementById('fire-particles');
+        if (!container) return;
+        
+        setInterval(() => {
+            if (document.hidden) return; // Save performance when tab is inactive
+            
+            const spark = document.createElement('div');
+            spark.className = 'spark';
+            
+            // Random properties
+            const size = Math.random() * 3 + 1;
+            const left = Math.random() * 100;
+            const duration = Math.random() * 3 + 2; // 2s to 5s
+            
+            spark.style.width = size + 'px';
+            spark.style.height = size + 'px';
+            spark.style.left = left + 'vw';
+            spark.style.animationDuration = duration + 's';
+            
+            container.appendChild(spark);
+            
+            // Remove after animation finishes
+            setTimeout(() => {
+                if(spark.parentNode) spark.parentNode.removeChild(spark);
+            }, duration * 1000);
+        }, 150); // Create a new spark every 150ms
+    }
+    
+    // Khởi động khi tải xong
+    document.addEventListener("DOMContentLoaded", createSparks);
 </script>
 
 {% endblock %}
