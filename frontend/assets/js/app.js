@@ -376,6 +376,35 @@ if (spiritOrb) spiritOrb.addEventListener('click', toggleSpiritRealm);
 if (closeSpiritRealm) closeSpiritRealm.addEventListener('click', toggleSpiritRealm);
 if (spiritChatBackdrop) spiritChatBackdrop.addEventListener('click', toggleSpiritRealm);
 
+// --- GLOBAL SWIPE GESTURE FOR CHAT ---
+let touchStartX = 0;
+let touchEndX = 0;
+
+document.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+});
+
+document.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    const swipeThreshold = 50; // khoảng cách tối thiểu để nhận diện vuốt
+    
+    // Lướt từ phải sang trái -> Mở chatbox full
+    if (touchEndX < touchStartX - swipeThreshold) {
+        // Chỉ kích hoạt nếu bắt đầu vuốt từ mép phải màn hình (khoảng 100px)
+        if (touchStartX > window.innerWidth - 100) {
+            if (spiritRealm && spiritRealm.classList.contains('hidden')) {
+                toggleSpiritRealm();
+            }
+        }
+    } 
+    // Lướt từ trái sang phải -> Đóng chatbox
+    else if (touchEndX > touchStartX + swipeThreshold) {
+        if (spiritRealm && !spiritRealm.classList.contains('hidden')) {
+            toggleSpiritRealm();
+        }
+    }
+});
+
 // --- CLEAR CHAT ---
 if (spiritClearChat) {
     spiritClearChat.addEventListener('click', () => {

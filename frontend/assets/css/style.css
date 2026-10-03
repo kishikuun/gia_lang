@@ -1140,7 +1140,7 @@ body {
 /* Chat Panel */
 .spirit-chat-panel {
     position: relative;
-    width: 440px;
+    width: 100vw;
     max-width: 100vw;
     height: 100vh;
     display: flex;
@@ -1166,6 +1166,12 @@ body {
     border-bottom: 1px solid rgba(230, 197, 92, 0.1);
     backdrop-filter: blur(12px);
     flex-shrink: 0;
+}
+@media (min-width: 900px) {
+    .spirit-chat-header {
+        padding-left: calc(50vw - 420px);
+        padding-right: calc(50vw - 420px);
+    }
 }
 .spirit-chat-header-left {
     display: flex;
@@ -1249,6 +1255,12 @@ body {
     gap: 16px;
     scroll-behavior: smooth;
     overscroll-behavior: contain;
+}
+@media (min-width: 900px) {
+    .spirit-chat-messages {
+        padding-left: calc(50vw - 420px);
+        padding-right: calc(50vw - 420px);
+    }
 }
 .spirit-chat-messages::-webkit-scrollbar {
     width: 5px;
@@ -1399,6 +1411,12 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.06);
     background: rgba(13, 17, 23, 0.98);
     flex-shrink: 0;
+}
+@media (min-width: 900px) {
+    .spirit-chat-input-area {
+        padding-left: calc(50vw - 420px);
+        padding-right: calc(50vw - 420px);
+    }
 }
 .spirit-chat-input-wrapper {
     display: flex;
