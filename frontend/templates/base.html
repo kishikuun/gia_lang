@@ -618,7 +618,7 @@
     <div id="insightModal" class="modal-overlay" style="z-index: 9999; align-items: center; justify-content: center; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);">
         <div class="modal-content" style="width: 90vw; height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px 8vw; text-align: center; background: rgba(11, 19, 16, 0.7); border: 1px solid rgba(245, 166, 35, 0.3); border-radius: 30px; box-shadow: 0 20px 80px rgba(0,0,0,0.8), inset 0 0 50px rgba(245, 166, 35, 0.05); overflow-y: auto;">
             <h3 id="insightModalTitle" class="serif-title" style="color: var(--gold); font-size: 3.5rem; margin-bottom: 40px; text-shadow: 0 4px 20px rgba(245, 166, 35, 0.4); font-weight: 700; letter-spacing: 1px; min-height: 4rem;"></h3>
-            <p id="insightModalContent" style="color: #f0f0f0; font-family: 'Inter', sans-serif; line-height: 2.2; font-size: 1.4rem; max-width: 900px; margin: 0 auto 50px auto; font-weight: 300; text-shadow: 0 2px 4px rgba(0,0,0,0.5); min-height: 10rem;"></p>
+            <p id="insightModalContent" style="color: #ffffff; text-align: left; font-family: 'Inter', sans-serif; line-height: 2.2; font-size: 1.4rem; max-width: 900px; margin: 0 auto 50px auto; font-weight: 300; text-shadow: 0 2px 4px rgba(0,0,0,0.5); min-height: 10rem;"></p>
             <div style="display: flex; gap: 20px; align-items: center; justify-content: center;">
                 <button id="insight-tts-btn" class="btn-primary" onclick="toggleInsightTTS()" style="padding: 15px 40px; font-size: 1.1rem; border-radius: 50px; background: rgba(245, 166, 35, 0.1); border: 1px solid var(--gold); color: var(--gold); font-weight: bold; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.background='rgba(245, 166, 35, 0.2)'" onmouseout="this.style.background='rgba(245, 166, 35, 0.1)'">🔊 Đọc nội dung</button>
                 <button class="btn-primary" onclick="closeInsightModal()" style="padding: 15px 50px; font-size: 1.1rem; border-radius: 50px; background: linear-gradient(45deg, #FF5722, #F5A623); border: none; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 10px 30px rgba(255, 87, 34, 0.3); transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">✕ Đóng</button>
@@ -667,11 +667,11 @@
         let iteration = 0;
         
         const localInterval = setInterval(() => {
-            el.innerText = plainText.split("").map((letter, index) => {
+            el.innerHTML = plainText.split("").map((letter, index) => {
                 if(index < iteration) {
-                    return plainText[index];
+                    return `<span style="color: #ffffff;">${plainText[index]}</span>`;
                 }
-                return letter === " " ? " " : chars[Math.floor(Math.random() * chars.length)];
+                return letter === " " ? " " : `<span style="color: #ffd24d; font-family: 'Playfair Display', serif; text-shadow: 0 0 8px rgba(255, 210, 77, 0.6);">${chars[Math.floor(Math.random() * chars.length)]}</span>`;
             }).join("");
             
             if(iteration >= plainText.length){
