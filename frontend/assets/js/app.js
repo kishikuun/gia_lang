@@ -275,12 +275,14 @@ function appendMessage(role, content, useGlitch = false, riskLevel = "Safe") {
                     <circle cx="12" cy="12" r="2" />
                 </svg>
             </div>
-            <div class="spirit-msg-bubble" style="${borderStyle}">
-                <div class="spirit-msg-header" style="margin-bottom:4px; font-weight:600; font-size:0.85rem;">
-                    <span>Già Làng</span>${warningIcon}
+            <div class="spirit-msg-content-wrapper" style="display: flex; flex-direction: column;">
+                <div class="spirit-msg-bubble" style="${borderStyle}">
+                    <div class="spirit-msg-header" style="margin-bottom:4px; font-weight:600; font-size:0.85rem;">
+                        <span>Già Làng</span>${warningIcon}
+                    </div>
+                    <div class="spirit-glitch-text${useGlitch ? ' glitching' : ''}">${useGlitch ? '' : content}</div>
+                    <span class="msg-time">${timeStr}</span>
                 </div>
-                <div class="spirit-glitch-text${useGlitch ? ' glitching' : ''}">${useGlitch ? '' : content}</div>
-                <span class="msg-time">${timeStr}</span>
             </div>
         `;
     } else {
@@ -301,7 +303,7 @@ function renderSpiritSuggestions(suggestions, msgEl) {
     if (!suggestions || suggestions.length === 0 || !msgEl) return;
     const chipsContainer = document.createElement('div');
     chipsContainer.className = 'spirit-suggest-chips-inline';
-    chipsContainer.style.cssText = 'display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; margin-left: 38px;';
+    chipsContainer.style.cssText = 'display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px;';
     
     suggestions.forEach(suggest => {
         const btn = document.createElement('button');
@@ -319,7 +321,10 @@ function renderSpiritSuggestions(suggestions, msgEl) {
         });
         chipsContainer.appendChild(btn);
     });
-    msgEl.appendChild(chipsContainer);
+    
+    const wrapper = msgEl.querySelector('.spirit-msg-content-wrapper');
+    if (wrapper) wrapper.appendChild(chipsContainer);
+    else msgEl.appendChild(chipsContainer);
 }
 
 function scrollChatToBottom() {
@@ -547,12 +552,14 @@ function appendCampfireMsg(role, content, useGlitch = false, riskLevel = "Safe")
                     <path d="M12 8v1M12 15v1M8 12h1M15 12h1" stroke-linecap="round" />
                 </svg>
             </div>
-            <div class="campfire-msg-bubble" style="${borderStyle}">
-                <div class="campfire-msg-header">
-                    <span class="campfire-msg-sender">Già Làng</span>${warningIcon}
+            <div class="campfire-msg-content-wrapper" style="display: flex; flex-direction: column;">
+                <div class="campfire-msg-bubble" style="${borderStyle}">
+                    <div class="campfire-msg-header">
+                        <span class="campfire-msg-sender">Già Làng</span>${warningIcon}
+                    </div>
+                    <div class="spirit-glitch-text${useGlitch ? ' glitching' : ''}">${useGlitch ? '' : content}</div>
+                    <span class="msg-time">${timeStr}</span>
                 </div>
-                <div class="spirit-glitch-text${useGlitch ? ' glitching' : ''}">${useGlitch ? '' : content}</div>
-                <span class="msg-time">${timeStr}</span>
             </div>
         `;
     } else {
@@ -573,7 +580,7 @@ function renderCampfireSuggestions(suggestions, msgEl) {
     if (!suggestions || suggestions.length === 0 || !msgEl) return;
     const chipsContainer = document.createElement('div');
     chipsContainer.className = 'campfire-suggest-chips-inline';
-    chipsContainer.style.cssText = 'display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; margin-left: 36px;';
+    chipsContainer.style.cssText = 'display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;';
     
     suggestions.forEach(suggest => {
         const btn = document.createElement('button');
@@ -590,7 +597,10 @@ function renderCampfireSuggestions(suggestions, msgEl) {
         });
         chipsContainer.appendChild(btn);
     });
-    msgEl.appendChild(chipsContainer);
+    
+    const wrapper = msgEl.querySelector('.campfire-msg-content-wrapper');
+    if (wrapper) wrapper.appendChild(chipsContainer);
+    else msgEl.appendChild(chipsContainer);
 }
 
 function showCampfireTyping() {
