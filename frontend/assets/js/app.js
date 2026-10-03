@@ -2109,7 +2109,7 @@ function runAncientDecipherAnimation(paragraphs, quoteText) {
         }
         isDeciphering = false;
         blocks.forEach(b => {
-            b.el.textContent = b.fullText;
+            b.el.innerHTML = `<span class="rune-translated">${b.fullText}</span>`;
         });
         if (indicatorEl) {
             indicatorEl.classList.add('complete');
@@ -2129,7 +2129,7 @@ function runAncientDecipherAnimation(paragraphs, quoteText) {
         currentCharIdx += stepSize;
 
         if (currentCharIdx >= b.fullText.length) {
-            b.el.textContent = b.fullText;
+            b.el.innerHTML = `<span class="rune-translated">${b.fullText}</span>`;
             currentBlockIdx++;
             currentCharIdx = 0;
         } else {
@@ -2148,7 +2148,7 @@ function runAncientDecipherAnimation(paragraphs, quoteText) {
                 unrevealed += (ch === ' ' || ch === '\n') ? ch : getRandomRune();
             }
 
-            b.el.innerHTML = `${revealed}<span class="rune-deciphering">${scrambles}</span><span class="rune-ancient">${unrevealed}</span>`;
+            b.el.innerHTML = `<span class="rune-translated">${revealed}</span><span class="rune-deciphering">${scrambles}</span><span class="rune-ancient">${unrevealed}</span>`;
         }
     }, 28);
 }

@@ -4383,8 +4383,7 @@ body.story-dimmed footer,
 
 .elder-story-p {
     margin: 0;
-    text-align: justify;
-    text-justify: inter-word;
+    text-align: left;
     font-family: 'Be Vietnam Pro', 'Inter', sans-serif !important;
     line-height: 1.9;
 }
@@ -4400,6 +4399,12 @@ body.story-dimmed footer,
     font-weight: 700;
     color: var(--gold);
     text-shadow: 0 0 16px rgba(212, 175, 55, 0.65);
+}
+
+.rune-translated {
+    display: inline;
+    color: #ffffff;
+    font-family: 'Be Vietnam Pro', 'Inter', sans-serif;
 }
 
 /* GLYPH STYLING DURING TRANSLATION */
