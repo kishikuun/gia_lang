@@ -92,13 +92,26 @@ system_instruction = f"""[LUẬT TỐI CAO CỦA GIÀ LÀNG]:
 {knowledge_base}
 """
 
-def extract_and_clean_tool_calls(text: str, actions: list) -> tuple[str, list, list, str]:
+def extract_and_clean_tool_calls(text: str, actions: list, context_info: str = "") -> tuple[str, list, list, str]:
     """Tách và dọn dẹp các thẻ tool call bị model sinh ra dưới dạng text như *<call:default_api:play_sound{sound_type:chimes}/>*"""
     if not text:
         return text, actions, ["Câu chuyện này thú vị quá!", "Sản phẩm này có gì đặc biệt?", "Chốt đơn cho cháu"], "Safe"
         
     # Extract suggestions and risk level
     suggested_replies = re.findall(r'<suggest>(.*?)</suggest>', text, flags=re.IGNORECASE)
+    
+    user_text = context_info.split(']')[-1].lower() if ']' in context_info else context_info.lower()
+    check_text = user_text if user_text.strip() else context_info.lower()
+    
+    if "bún" in check_text or "song thằn" in check_text:
+        suggested_replies = ["Bún Song Thằn có gì đặc biệt?", "Bún này nấu món gì ngon?", "Chốt đơn cho cháu bún này!"]
+    elif "rượu" in check_text or "ché" in check_text:
+        suggested_replies = ["Rượu cần có gì đặc biệt?", "Cách uống chuẩn người bản địa?", "Chốt đơn một ché rượu!"]
+    elif "thổ cẩm" in check_text or "vải" in check_text or "dệt" in check_text:
+        suggested_replies = ["Vải thổ cẩm có gì đặc biệt?", "Họa tiết này có ý nghĩa gì?", "Cho cháu xem các mẫu thổ cẩm"]
+    elif "gùi" in check_text or "tre" in check_text:
+        suggested_replies = ["Gùi đan tre có gì đặc biệt?", "Gùi này tải được bao nhiêu kg?", "Cháu lấy cái gùi này"]
+        
     if not suggested_replies or len(suggested_replies) < 2:
         suggested_replies = (suggested_replies + ["Chuyện làng còn gì vui không?", "Sản phẩm này có gì đặc biệt?", "Già tư vấn thêm cho cháu"])[:3]
         
@@ -248,7 +261,7 @@ class GiaLangChatbot:
                 elif "rượu" in ai_text.lower():
                     actions.append({"type": "play_sound", "payload": {"sound_type": "pouring"}})
                     
-                return extract_and_clean_tool_calls(ai_text, actions)
+                return extract_and_clean_tool_calls(ai_text, actions, payload.user_message if payload else "")
             else:
                 return "Già đang bận đi nương, mạng lag quá cháu ơi.", []
         except Exception as e:
@@ -343,7 +356,7 @@ class GiaLangChatbot:
                         self.candidate_models.insert(0, model_to_try)
                     self.gemini_model = model_to_try
                     
-                    return extract_and_clean_tool_calls(response_text, actions)
+                    return extract_and_clean_tool_calls(response_text, actions, req.user_message if req else "")
                 except Exception as e:
                     last_err = e
                     print(f"[Gemini] Mô hình {model_to_try} gặp lỗi: {e}. Thử mô hình tiếp theo...")
