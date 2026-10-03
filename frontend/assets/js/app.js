@@ -70,6 +70,7 @@ if (welcomeScreen) {
             triggerInitialGreeting();
         }
     });
+    }
 }
 
 // GSAP ANIMATIONS & SCROLLYTELLING
