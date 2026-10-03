@@ -259,13 +259,15 @@ function getTimeString() {
     return now.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
 }
 
-function appendMessage(role, content, useGlitch = false) {
+function appendMessage(role, content, useGlitch = false, riskLevel = "Safe") {
     const msgDiv = document.createElement('div');
     msgDiv.className = `spirit-msg spirit-msg-${role}`;
     
     const timeStr = getTimeString();
     
     if (role === 'ai') {
+        const borderStyle = riskLevel === "Warning" ? 'border: 1px solid #ffcc00; box-shadow: 0 0 10px rgba(255,204,0,0.2);' : '';
+        const warningIcon = riskLevel === "Warning" ? '<span title="Dữ liệu ngoài kho tri thức" style="color:#ffcc00; font-size:12px; margin-left:8px;">⚠️ Cảnh báo</span>' : '';
         msgDiv.innerHTML = `
             <div class="spirit-avatar-small">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
@@ -273,7 +275,10 @@ function appendMessage(role, content, useGlitch = false) {
                     <circle cx="12" cy="12" r="2" />
                 </svg>
             </div>
-            <div class="spirit-msg-bubble">
+            <div class="spirit-msg-bubble" style="${borderStyle}">
+                <div class="spirit-msg-header" style="margin-bottom:4px; font-weight:600; font-size:0.85rem;">
+                    <span>Già Làng</span>${warningIcon}
+                </div>
                 <div class="spirit-glitch-text${useGlitch ? ' glitching' : ''}">${useGlitch ? '' : content}</div>
                 <span class="msg-time">${timeStr}</span>
             </div>
@@ -290,6 +295,33 @@ function appendMessage(role, content, useGlitch = false) {
     spiritChatMessages.appendChild(msgDiv);
     scrollChatToBottom();
     return msgDiv;
+}
+
+function renderSpiritSuggestions(suggestions) {
+    if (!suggestions || suggestions.length === 0) return;
+    let chipsContainer = document.getElementById('spirit-suggest-chips');
+    if (!chipsContainer) {
+        const inputArea = document.querySelector('.spirit-chat-input-wrapper');
+        chipsContainer = document.createElement('div');
+        chipsContainer.id = 'spirit-suggest-chips';
+        chipsContainer.style.cssText = 'display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; padding: 0 10px;';
+        inputArea.parentNode.insertBefore(chipsContainer, inputArea);
+    }
+    chipsContainer.innerHTML = '';
+    suggestions.forEach(suggest => {
+        const btn = document.createElement('button');
+        btn.textContent = suggest;
+        btn.style.cssText = 'background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); color: #d4af37; padding: 6px 12px; border-radius: 16px; font-size: 12px; cursor: pointer; transition: all 0.3s;';
+        btn.onmouseover = () => btn.style.background = 'rgba(212, 175, 55, 0.2)';
+        btn.onmouseout = () => btn.style.background = 'rgba(212, 175, 55, 0.1)';
+        btn.addEventListener('click', () => {
+            if (spiritInput) {
+                spiritInput.value = suggest;
+                handleSpiritMessage();
+            }
+        });
+        chipsContainer.appendChild(btn);
+    });
 }
 
 function scrollChatToBottom() {
@@ -395,6 +427,8 @@ async function callSpiritAI(systemPromptOverride = null) {
         if (res.ok) {
             const aiResponse = data.response;
             const actions = data.actions || [];
+            const suggestedReplies = data.suggested_replies || [];
+            const riskLevel = data.risk_level || "Safe";
             
             spiritChatHistory.push({ role: 'model', content: aiResponse });
             
@@ -406,11 +440,12 @@ async function callSpiritAI(systemPromptOverride = null) {
             }
             
             // Add AI message with glitch decode animation
-            const msgEl = appendMessage('ai', '', true);
+            const msgEl = appendMessage('ai', '', true, riskLevel);
             const bubbleEl = msgEl.querySelector('.spirit-msg-bubble');
             
             glitchDecodeText(bubbleEl, aiResponse, () => {
                 if (actions && actions.length > 0) processActions(actions);
+                renderSpiritSuggestions(suggestedReplies);
                 scrollChatToBottom();
             });
         } else {
@@ -497,13 +532,15 @@ const campfireHistory = document.getElementById('campfire-history');
 const campfireTypingIndicator = document.getElementById('campfire-typing-indicator');
 const campfireClearBtn = document.getElementById('campfire-clear-btn');
 
-function appendCampfireMsg(role, content, useGlitch = false) {
+function appendCampfireMsg(role, content, useGlitch = false, riskLevel = "Safe") {
     if (!campfireHistory) return null;
     const msgDiv = document.createElement('div');
     msgDiv.className = `campfire-msg campfire-msg-${role}`;
     const timeStr = getTimeString();
 
     if (role === 'ai') {
+        const borderStyle = riskLevel === "Warning" ? 'border: 1px solid #ffcc00; box-shadow: 0 0 10px rgba(255,204,0,0.2);' : '';
+        const warningIcon = riskLevel === "Warning" ? '<span title="Dữ liệu ngoài kho tri thức" style="color:#ffcc00; margin-left:8px; font-size:12px;">⚠️ Cảnh báo thiếu dữ liệu</span>' : '';
         msgDiv.innerHTML = `
             <div class="campfire-avatar-small" title="Già Làng">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" width="18" height="18">
@@ -512,9 +549,9 @@ function appendCampfireMsg(role, content, useGlitch = false) {
                     <path d="M12 8v1M12 15v1M8 12h1M15 12h1" stroke-linecap="round" />
                 </svg>
             </div>
-            <div class="campfire-msg-bubble">
+            <div class="campfire-msg-bubble" style="${borderStyle}">
                 <div class="campfire-msg-header">
-                    <span class="campfire-msg-sender">Già Làng</span>
+                    <span class="campfire-msg-sender">Già Làng</span>${warningIcon}
                 </div>
                 <div class="spirit-glitch-text${useGlitch ? ' glitching' : ''}">${useGlitch ? '' : content}</div>
                 <span class="msg-time">${timeStr}</span>
@@ -532,6 +569,24 @@ function appendCampfireMsg(role, content, useGlitch = false) {
     campfireHistory.appendChild(msgDiv);
     campfireHistory.scrollTop = campfireHistory.scrollHeight;
     return msgDiv;
+}
+
+function renderCampfireSuggestions(suggestions) {
+    const chipsContainer = document.querySelector('.campfire-section .prompt-chips');
+    if (!chipsContainer || !suggestions || suggestions.length === 0) return;
+    chipsContainer.innerHTML = '';
+    suggestions.forEach(suggest => {
+        const btn = document.createElement('button');
+        btn.className = 'prompt-chip';
+        btn.innerHTML = `<span class="chip-icon">💬</span><span>${suggest}</span>`;
+        btn.addEventListener('click', () => {
+            if (campfireInput) {
+                campfireInput.value = suggest;
+                handleCampfireMessage();
+            }
+        });
+        chipsContainer.appendChild(btn);
+    });
 }
 
 function showCampfireTyping() {
@@ -578,14 +633,17 @@ async function handleCampfireMessage() {
         if (res.ok) {
             const aiResponse = data.response;
             const actions = data.actions || [];
+            const suggestedReplies = data.suggested_replies || [];
+            const riskLevel = data.risk_level || "Safe";
             spiritChatHistory.push({ role: 'model', content: aiResponse });
             
             // Glitch Decode Animation for Campfire
-            const msgEl = appendCampfireMsg('ai', '', true);
+            const msgEl = appendCampfireMsg('ai', '', true, riskLevel);
             if (msgEl) {
                 const bubbleEl = msgEl.querySelector('.campfire-msg-bubble');
                 glitchDecodeText(bubbleEl, aiResponse, () => {
                     if (actions && actions.length > 0) processActions(actions);
+                    renderCampfireSuggestions(suggestedReplies);
                     if (campfireHistory) campfireHistory.scrollTop = campfireHistory.scrollHeight;
                 });
             }

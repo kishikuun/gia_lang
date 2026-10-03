@@ -84,16 +84,26 @@ system_instruction = f"""[LUẬT TỐI CAO CỦA GIÀ LÀNG]:
 3. CHỦ ĐỘNG DẪN DẮT: Đừng chỉ trả lời suông. Kể một câu chuyện bí ẩn, thú vị về văn hóa, rồi gạ khách chốt đơn khéo léo.
 4. BÚN SONG THẰN LÀ SỐ 1: Bún tiến vua, sợi trong suốt như ngọc, 100% đậu xanh nguyên chất. Luôn tìm cách lồng ghép để PR món này.
 5. Định dạng văn bản: Trả lời ngắn gọn, xuống dòng tự nhiên, KHÔNG dùng gạch đầu dòng, KHÔNG liệt kê số thứ tự kiểu robot. Dùng emoji vừa đủ.
-6. TUYỆT ĐỐI KHÔNG tự viết thẻ lệnh hàm dạng text như '<call:...>' hay '*<call:...>*' vào câu trả lời. Già Làng chỉ giao tiếp bằng lời thoại ấm áp, tự nhiên thuần túy.
+6. TUYỆT ĐỐI KHÔNG tự viết thẻ lệnh hàm dạng text như '<call:...>' hay '*<call:...>*' vào câu trả lời.
+7. [QUAN TRỌNG] Ở CUỐI câu trả lời, LUÔN LUÔN cung cấp 2 câu hỏi gợi ý để khách hỏi tiếp, đặt trong thẻ <suggest>... </suggest>. Ví dụ: <suggest>Kể chuyện tiếp đi Già</suggest><suggest>Bún này giá sao Già?</suggest>
+8. [QUAN TRỌNG] PHÂN TÍCH RỦI RO: Đánh giá xem khách có hỏi ngoài lề (không có trong KIẾN THỨC BẢN LÀNG) hay không. Nếu ngoài lề, hãy thật thà nói "Già chưa nghe chuyện này..." và LUÔN LUÔN thêm thẻ <risk>Warning</risk> ở cuối. Nếu an toàn, trả về <risk>Safe</risk>.
 
 [KIẾN THỨC BẢN LÀNG]:
 {knowledge_base}
 """
 
-def extract_and_clean_tool_calls(text: str, actions: list) -> tuple[str, list]:
+def extract_and_clean_tool_calls(text: str, actions: list) -> tuple[str, list, list, str]:
     """Tách và dọn dẹp các thẻ tool call bị model sinh ra dưới dạng text như *<call:default_api:play_sound{sound_type:chimes}/>*"""
     if not text:
-        return text, actions
+        return text, actions, ["Già kể tiếp đi", "Sản phẩm này có gì đặc biệt?"], "Safe"
+        
+    # Extract suggestions and risk level
+    suggested_replies = re.findall(r'<suggest>(.*?)</suggest>', text, flags=re.IGNORECASE)
+    if not suggested_replies or len(suggested_replies) < 2:
+        suggested_replies = (suggested_replies + ["Già kể tiếp đi", "Sản phẩm này có gì đặc biệt?"])[:2]
+        
+    risk_match = re.search(r'<risk>(.*?)</risk>', text, flags=re.IGNORECASE)
+    risk_level = risk_match.group(1).strip() if risk_match else "Safe"
     
     pattern = r'\*?`?<\s*call:(?:default_api:)?(\w+)\s*(\{.*?\})?\s*/?>`?\*?'
     
@@ -130,8 +140,10 @@ def extract_and_clean_tool_calls(text: str, actions: list) -> tuple[str, list]:
     cleaned_text = re.sub(r'\[ACTION_BUY\]', '', cleaned_text)
     cleaned_text = re.sub(r'<call:[^>]+>', '', cleaned_text)
     cleaned_text = re.sub(r'<thought>.*?</thought>', '', cleaned_text, flags=re.DOTALL)
+    cleaned_text = re.sub(r'<suggest>.*?</suggest>', '', cleaned_text, flags=re.IGNORECASE)
+    cleaned_text = re.sub(r'<risk>.*?</risk>', '', cleaned_text, flags=re.IGNORECASE)
     cleaned_text = re.sub(r'\n{3,}', '\n\n', cleaned_text).strip()
-    return cleaned_text, actions
+    return cleaned_text, actions, suggested_replies, risk_level
 
 def warmup_ollama_sync():
     print("\n[System] Đang khởi động Ollama (gialang_model) trước khi chạy Server...")
@@ -243,7 +255,7 @@ class GiaLangChatbot:
             print(f"[Ollama Lỗi] Không thể kết nối tới Ollama: {str(e)}")
             return "Già đang nghỉ ngơi, lát gọi lại cho Già nhen.", []
 
-    def send_message(self, payload: InteractRequest) -> tuple[str, list]:
+    def send_message(self, payload: InteractRequest) -> tuple[str, list, list, str]:
         current_time = time.time()
         if current_time < self.gemini_cooldown_until:
             remain = int(self.gemini_cooldown_until - current_time)
@@ -376,13 +388,14 @@ async def health_check():
 async def interact_api(payload: InteractRequest):
     print(f"\n[AI-GATEWAY] Khách nói: '{payload.user_message}' | Context: {payload.context_product}")
     try:
-        response_text, actions = await asyncio.to_thread(chatbot.send_message, payload)
-        response_text, actions = extract_and_clean_tool_calls(response_text, actions)
+        response_text, actions, suggested_replies, risk_level = await asyncio.to_thread(chatbot.send_message, payload)
     except Exception as e:
         print(f"[AI-GATEWAY Lỗi] {e}")
         response_text = "Già đang mải canh đống lửa buôn làng, mạng chập chờn quá cháu ơi. Lát cháu nhắn lại Già liền nghen!"
         actions = []
-    return {"response": response_text, "actions": actions}
+        suggested_replies = ["Khởi động lại", "Thoát"]
+        risk_level = "Warning"
+    return {"response": response_text, "actions": actions, "suggested_replies": suggested_replies, "risk_level": risk_level}
 
 def warmup_gemini_sync():
     import time
