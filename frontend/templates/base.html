@@ -662,7 +662,8 @@
 
     function decodeTextEffect(elementId, finalHtml) {
         const el = document.getElementById(elementId);
-        const plainText = finalHtml.replace(/<[^>]*>?/gm, ''); 
+        el.style.whiteSpace = 'pre-wrap';
+        const plainText = finalHtml.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>?/gm, ''); 
         const chars = "ⰀⰁⰂⰃⰄⰅⰆⰇⰈⰉⰊⰋⰌⰍⰎⰏⰐⰑⰒⰓⰔⰕⰖⰗⰘⰙⰚⰛⰜⰝⰞⰟⰠⰡⰢⰣⰤⰥⰦⰧⰨⰩⰪⰫⰬⰭⰮⰯ"; 
         let iteration = 0;
         
@@ -671,15 +672,16 @@
                 if(index < iteration) {
                     return `<span style="color: #ffffff;">${plainText[index]}</span>`;
                 }
-                return letter === " " ? " " : `<span style="color: #ffd24d; font-family: 'Playfair Display', serif; text-shadow: 0 0 8px rgba(255, 210, 77, 0.6);">${chars[Math.floor(Math.random() * chars.length)]}</span>`;
+                return (letter === " " || letter === "\n") ? letter : `<span style="color: #ffd24d; font-family: 'Playfair Display', serif; text-shadow: 0 0 8px rgba(255, 210, 77, 0.6);">${chars[Math.floor(Math.random() * chars.length)]}</span>`;
             }).join("");
             
             if(iteration >= plainText.length){
                 clearInterval(localInterval);
+                el.style.whiteSpace = 'normal';
                 el.innerHTML = finalHtml;
             }
-            iteration += 1;
-        }, 15);
+            iteration += 3; // speed up decode for long text
+        }, 10);
         return localInterval;
     }
 
@@ -689,18 +691,44 @@
         let title = "";
         let contentHtml = "";
         
+        let isBunSongThan = productName.toLowerCase().includes("bún song thằn");
+
         if (type === 'nguon_goc') {
             title = "Nguồn gốc";
-            contentHtml = `Sản phẩm <b>${productName}</b> bắt nguồn từ những buôn làng cổ xưa sâu trong đại ngàn. Được truyền từ thế hệ này sang thế hệ khác, lưu giữ trọn vẹn tinh hoa của vùng đất đỏ bazan.`;
+            if (isBunSongThan) {
+                contentHtml = `<b>Bún song thằn</b> là di sản văn hóa ẩm thực và thủ công truyền thống có lịch sử hàng trăm năm, xuất phát từ làng cổ An Thái, thị xã An Nhơn, tỉnh Bình Định. Nguồn gốc của sản phẩm gắn liền với các yếu tố lịch sử và địa lý đặc thù:<br><br>
+<b>Sự giao thoa văn hóa Việt - Hoa:</b> Hình thành vào khoảng thế kỷ 18 khi cộng đồng người Hoa (Minh Hương) di cư đến thương cảng sầm uất An Thái. Nghề làm bột đậu xanh và bún ban đầu được giữ bí mật trong các gia tộc gốc Hoa, sau đó dần chuyển giao và bản địa hóa hoàn toàn bởi người Việt.<br><br>
+<b>Dấu ấn gia truyền:</b> Ông tổ nghề Hồ Văn Mơi là người khởi xướng, sau đó truyền lại qua nhiều thế hệ. Nổi bật nhất là bà Lý Thị Hương - người đã thiết kế biểu tượng thương hiệu "năm cậu bé hồng hào" mang tâm niệm chúc sức khỏe cho người thưởng thức.<br><br>
+<b>Từ nguyên học và huyền thoại:</b> Tên gọi gốc là "song thằng" (chỉ việc sợi bún được ép kéo thành từng đôi song song), sau đọc trại thành "song thằn". Sản phẩm còn được gọi là "bún tiến vua" do từng là ngự thiện dâng lên vua triều Nguyễn.`;
+            } else {
+                contentHtml = `Sản phẩm <b>${productName}</b> bắt nguồn từ những buôn làng cổ xưa sâu trong đại ngàn. Được truyền từ thế hệ này sang thế hệ khác, lưu giữ trọn vẹn tinh hoa của vùng đất đỏ bazan.`;
+            }
         } else if (type === 'quy_trinh') {
             title = "Quy trình làm";
-            contentHtml = `Để tạo ra <b>${productName}</b>, các nghệ nhân phải mất hàng chục giờ đồng hồ lao động miệt mài. Mọi công đoạn đều 100% thủ công, từ khâu chọn lọc nguyên liệu tự nhiên đến khi thành hình, đòi hỏi sự kiên nhẫn và đôi tay khéo léo tuyệt đỉnh.`;
+            if (isBunSongThan) {
+                contentHtml = `Quy trình làm <b>bún song thằn</b> đòi hỏi tay nghề cao, tỷ lệ hao hụt nguyên liệu cực lớn (5kg đậu xanh loại 1 mới thu được 1,2kg tinh bột và làm ra 1kg bún khô) và phụ thuộc tuyệt đối vào thiên nhiên.<br><br>
+<b>Gạn lọc tinh bột:</b> Đậu xanh được giã, đãi, ngâm và lắng lọc nhiều lần để lấy phần bột mịn, tinh khiết nhất chìm dưới đáy gọi là "bột nhất".<br><br>
+<b>Xay bột trong đêm:</b> Diễn ra từ 12 giờ khuya đến rạng sáng để tận dụng không khí mát mẻ, ngăn vi khuẩn lactic làm chua và hỏng cấu trúc tinh bột.<br><br>
+<b>Nhào bột và ép khuôn:</b> Tinh bột được nhào cùng một phần bột hồ hóa bằng nước nóng và nước sông Côn cho đến khi dẻo mịn. Thợ dùng ống đồng đục lỗ (khuôn), dùng lực tay ép mạnh để bột chảy thành "song sợi" xuống chảo nước đang sôi sùng sục.<br><br>
+<b>Sốc nhiệt:</b> Sau 2-3 phút luộc, bún được vớt bằng rổ tre và xả ngay vào chảo nước lạnh để ức chế hồ hóa, giúp sợi bún dai, dẻo và tơi rời.<br><br>
+<b>Phơi bún:</b> Bún được trải lên phên tre lót vải thành từng tấm vuông (~30cm). Bắt buộc phải phơi trực tiếp dưới nắng gắt và gió hanh của bãi bồi sông Côn để khô kiệt trong ngày. Không thể dùng máy sấy công nghiệp. Nghề này chỉ hoạt động được 6 tháng mùa nắng.`;
+            } else {
+                contentHtml = `Để tạo ra <b>${productName}</b>, các nghệ nhân phải mất hàng chục giờ đồng hồ lao động miệt mài. Mọi công đoạn đều 100% thủ công, từ khâu chọn lọc nguyên liệu tự nhiên đến khi thành hình, đòi hỏi sự kiên nhẫn và đôi tay khéo léo tuyệt đỉnh.`;
+            }
         } else if (type === 'gia_tri') {
             title = "Giá trị văn hoá";
-            contentHtml = `Không chỉ là một vật dụng hay món ăn, <b>${productName}</b> còn là hiện thân của tín ngưỡng, là vật kết nối con người với thế giới tâm linh, với Giàng (Trời). Nó mang trong mình linh hồn và nhịp sống của người dân bản địa.`;
+            if (isBunSongThan) {
+                contentHtml = `<b>Bún song thằn</b> vượt lên trên một món ăn thông thường để trở thành một thực thể văn hóa, y lý và kinh tế đặc biệt:<br><br>
+<b>Tính độc bản về địa lý:</b> Bún song thằn mang tính quyết định địa lý cực cao. Tương truyền các nghệ nhân từng thất bại khi làm bún tại kinh đô Huế vì thiếu đi nước ngọt mát của sông Côn và cái nắng gió hanh khô đặc thù của An Thái.<br><br>
+<b>Triết lý y lý Đông y:</b> Làm hoàn toàn từ đậu xanh, bún mang tính mát, giúp thanh nhiệt, giải độc và điều hòa cơ thể, thể hiện triết lý cân bằng âm dương trong ẩm thực nhiệt đới.<br><br>
+<b>Vị thế trong ẩm thực và nghi lễ:</b> Bún song thằn là nguyên liệu cao cấp, không thể thiếu trong các mâm cỗ sang trọng, giỗ chạp và tiệc cưới hỏi của người Bình Định. Nó tạo nên bản giao hưởng ẩm thực xứ Nẫu khi kết hợp cùng bánh tráng nướng, nem chua Chợ Huyện và rượu Bàu Đá.<br><br>
+<b>Tính tiếp biến và lưu giữ tình tự quê hương:</b> Theo bước chân người Bình Định di cư dọc Quốc lộ 19 lên Tây Nguyên (Gia Lai), bún song thằn trở thành nhịp cầu kết nối văn hóa biển và đại ngàn. Từ một sản phẩm làng nghề, bún hiện được nâng tầm chuẩn OCOP 4 sao cấp tỉnh, trở thành quà biếu đặc sản cao cấp bảo tồn hồn cốt xứ võ trời văn.`;
+            } else {
+                contentHtml = `Không chỉ là một vật dụng hay món ăn, <b>${productName}</b> còn là hiện thân của tín ngưỡng, là vật kết nối con người với thế giới tâm linh, với Giàng (Trời). Nó mang trong mình linh hồn và nhịp sống của người dân bản địa.`;
+            }
         }
         
-        currentInsightPlainText = contentHtml.replace(/<[^>]*>?/gm, '');
+        currentInsightPlainText = contentHtml.replace(/<br\s*\/?>/gi, '\n').replace(/<[^>]*>?/gm, '');
 
         const modal = document.getElementById('insightModal');
         modal.classList.add('insight-modal-active');
