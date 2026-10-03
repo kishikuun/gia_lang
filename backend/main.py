@@ -10,7 +10,6 @@ from fastapi import FastAPI, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.middleware.cors import CORSMiddleware
-from starlette.middleware.gzip import GZipMiddleware
 from pydantic import BaseModel
 import uvicorn
 from google import genai
@@ -50,7 +49,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-<<<<<<< Updated upstream
 @app.middleware("http")
 async def add_cache_control_header(request: Request, call_next):
     response = await call_next(request)
@@ -58,19 +56,6 @@ async def add_cache_control_header(request: Request, call_next):
         response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, max-age=0"
         response.headers["Pragma"] = "no-cache"
         response.headers["Expires"] = "0"
-=======
-app.add_middleware(GZipMiddleware, minimum_size=1000)
-
-@app.middleware("http")
-async def add_cache_control_header(request: Request, call_next):
-    response = await call_next(request)
-    if any(request.url.path.endswith(ext) for ext in [".js", ".css", ".geojson"]):
-        response.headers["Cache-Control"] = "public, max-age=86400"
-    elif any(request.url.path.endswith(ext) for ext in [".ogg", ".wav", ".jpg", ".jpeg", ".png", ".webp"]):
-        response.headers["Cache-Control"] = "public, max-age=604800, immutable"
-    elif any(request.url.path.endswith(ext) for ext in [".html"]) or request.url.path in ["/", "/products", "/heritage"]:
-        response.headers["Cache-Control"] = "no-cache, must-revalidate"
->>>>>>> Stashed changes
     return response
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -379,7 +364,6 @@ async def read_products(request: Request):
 async def read_heritage(request: Request):
     return templates.TemplateResponse(request=request, name="heritage.html")
 
-<<<<<<< Updated upstream
 @app.get("/api/health")
 async def health_check():
     return {
@@ -387,63 +371,10 @@ async def health_check():
         "gemini_model": chatbot.gemini_model,
         "cooldown_active": time.time() < chatbot.gemini_cooldown_until
     }
-=======
-PRODUCTS_DB = {
-    "bun_song_than": {
-        "id": "bun_song_than",
-        "name": "Bún Song Thằn",
-        "price": 150000,
-        "desc": "Đặc sản tiến vua, sợi bún dai trong suốt như ngọc.",
-        "image": "/assets/images/bun_song_than.jpg",
-        "rating": 5.0,
-        "sold": 259,
-        "original_price": 180000
-    },
-    "vai_tho_cam": {
-        "id": "vai_tho_cam",
-        "name": "Vải Thổ Cẩm",
-        "price": 350000,
-        "desc": "Tuyệt tác dệt tay từ những người thợ lành nghề.",
-        "image": "/assets/images/vai_tho_cam.jpg",
-        "rating": 4.9,
-        "sold": 120,
-        "original_price": 400000
-    },
-    "ruou_can": {
-        "id": "ruou_can",
-        "name": "Rượu Cần Men Lá",
-        "price": 280000,
-        "desc": "Cay nồng hương rừng, uống một ngụm say một đời.",
-        "image": "/assets/images/ruou_can.jpg",
-        "rating": 4.8,
-        "sold": 89,
-        "original_price": 320000
-    },
-    "gui_dan": {
-        "id": "gui_dan",
-        "name": "Gùi Đan Mây Tre",
-        "price": 120000,
-        "desc": "Thủ công tỉ mỉ, vật dụng không thể thiếu của người Tây Nguyên.",
-        "image": "/assets/images/gui_dan.jpg",
-        "rating": 5.0,
-        "sold": 45,
-        "original_price": 150000
-    }
-}
-
-@app.get("/product/{product_id}")
-async def read_product_detail(request: Request, product_id: str):
-    product = PRODUCTS_DB.get(product_id)
-    if not product:
-        return templates.TemplateResponse(request=request, name="products.html")
-    return templates.TemplateResponse(request=request, name="product_detail.html", context={"product": product})
-
->>>>>>> Stashed changes
 
 @app.post("/api/interact")
 async def interact_api(payload: InteractRequest):
     print(f"\n[AI-GATEWAY] Khách nói: '{payload.user_message}' | Context: {payload.context_product}")
-<<<<<<< Updated upstream
     try:
         response_text, actions = await asyncio.to_thread(chatbot.send_message, payload)
         response_text, actions = extract_and_clean_tool_calls(response_text, actions)
@@ -451,9 +382,6 @@ async def interact_api(payload: InteractRequest):
         print(f"[AI-GATEWAY Lỗi] {e}")
         response_text = "Già đang mải canh đống lửa buôn làng, mạng chập chờn quá cháu ơi. Lát cháu nhắn lại Già liền nghen!"
         actions = []
-=======
-    response_text, actions = await asyncio.to_thread(chatbot.send_message, payload)
->>>>>>> Stashed changes
     return {"response": response_text, "actions": actions}
 
 def warmup_gemini_sync():
