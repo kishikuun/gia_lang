@@ -2542,3 +2542,86 @@ Object.keys(soundTracks).forEach(key => {
         });
     }
 });
+
+// ========================================================
+// ONBOARDING TOUR LOGIC (Driver.js)
+// ========================================================
+function startOnboardingTour() {
+    if (localStorage.getItem('gia_lang_tour_completed')) return;
+    if (window.location.pathname !== '/' && window.location.pathname !== '' && window.location.pathname !== '/index.html') return;
+
+    if (!window.driver) {
+        console.warn('Driver.js not loaded');
+        return;
+    }
+
+    const driverObj = window.driver.js.driver({
+        showProgress: true,
+        allowClose: true,
+        doneBtnText: 'Xong',
+        closeBtnText: 'Bỏ qua',
+        nextBtnText: 'Tiếp ➔',
+        prevBtnText: '⬅ Quay lại',
+        steps: [
+            {
+                element: 'header.navbar',
+                popover: {
+                    title: 'Chào mừng bạn đến với Già Làng Số!',
+                    description: 'Đây là thanh điều hướng chính, giúp bạn đi khắp buôn làng và tìm hiểu các sản phẩm truyền thống.',
+                    side: "bottom", align: 'start'
+                }
+            },
+            {
+                element: '#spirit-orb',
+                popover: {
+                    title: 'Trợ lý ảo Già Làng',
+                    description: 'Bấm vào đây để trò chuyện cùng Già Làng bất cứ lúc nào bạn cần tư vấn hay muốn nghe kể chuyện.',
+                    side: "left", align: 'end'
+                }
+            },
+            {
+                element: '#sound-mixer-btn',
+                popover: {
+                    title: 'Âm thanh đại ngàn',
+                    description: 'Bật và tùy chỉnh các âm thanh thiên nhiên (cồng chiêng, suối chảy, lửa trại) để có trải nghiệm chân thực nhất.',
+                    side: "bottom", align: 'end'
+                }
+            },
+            {
+                element: '#cart-toggle-btn',
+                popover: {
+                    title: 'Giỏ hàng của bạn',
+                    description: 'Những sản vật quý giá mà bạn chọn mua sẽ được cất giữ ở đây.',
+                    side: "bottom", align: 'end'
+                }
+            }
+        ],
+        onDestroyStarted: () => {
+            driverObj.destroy();
+            localStorage.setItem('gia_lang_tour_completed', 'true');
+        },
+    });
+
+    const welcomeScreen = document.getElementById('welcome-screen');
+    if (welcomeScreen && !welcomeScreen.classList.contains('hidden')) {
+        const enterBtn = document.getElementById('enter-village-btn');
+        if (enterBtn) {
+            enterBtn.addEventListener('click', () => {
+                setTimeout(() => {
+                    driverObj.drive();
+                }, 800); 
+            });
+        }
+    } else {
+        setTimeout(() => {
+            driverObj.drive();
+        }, 1000);
+    }
+}
+
+// Bắt đầu tour nếu trang đã sẵn sàng
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startOnboardingTour);
+} else {
+    startOnboardingTour();
+}
