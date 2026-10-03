@@ -306,9 +306,9 @@ function renderSpiritSuggestions(suggestions, msgEl) {
     suggestions.forEach(suggest => {
         const btn = document.createElement('button');
         btn.innerHTML = `<span style="opacity:0.7; margin-right:4px;">✦</span> ${suggest}`;
-        btn.style.cssText = 'background: rgba(224, 176, 132, 0.1); border: 1px solid rgba(224, 176, 132, 0.35); color: #e0b084; padding: 8px 14px; border-radius: 8px; font-size: 0.85rem; font-family: "Inter", sans-serif; cursor: pointer; transition: all 0.3s ease;';
-        btn.onmouseover = () => { btn.style.background = 'rgba(224, 176, 132, 0.25)'; btn.style.borderColor = 'rgba(224, 176, 132, 0.6)'; };
-        btn.onmouseout = () => { btn.style.background = 'rgba(224, 176, 132, 0.1)'; btn.style.borderColor = 'rgba(224, 176, 132, 0.35)'; };
+        btn.style.cssText = 'background: rgba(230, 197, 92, 0.1); border: 1px solid rgba(230, 197, 92, 0.35); color: #d4af37; padding: 8px 14px; border-radius: 8px; font-size: 0.85rem; font-family: "Inter", sans-serif; cursor: pointer; transition: all 0.3s ease;';
+        btn.onmouseover = () => { btn.style.background = 'rgba(230, 197, 92, 0.25)'; btn.style.borderColor = 'rgba(230, 197, 92, 0.6)'; };
+        btn.onmouseout = () => { btn.style.background = 'rgba(230, 197, 92, 0.1)'; btn.style.borderColor = 'rgba(230, 197, 92, 0.35)'; };
         btn.addEventListener('click', () => {
             if (spiritInput) {
                 spiritInput.value = suggest;
