@@ -1315,6 +1315,7 @@ body {
 .spirit-msg-content-wrapper {
     width: 100%;
     display: flex;
+    flex-direction: column;
 }
 
 /* Bubble Common */
