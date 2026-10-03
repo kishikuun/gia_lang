@@ -85,7 +85,7 @@ system_instruction = f"""[LUẬT TỐI CAO CỦA GIÀ LÀNG]:
 4. BÚN SONG THẰN LÀ SỐ 1: Bún tiến vua, sợi trong suốt như ngọc, 100% đậu xanh nguyên chất. Luôn tìm cách lồng ghép để PR món này.
 5. Định dạng văn bản: Trả lời ngắn gọn, xuống dòng tự nhiên, KHÔNG dùng gạch đầu dòng, KHÔNG liệt kê số thứ tự kiểu robot. Dùng emoji vừa đủ.
 6. TUYỆT ĐỐI KHÔNG tự viết thẻ lệnh hàm dạng text như '<call:...>' hay '*<call:...>*' vào câu trả lời.
-7. [QUAN TRỌNG] Ở CUỐI câu trả lời, LUÔN LUÔN cung cấp 2 câu hỏi gợi ý để khách hỏi tiếp, đặt trong thẻ <suggest>... </suggest>. Ví dụ: <suggest>Kể chuyện tiếp đi Già</suggest><suggest>Bún này giá sao Già?</suggest>
+7. [QUAN TRỌNG] Ở CUỐI câu trả lời, LUÔN LUÔN cung cấp 3 câu hỏi gợi ý ĐA DẠNG và THÔNG MINH để khách hỏi tiếp, dựa theo sát ngữ cảnh cuộc trò chuyện, đặt trong thẻ <suggest>... </suggest>. Ví dụ nếu nói về bún: <suggest>Bún này có gì đặc biệt?</suggest><suggest>Cách nấu chuẩn vị?</suggest><suggest>Chốt đơn luôn Già ơi!</suggest>
 8. [QUAN TRỌNG] PHÂN TÍCH RỦI RO: Đánh giá xem khách có hỏi ngoài lề (không có trong KIẾN THỨC BẢN LÀNG) hay không. Nếu ngoài lề, hãy thật thà nói "Già chưa nghe chuyện này..." và LUÔN LUÔN thêm thẻ <risk>Warning</risk> ở cuối. Nếu an toàn, trả về <risk>Safe</risk>.
 
 [KIẾN THỨC BẢN LÀNG]:
@@ -95,12 +95,12 @@ system_instruction = f"""[LUẬT TỐI CAO CỦA GIÀ LÀNG]:
 def extract_and_clean_tool_calls(text: str, actions: list) -> tuple[str, list, list, str]:
     """Tách và dọn dẹp các thẻ tool call bị model sinh ra dưới dạng text như *<call:default_api:play_sound{sound_type:chimes}/>*"""
     if not text:
-        return text, actions, ["Già kể tiếp đi", "Sản phẩm này có gì đặc biệt?"], "Safe"
+        return text, actions, ["Câu chuyện này thú vị quá!", "Sản phẩm này có gì đặc biệt?", "Chốt đơn cho cháu"], "Safe"
         
     # Extract suggestions and risk level
     suggested_replies = re.findall(r'<suggest>(.*?)</suggest>', text, flags=re.IGNORECASE)
     if not suggested_replies or len(suggested_replies) < 2:
-        suggested_replies = (suggested_replies + ["Già kể tiếp đi", "Sản phẩm này có gì đặc biệt?"])[:2]
+        suggested_replies = (suggested_replies + ["Chuyện làng còn gì vui không?", "Sản phẩm này có gì đặc biệt?", "Già tư vấn thêm cho cháu"])[:3]
         
     risk_match = re.search(r'<risk>(.*?)</risk>', text, flags=re.IGNORECASE)
     risk_level = risk_match.group(1).strip() if risk_match else "Safe"
