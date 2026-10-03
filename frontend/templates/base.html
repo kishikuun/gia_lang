@@ -605,35 +605,128 @@
     <div id="product-toast" class="product-toast" aria-live="polite"></div>
 
     <!-- Insight Modal -->
-    <div id="insightModal" class="modal-overlay" style="display: none; z-index: 9999; align-items: center; justify-content: center; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.4); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);">
+    <style>
+        #insightModal {
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            opacity: 0;
+            visibility: hidden;
+            display: flex;
+        }
+        #insightModal.insight-modal-active {
+            opacity: 1;
+            visibility: visible;
+        }
+        #insightModal .modal-content {
+            transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: scale(0.9) translateY(30px);
+            filter: blur(15px);
+            opacity: 0;
+        }
+        #insightModal.insight-modal-active .modal-content {
+            transform: scale(1) translateY(0);
+            filter: blur(0);
+            opacity: 1;
+        }
+    </style>
+    <div id="insightModal" class="modal-overlay" style="z-index: 9999; align-items: center; justify-content: center; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.6); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);">
         <div class="modal-content" style="width: 90vw; height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 50px 8vw; text-align: center; background: rgba(11, 19, 16, 0.7); border: 1px solid rgba(245, 166, 35, 0.3); border-radius: 30px; box-shadow: 0 20px 80px rgba(0,0,0,0.8), inset 0 0 50px rgba(245, 166, 35, 0.05); overflow-y: auto;">
-            <h3 id="insightModalTitle" class="serif-title" style="color: var(--gold); font-size: 3.5rem; margin-bottom: 40px; text-shadow: 0 4px 20px rgba(245, 166, 35, 0.4); font-weight: 700; letter-spacing: 1px;">Tiêu đề</h3>
-            <p id="insightModalContent" style="color: #f0f0f0; font-family: 'Inter', sans-serif; line-height: 2.2; font-size: 1.4rem; max-width: 900px; margin: 0 auto 50px auto; font-weight: 300; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">Nội dung chi tiết...</p>
-            <button class="btn-primary" onclick="document.getElementById('insightModal').style.display='none'" style="padding: 15px 50px; font-size: 1.1rem; border-radius: 50px; background: linear-gradient(45deg, #FF5722, #F5A623); border: none; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 10px 30px rgba(255, 87, 34, 0.3); transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">✕ Đóng màn hình</button>
+            <h3 id="insightModalTitle" class="serif-title" style="color: var(--gold); font-size: 3.5rem; margin-bottom: 40px; text-shadow: 0 4px 20px rgba(245, 166, 35, 0.4); font-weight: 700; letter-spacing: 1px; min-height: 4rem;"></h3>
+            <p id="insightModalContent" style="color: #f0f0f0; font-family: 'Inter', sans-serif; line-height: 2.2; font-size: 1.4rem; max-width: 900px; margin: 0 auto 50px auto; font-weight: 300; text-shadow: 0 2px 4px rgba(0,0,0,0.5); min-height: 10rem;"></p>
+            <div style="display: flex; gap: 20px; align-items: center; justify-content: center;">
+                <button id="insight-tts-btn" class="btn-primary" onclick="toggleInsightTTS()" style="padding: 15px 40px; font-size: 1.1rem; border-radius: 50px; background: rgba(245, 166, 35, 0.1); border: 1px solid var(--gold); color: var(--gold); font-weight: bold; cursor: pointer; transition: all 0.3s;" onmouseover="this.style.background='rgba(245, 166, 35, 0.2)'" onmouseout="this.style.background='rgba(245, 166, 35, 0.1)'">🔊 Đọc nội dung</button>
+                <button class="btn-primary" onclick="closeInsightModal()" style="padding: 15px 50px; font-size: 1.1rem; border-radius: 50px; background: linear-gradient(45deg, #FF5722, #F5A623); border: none; color: white; font-weight: bold; cursor: pointer; box-shadow: 0 10px 30px rgba(255, 87, 34, 0.3); transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">✕ Đóng</button>
+            </div>
         </div>
     </div>
 
     <script>
-    function showInsight(type) {
+    let currentInsightUtterance = null;
+    let insightDecodeInterval = null;
+    let currentInsightPlainText = "";
+
+    function toggleInsightTTS() {
+        const btn = document.getElementById('insight-tts-btn');
+        if (window.speechSynthesis.speaking) {
+            window.speechSynthesis.cancel();
+            btn.innerHTML = '🔊 Đọc nội dung';
+            return;
+        }
+        
+        if (!currentInsightPlainText) return;
+
+        currentInsightUtterance = new SpeechSynthesisUtterance(currentInsightPlainText);
+        currentInsightUtterance.lang = 'vi-VN';
+        currentInsightUtterance.rate = 1.0;
+        
+        currentInsightUtterance.onend = () => {
+            btn.innerHTML = '🔊 Đọc nội dung';
+        };
+        
+        window.speechSynthesis.speak(currentInsightUtterance);
+        btn.innerHTML = '🛑 Dừng đọc';
+    }
+
+    window.closeInsightModal = function() {
+        document.getElementById('insightModal').classList.remove('insight-modal-active');
+        if (window.speechSynthesis) window.speechSynthesis.cancel();
+        if (insightDecodeInterval) clearInterval(insightDecodeInterval);
+        document.getElementById('insight-tts-btn').innerHTML = '🔊 Đọc nội dung';
+    }
+
+    function decodeTextEffect(elementId, finalHtml) {
+        const el = document.getElementById(elementId);
+        const plainText = finalHtml.replace(/<[^>]*>?/gm, ''); 
+        const chars = "ⰀⰁⰂⰃⰄⰅⰆⰇⰈⰉⰊⰋⰌⰍⰎⰏⰐⰑⰒⰓⰔⰕⰖⰗⰘⰙⰚⰛⰜⰝⰞⰟⰠⰡⰢⰣⰤⰥⰦⰧⰨⰩⰪⰫⰬⰭⰮⰯ"; 
+        let iteration = 0;
+        
+        const localInterval = setInterval(() => {
+            el.innerText = plainText.split("").map((letter, index) => {
+                if(index < iteration) {
+                    return plainText[index];
+                }
+                return letter === " " ? " " : chars[Math.floor(Math.random() * chars.length)];
+            }).join("");
+            
+            if(iteration >= plainText.length){
+                clearInterval(localInterval);
+                el.innerHTML = finalHtml;
+            }
+            iteration += 1;
+        }, 15);
+        return localInterval;
+    }
+
+    window.showInsight = function(type) {
         let productNameElement = document.getElementById('modal-product-title');
         let productName = productNameElement ? productNameElement.innerText : "Sản phẩm";
         let title = "";
-        let content = "";
+        let contentHtml = "";
         
         if (type === 'nguon_goc') {
             title = "Nguồn gốc";
-            content = `Sản phẩm <b>${productName}</b> bắt nguồn từ những buôn làng cổ xưa sâu trong đại ngàn. Được truyền từ thế hệ này sang thế hệ khác, lưu giữ trọn vẹn tinh hoa của vùng đất đỏ bazan.`;
+            contentHtml = `Sản phẩm <b>${productName}</b> bắt nguồn từ những buôn làng cổ xưa sâu trong đại ngàn. Được truyền từ thế hệ này sang thế hệ khác, lưu giữ trọn vẹn tinh hoa của vùng đất đỏ bazan.`;
         } else if (type === 'quy_trinh') {
             title = "Quy trình làm";
-            content = `Để tạo ra <b>${productName}</b>, các nghệ nhân phải mất hàng chục giờ đồng hồ lao động miệt mài. Mọi công đoạn đều 100% thủ công, từ khâu chọn lọc nguyên liệu tự nhiên đến khi thành hình, đòi hỏi sự kiên nhẫn và đôi tay khéo léo tuyệt đỉnh.`;
+            contentHtml = `Để tạo ra <b>${productName}</b>, các nghệ nhân phải mất hàng chục giờ đồng hồ lao động miệt mài. Mọi công đoạn đều 100% thủ công, từ khâu chọn lọc nguyên liệu tự nhiên đến khi thành hình, đòi hỏi sự kiên nhẫn và đôi tay khéo léo tuyệt đỉnh.`;
         } else if (type === 'gia_tri') {
             title = "Giá trị văn hoá";
-            content = `Không chỉ là một vật dụng hay món ăn, <b>${productName}</b> còn là hiện thân của tín ngưỡng, là vật kết nối con người với thế giới tâm linh, với Giàng (Trời). Nó mang trong mình linh hồn và nhịp sống của người dân bản địa.`;
+            contentHtml = `Không chỉ là một vật dụng hay món ăn, <b>${productName}</b> còn là hiện thân của tín ngưỡng, là vật kết nối con người với thế giới tâm linh, với Giàng (Trời). Nó mang trong mình linh hồn và nhịp sống của người dân bản địa.`;
         }
         
-        document.getElementById('insightModalTitle').innerText = title;
-        document.getElementById('insightModalContent').innerHTML = content;
-        document.getElementById('insightModal').style.display = 'flex';
+        currentInsightPlainText = contentHtml.replace(/<[^>]*>?/gm, '');
+
+        const modal = document.getElementById('insightModal');
+        modal.classList.add('insight-modal-active');
+        
+        if (insightDecodeInterval) clearInterval(insightDecodeInterval);
+        
+        document.getElementById('insightModalTitle').innerHTML = title;
+        document.getElementById('insightModalContent').innerHTML = "";
+        
+        // Wait for modal animation to settle before decoding text
+        setTimeout(() => {
+            insightDecodeInterval = decodeTextEffect('insightModalContent', contentHtml);
+        }, 500);
     }
     </script>
 
