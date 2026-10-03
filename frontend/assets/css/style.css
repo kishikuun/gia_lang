@@ -1407,18 +1407,33 @@ body {
 }
 
 /* User Messages */
+.spirit-msg-user {
+    align-items: flex-end;
+}
 .spirit-msg-user .spirit-msg-bubble {
     border-color: rgba(230, 197, 92, 0.5);
     background: rgba(230, 197, 92, 0.05);
+    margin-left: 0;
+    margin-right: 28px;
 }
 .spirit-msg-user .spirit-msg-bubble::before {
     background: rgba(230, 197, 92, 0.5);
+    left: auto;
+    right: -28px;
 }
 .spirit-msg-user .spirit-msg-bubble::after {
     border-color: rgba(230, 197, 92, 0.8);
+    left: auto;
+    right: -32px;
 }
 .spirit-msg-user .widget-plus {
     color: rgba(230, 197, 92, 0.9);
+    left: auto;
+    right: -27.5px;
+    transform: translate(50%, -50%);
+}
+.spirit-msg-user .spirit-msg-header {
+    flex-direction: row-reverse;
 }
 
 /* Typing Indicator */
