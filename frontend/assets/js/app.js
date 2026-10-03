@@ -28,8 +28,19 @@ const enterBtn = document.getElementById('enter-village-btn');
 const ambientAudio = document.getElementById('ambient-audio');
 const magicAudio = document.getElementById('magic-chime-audio');
 
-if (enterBtn && welcomeScreen) {
-    enterBtn.addEventListener('click', () => {
+if (welcomeScreen) {
+    if (sessionStorage.getItem('village_entered') === 'true') {
+        welcomeScreen.style.display = 'none';
+        try {
+            if (ambientAudio) {
+                ambientAudio.volume = 0.4;
+                ambientAudio.play().catch(e => console.log("Audio play blocked", e));
+            }
+            if (typeof startAllSounds === 'function') startAllSounds();
+        } catch (e) {}
+    } else if (enterBtn) {
+        enterBtn.addEventListener('click', () => {
+            sessionStorage.setItem('village_entered', 'true');
         try {
             window.scrollTo(0, 0);
             if (typeof lenis !== 'undefined' && lenis) lenis.scrollTo(0, {immediate: true});
@@ -2634,7 +2645,7 @@ function startOnboardingTour() {
     });
 
     const welcomeScreen = document.getElementById('welcome-screen');
-    if (welcomeScreen && !welcomeScreen.classList.contains('hidden')) {
+    if (welcomeScreen && welcomeScreen.style.display !== 'none' && !welcomeScreen.classList.contains('hidden')) {
         const enterBtn = document.getElementById('enter-village-btn');
         if (enterBtn) {
             enterBtn.addEventListener('click', () => {
