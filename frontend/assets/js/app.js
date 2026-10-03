@@ -297,20 +297,15 @@ function appendMessage(role, content, useGlitch = false, riskLevel = "Safe") {
     return msgDiv;
 }
 
-function renderSpiritSuggestions(suggestions) {
-    if (!suggestions || suggestions.length === 0) return;
-    let chipsContainer = document.getElementById('spirit-suggest-chips');
-    if (!chipsContainer) {
-        const inputArea = document.querySelector('.spirit-chat-input-wrapper');
-        chipsContainer = document.createElement('div');
-        chipsContainer.id = 'spirit-suggest-chips';
-        chipsContainer.style.cssText = 'display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; padding: 0 10px;';
-        inputArea.parentNode.insertBefore(chipsContainer, inputArea);
-    }
-    chipsContainer.innerHTML = '';
+function renderSpiritSuggestions(suggestions, msgEl) {
+    if (!suggestions || suggestions.length === 0 || !msgEl) return;
+    const chipsContainer = document.createElement('div');
+    chipsContainer.className = 'spirit-suggest-chips-inline';
+    chipsContainer.style.cssText = 'display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; margin-left: 38px;';
+    
     suggestions.forEach(suggest => {
         const btn = document.createElement('button');
-        btn.textContent = suggest;
+        btn.innerHTML = `💬 ${suggest}`;
         btn.style.cssText = 'background: rgba(212, 175, 55, 0.1); border: 1px solid rgba(212, 175, 55, 0.3); color: #d4af37; padding: 6px 12px; border-radius: 16px; font-size: 12px; cursor: pointer; transition: all 0.3s;';
         btn.onmouseover = () => btn.style.background = 'rgba(212, 175, 55, 0.2)';
         btn.onmouseout = () => btn.style.background = 'rgba(212, 175, 55, 0.1)';
@@ -318,10 +313,13 @@ function renderSpiritSuggestions(suggestions) {
             if (spiritInput) {
                 spiritInput.value = suggest;
                 handleSpiritMessage();
+                chipsContainer.style.pointerEvents = 'none';
+                chipsContainer.style.opacity = '0.5';
             }
         });
         chipsContainer.appendChild(btn);
     });
+    msgEl.appendChild(chipsContainer);
 }
 
 function scrollChatToBottom() {
@@ -445,7 +443,7 @@ async function callSpiritAI(systemPromptOverride = null) {
             
             glitchDecodeText(bubbleEl, aiResponse, () => {
                 if (actions && actions.length > 0) processActions(actions);
-                renderSpiritSuggestions(suggestedReplies);
+                renderSpiritSuggestions(suggestedReplies, msgEl);
                 scrollChatToBottom();
             });
         } else {
@@ -571,22 +569,28 @@ function appendCampfireMsg(role, content, useGlitch = false, riskLevel = "Safe")
     return msgDiv;
 }
 
-function renderCampfireSuggestions(suggestions) {
-    const chipsContainer = document.querySelector('.campfire-section .prompt-chips');
-    if (!chipsContainer || !suggestions || suggestions.length === 0) return;
-    chipsContainer.innerHTML = '';
+function renderCampfireSuggestions(suggestions, msgEl) {
+    if (!suggestions || suggestions.length === 0 || !msgEl) return;
+    const chipsContainer = document.createElement('div');
+    chipsContainer.className = 'campfire-suggest-chips-inline';
+    chipsContainer.style.cssText = 'display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; margin-left: 36px;';
+    
     suggestions.forEach(suggest => {
         const btn = document.createElement('button');
         btn.className = 'prompt-chip';
+        btn.style.margin = '0';
         btn.innerHTML = `<span class="chip-icon">💬</span><span>${suggest}</span>`;
         btn.addEventListener('click', () => {
             if (campfireInput) {
                 campfireInput.value = suggest;
                 handleCampfireMessage();
+                chipsContainer.style.pointerEvents = 'none';
+                chipsContainer.style.opacity = '0.5';
             }
         });
         chipsContainer.appendChild(btn);
     });
+    msgEl.appendChild(chipsContainer);
 }
 
 function showCampfireTyping() {
@@ -643,7 +647,7 @@ async function handleCampfireMessage() {
                 const bubbleEl = msgEl.querySelector('.campfire-msg-bubble');
                 glitchDecodeText(bubbleEl, aiResponse, () => {
                     if (actions && actions.length > 0) processActions(actions);
-                    renderCampfireSuggestions(suggestedReplies);
+                    renderCampfireSuggestions(suggestedReplies, msgEl);
                     if (campfireHistory) campfireHistory.scrollTop = campfireHistory.scrollHeight;
                 });
             }
