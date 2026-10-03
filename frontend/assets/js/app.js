@@ -265,34 +265,32 @@ function appendMessage(role, content, useGlitch = false, riskLevel = "Safe") {
     
     const timeStr = getTimeString();
     
-    if (role === 'ai') {
-        const borderStyle = riskLevel === "Warning" ? 'border: 1px solid #ffcc00; box-shadow: 0 0 10px rgba(255,204,0,0.2);' : '';
-        const warningIcon = riskLevel === "Warning" ? '<span title="Dữ liệu ngoài kho tri thức" style="color:#ffcc00; font-size:12px; margin-left:8px;">⚠️ Cảnh báo</span>' : '';
-        msgDiv.innerHTML = `
-            <div class="spirit-avatar-small">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
-                    <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2Z" />
-                    <circle cx="12" cy="12" r="2" />
-                </svg>
-            </div>
-            <div class="spirit-msg-content-wrapper" style="display: flex; flex-direction: column;">
-                <div class="spirit-msg-bubble" style="${borderStyle}">
-                    <div class="spirit-msg-header" style="margin-bottom:4px; font-weight:600; font-size:0.85rem;">
-                        <span>Già Làng</span>${warningIcon}
-                    </div>
-                    <div class="spirit-glitch-text${useGlitch ? ' glitching' : ''}">${useGlitch ? '' : content}</div>
-                    <span class="msg-time">${timeStr}</span>
+    // Config cho role
+    const isAI = role === 'ai';
+    const username = isAI ? 'GIÀ LÀNG' : 'KHÁCH PHƯƠNG XA';
+    const metaStr = isAI ? '— TRƯỞNG BẢN' : '— BẠN';
+    const warningIcon = (isAI && riskLevel === "Warning") ? '<span title="Dữ liệu ngoài kho tri thức" style="color:#ffcc00; font-size:12px; margin-left:8px;">⚠️ Cảnh báo</span>' : '';
+    const borderStyle = (isAI && riskLevel === "Warning") ? 'border-color: #ffcc00; box-shadow: 0 0 10px rgba(255,204,0,0.2);' : '';
+    const starIcon = isAI ? '✦' : '✧';
+    
+    msgDiv.innerHTML = `
+        <div class="spirit-msg-content-wrapper widget-style">
+            <div class="spirit-msg-bubble" style="${borderStyle}">
+                <div class="widget-plus">+</div>
+                <div class="spirit-msg-header">
+                    <span class="widget-star">${starIcon}</span>
+                    <span class="widget-username">${username}</span>
+                    <span class="widget-meta">${metaStr}</span>
+                    ${warningIcon}
                 </div>
-            </div>
-        `;
-    } else {
-        msgDiv.innerHTML = `
-            <div class="spirit-msg-bubble">
-                <div>${content}</div>
+                <div class="widget-body">
+                    <span class="widget-colon">:</span>
+                    <div class="spirit-glitch-text${useGlitch ? ' glitching' : ''}">${useGlitch ? '' : content}</div>
+                </div>
                 <span class="msg-time">${timeStr}</span>
             </div>
-        `;
-    }
+        </div>
+    `;
     
     spiritChatMessages.appendChild(msgDiv);
     scrollChatToBottom();
