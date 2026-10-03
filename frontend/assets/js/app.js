@@ -2615,14 +2615,6 @@ function startOnboardingTour() {
                 }
             },
             {
-                element: '#spirit-orb',
-                popover: {
-                    title: 'Trợ lý ảo Già Làng',
-                    description: 'Bấm vào đây để trò chuyện cùng Già Làng bất cứ lúc nào bạn cần tư vấn hay muốn nghe kể chuyện.',
-                    side: "left", align: 'end'
-                }
-            },
-            {
                 element: '#sound-mixer-btn',
                 popover: {
                     title: 'Âm thanh đại ngàn',
