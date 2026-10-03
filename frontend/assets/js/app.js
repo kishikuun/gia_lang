@@ -29,6 +29,7 @@ const ambientAudio = document.getElementById('ambient-audio');
 const magicAudio = document.getElementById('magic-chime-audio');
 
 if (enterBtn && welcomeScreen) {
+<<<<<<< Updated upstream
     enterBtn.addEventListener('click', () => {
         try {
             window.scrollTo(0, 0);
@@ -46,10 +47,19 @@ if (enterBtn && welcomeScreen) {
             if (ambientAudio) {
                 ambientAudio.volume = 0.4;
                 ambientAudio.play().catch(e => console.log("Audio play blocked", e));
+=======
+    if (sessionStorage.getItem('villageEntered') === 'true') {
+        welcomeScreen.style.display = 'none';
+        try {
+            if (ambientAudio) {
+                ambientAudio.volume = 0.4;
+                ambientAudio.play().catch(e => console.log("Auto-play blocked after nav", e));
+>>>>>>> Stashed changes
             }
             if (typeof startAllSounds === 'function') {
                 startAllSounds();
             }
+<<<<<<< Updated upstream
         } catch (e) {
             console.log("Audio error", e);
         }
@@ -59,6 +69,42 @@ if (enterBtn && welcomeScreen) {
             triggerInitialGreeting();
         }
     });
+=======
+        } catch (e) {}
+    } else {
+        enterBtn.addEventListener('click', () => {
+            try {
+                window.scrollTo(0, 0);
+                if (typeof lenis !== 'undefined' && lenis) lenis.scrollTo(0, {immediate: true});
+            } catch (err) {
+                console.error(err);
+            }
+            
+            sessionStorage.setItem('villageEntered', 'true');
+            welcomeScreen.style.opacity = '0';
+            setTimeout(() => {
+                welcomeScreen.style.display = 'none';
+            }, 800);
+            
+            try {
+                if (ambientAudio) {
+                    ambientAudio.volume = 0.4;
+                    ambientAudio.play().catch(e => console.log("Audio play blocked", e));
+                }
+                if (typeof startAllSounds === 'function') {
+                    startAllSounds();
+                }
+            } catch (e) {
+                console.log("Audio error", e);
+            }
+            
+            // Gọi AI chào ngay khi vừa load xong
+            if (typeof triggerInitialGreeting === 'function') {
+                triggerInitialGreeting();
+            }
+        });
+    }
+>>>>>>> Stashed changes
 }
 
 // GSAP ANIMATIONS & SCROLLYTELLING
@@ -1111,7 +1157,17 @@ window.triggerDetails = function(productId, productName) {
 
 window.triggerAction = function(type, productId) {
     if (type === 'add_to_cart') {
+<<<<<<< Updated upstream
         openProductModal(productId);
+=======
+        const mockPrice = productId === 'bun_song_than' ? 150000 : 100000;
+        const mockName = productId === 'bun_song_than' ? 'Bún Song Thằn' : productId;
+        addToCart({ id: productId, name: mockName, price: mockPrice }, 1);
+        
+        if (!cartSidebar.classList.contains('open')) {
+            toggleCart();
+        }
+>>>>>>> Stashed changes
     }
 };
 
@@ -1260,6 +1316,7 @@ if (mapElement && typeof L !== 'undefined') {
     satelliteTile.addTo(map);
     let isSatellite = true;
 
+<<<<<<< Updated upstream
     // Fullscreen Map Modal Controller
     window.villageMap = map;
     const openMapBtn = document.getElementById('open-fullscreen-map-btn');
@@ -1353,6 +1410,8 @@ if (mapElement && typeof L !== 'undefined') {
         }
     });
 
+=======
+>>>>>>> Stashed changes
     // Map Style Toggle Button
     const styleToggleBtn = document.getElementById('map-style-toggle');
     if (styleToggleBtn) {
@@ -1726,6 +1785,7 @@ if (mapElement && typeof L !== 'undefined') {
     });
 }
 
+<<<<<<< Updated upstream
 // ========================================================
 // PROVINCE LORE DATABASE & IMMERSIVE ELDER STORYTELLING MODAL
 // ========================================================
@@ -2267,6 +2327,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
 window.triggerMapStory = function(id, name, mergers, center) {
     window.openElderStoryModal(name, mergers, center);
+=======
+window.triggerMapStory = function(id, name, mergers, center) {
+    if (typeof spiritRealm !== 'undefined' && spiritRealm.classList.contains('hidden')) {
+        toggleSpiritRealm();
+    }
+    
+    let prompt = `[SỰ KIỆN TƯƠNG TÁC BẢN ĐỒ]: Khách vừa chọn vùng đất ${name} trên bản đồ Việt Nam mới. `;
+    if (mergers && mergers !== 'Giữ nguyên') {
+        prompt += `Tỉnh này được hợp nhất từ ${mergers}, với trung tâm chính trị - hành chính đặt tại ${center}. `;
+    }
+    if (name.includes('Gia Lai')) {
+        prompt += `Đây chính là tỉnh Gia Lai mới sau khi sáp nhập cùng Bình Định (trung tâm tại Bình Định)! Nơi vừa có đại ngàn Tây Nguyên (cồng chiêng, rượu cần) vừa có xứ Nẫu Bình Định - cái nôi của món Bún Song Thằn An Thái tiến vua ngàn năm nức tiếng! Già hãy hào hứng kể chuyện và nhắc khách trải nghiệm ngay Bún Song Thằn nhé!`;
+    } else {
+        prompt += `Già hãy kể một câu chuyện thần thoại hoặc giai thoại văn hóa - ẩm thực thật lôi cuốn, mặn mòi, dí dỏm về vùng đất này và nhắc họ hãy trải nghiệm thử sản vật của buôn làng.`;
+    }
+
+    if (typeof spiritChatHistory !== 'undefined') {
+        spiritChatHistory.push({ role: 'user', content: prompt });
+    }
+    if (typeof callSpiritAI === 'function') {
+        callSpiritAI(prompt);
+    }
+>>>>>>> Stashed changes
 };
 
 window.triggerProactiveAI = function(id, name) {
